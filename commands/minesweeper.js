@@ -17,7 +17,7 @@ module.exports = {
 
 	execute(message, args, client) {
 		if (args) {
-			switch (args[0].toLowercase()) {
+			switch (args[0] {
 			case "intermediate":
 				mines = 22;
 				width = 12;
