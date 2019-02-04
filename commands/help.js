@@ -5,7 +5,7 @@ module.exports = {
 	errorVerb: "help you",
 	missingArgsVerb: "help",
 	aliases: ["h"],
-	cooldown: 6,
+	cooldown: 4,
 	description: "This thingy shows various useful things to know about what I can do, beep!",
 	guildOnly: false,
 	usage: "[**command name**]",

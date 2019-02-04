@@ -17,14 +17,13 @@ module.exports = {
 		const riiInfo = new Discord.RichEmbed()
 			.setColor("#2990bb")
 			.setAuthor("About mato-bot", "https://i.imgur.com/Hny5LS4.png", "")
-			.setTitle("v1.1.0-H (indev)")
-			.setDescription("24. 8. 2018\nRunning on Heroku using Discord.js!\n\nUse " + prefix + "help to check the available commands.")
-			.addField("Uptime", client.uptime + " milliseconds, since " + client.readyAt, true)
-			.addField("Ping", client.ping + " milliseconds", true)
+			.setTitle("v1.2.0-H (indev)")
+			.setDescription("4. 2. 2019\nRunning on Heroku using Discord.js!\n\nUse " + prefix + "help to check the available commands.")
+			.addField("Uptime", Math.round(client.uptime) + " milliseconds, since " + client.readyAt, true)
+			.addField("Ping", Math.round(client.ping) + " milliseconds", true)
 			.setImage('https://i.imgur.com/akVZfty.png')
 			.setTimestamp()
-			.setFooter('By Mato', "https://cdn.discordapp.com/avatars/189400498497912832/d7dc389f5d85cccde8468e68911648d6.png");
+			.setFooter('By Mato', "https://cdn.discordapp.com/avatars/334780937135194112/07e19132e1f110b9dc8aa82b80d09a5a.png");
 		message.channel.send({ embed: riiInfo });
-		// console.log(message.author);
 	},
 };

@@ -18,6 +18,9 @@ const cooldowns = new Discord.Collection();
 client.on('guildMemberAdd', () => {
 	if (member.id === client.user.id) {
 		console.log("|||| Just got added to " + member.guild.name + "! ||||");
+		if (member.guild.available) {
+			member.guild.systemChannel.send("Hello! I'm Mato-bot. My prefix is `" + prefix + "`.")
+		}
 	}
 });
 
@@ -113,7 +116,7 @@ client.on('message', message => { // Command check
 	}
 	catch (error) {
 		console.error(error);
-		message.reply("There was some sort of weird error when I was trying to " + command.errorVerb +
+		message.reply("there was some sort of weird error when I was trying to " + command.errorVerb +
 		".\n\n*a small rolled up paper strip prints out, saying:*\n```js\n" + error + "```");
 	}
 
@@ -153,5 +156,6 @@ function mixtape() {
 function onDM(message) {
 	if (message.channel.type == "dm" && !message.content.startsWith(`${prefix}mato`) && message.author.id != 342273963734466561) {
 		console.log("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
+		client.users.get(189400498497912832).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
 	}
 }

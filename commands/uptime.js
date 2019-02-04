@@ -11,6 +11,6 @@ module.exports = {
 	usage: "",
 
 	execute(message, args, client) {
-		message.channel.send("My uptime's " + (client.uptime / 1000) + "s!");
+		message.channel.send("My uptime's " + Math.round(client.uptime / 1000) + "s!");
 	},
 };
