@@ -2,7 +2,7 @@ module.exports = {
 	name: 'cookie',
 	errorVerb: "bake the cookies",
 	missingArgsVerb: "baking",
-	aliases: [],
+	aliases: ['yummy'],
 	cooldown: 1,
 	guildOnly: false,
 	description: "Recieve a cookie for free!",
