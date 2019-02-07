@@ -15,4 +15,6 @@ Code:
 
 ## Legal
 
-Discord.JS Apache 2.0 Copyright 2015 - 2018 Amish Shah
+Discord.JS Apache 2.0 © 2015 - 2018 Amish Shah
+
+pokedex-promise-v2 MIT © 2016 Thomas Asadurian
