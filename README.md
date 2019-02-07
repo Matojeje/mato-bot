@@ -9,8 +9,9 @@ Pull requests are welcome! Please keep the license (MIT) and add your username b
 
 ## Credits
 
-Code: * Matojeje
-      * IamRifki
+Code: 
+* Matojeje
+* IamRifki
 
 ## Legal
 
