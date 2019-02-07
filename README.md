@@ -5,4 +5,8 @@ My little Discord bot using **Node.js**, **Discord.js** and **pokedex-promise-v2
 
 ## Pull requests
 
-Pull requests are welcome.
+Pull requests are welcome! Please keep the license (MIT) and add your username below.
+
+## Credits
+
+Code: Matojeje
