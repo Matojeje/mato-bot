@@ -1,9 +1,10 @@
 const fs = require('fs');
 
+require('dotenv').config(); 
+
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-const { prefix, token } = require('./config.json');
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 
@@ -15,12 +16,13 @@ for (const file of commandFiles) {
 const musicList = require('./tunes.json');
 const cooldowns = new Discord.Collection();
 
-client.on('guildMemberAdd', () => {
-	if (member.id === client.user.id) {
-		console.log("|||| Just got added to " + member.guild.name + "! ||||");
-		if (member.guild.available) {
-			member.guild.systemChannel.send("Hello! I'm Mato-bot. My prefix is `" + prefix + "`.")
-		}
+client.on('guildCreate', guild => {
+	console.log("Got added to " + guild);
+	if (guild.available) {
+		const riiHello = new Discord.RichEmbed()
+			.setColor("#2990bb")
+			.setImage("https://i.imgur.com/RNYfcer.png");
+		client.channels.get(guild.systemChannelID).send(`Hello! I'm Mato-bot. My prefix is \`${process.env.PREFIX}\`. Type \`${process.env.PREFIX}help\` to get started, beep!`, { embed: riiHello });
 	}
 });
 
@@ -32,14 +34,14 @@ client.on('ready', () => {
 });
 
 client.on('message', message => { // Command check
-	if (!message.content.startsWith(prefix) || message.author.bot) {
+	if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) {
 		itsCommand = false;
 		onDM(message);
 		return;
 	}
 	console.log(message.author.id);
-	if (message.author.id == 189400498497912832 && message.content.startsWith(`${prefix}mato`) && !message.channel.name) {
-		args = message.content.slice(prefix.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
+	if (message.author.id == 189400498497912832 && message.content.startsWith(`${process.env.PREFIX}mato`) && !message.channel.name) {
+		args = message.content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
 		commandName = args.shift().toLowerCase();
 		console.log(`Secret mato command: ${args[0]} (${message.content})`);
 		switch (args[0]) {
@@ -66,7 +68,13 @@ client.on('message', message => { // Command check
 		}
 	}
 
-	args = message.content.slice(prefix.length).split(/ +/); // Splitting out arguments and prefix
+	/* if (message.content.toString().toLowerCase() == "f") {
+		if (new Date.getSeconds().toString().endsWith(0) || new Date.getSeconds().toString().endsWith(5)) {
+			message.channel.send("F");
+		}
+	} */
+
+	args = message.content.slice(process.env.PREFIX.length).split(/ +/); // Splitting out arguments and prefix
 	commandName = args.shift().toLowerCase();
 
 	console.log(`Got command! ${commandName}, from ${message.author.username} at ${(message.channel.name || "DMs")}`);
@@ -82,7 +90,7 @@ client.on('message', message => { // Command check
 		let reply = `${message.author}, you forgot to tell me the ${command.missingArgsVerb} settings`;
 
 		if (command.usage) { // Did I write how to use it then?
-			reply += `. You should say it like ${prefix}${command.name} ${command.usage}`;
+			reply += `. You should say it like ${process.env.PREFIX}${command.name} ${command.usage}`;
 		} else { reply += ", silly";
 		}
 
@@ -95,7 +103,11 @@ client.on('message', message => { // Command check
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	const cooldownAmount = (command.cooldown || 3) * 1000; // default value is 3 seconds => ms
+	if (process.env.DEBUG == true) {
+		cooldownAmount = 0;
+	} else {
+		cooldownAmount = (command.cooldown || 3) * 1000; // default value is 3 seconds => ms
+	}
 
 	if (!timestamps.has(message.author.id)) {
 		timestamps.set(message.author.id, now);
@@ -104,7 +116,7 @@ client.on('message', message => { // Command check
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`hold up! Please wait ${timeLeft.toFixed(1)}s to use ${prefix}${command.name} again.`);
+			return message.reply(`hold up! Please wait ${timeLeft.toFixed(1)}s to use ${process.env.PREFIX}${command.name} again.`);
 		}
 		timestamps.set(message.author.id, now);
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
@@ -141,8 +153,8 @@ client.on('message', message => { // Command check
 	} */
 });
 
-client.login(token);
-console.log("Prefix: " + prefix);
+client.login(process.env.CLIENT_TOKEN);
+console.log("Prefix: " + process.env.PREFIX);
 
 process.on('unhandledRejection', error => console.error(`Uncaught Promise Rejection:\n${error}`));
 
@@ -154,8 +166,8 @@ function mixtape() {
 }
 
 function onDM(message) {
-	if (message.channel.type == "dm" && !message.content.startsWith(`${prefix}mato`) && message.author.id != 342273963734466561) {
+	if (message.channel.type == "dm" && !message.content.startsWith(`${process.env.PREFIX}mato`) && message.author.id != 342273963734466561) {
 		console.log("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
-		client.users.get(189400498497912832).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
+		// client.users.get(189400498497912832).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
 	}
 }

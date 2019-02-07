@@ -1,4 +1,4 @@
-const { prefix } = require('../config.json');
+require('dotenv').config();
 
 module.exports = {
 	name: "help",
@@ -16,7 +16,7 @@ module.exports = {
 		if (!args.length) {
 			data.push("[Help] Beep beep, here's what I can do:");
 			data.push(commands.map(command => command.name).join(", "));
-			data.push(`And if you'd like to know more about one of these, send the command name after ${prefix}help!`);
+			data.push(`And if you'd like to know more about one of these, send the command name after ${process.env.PREFIX}help!`);
 
 			return message.author.send(data, { split: true })
 				.then(() => {
