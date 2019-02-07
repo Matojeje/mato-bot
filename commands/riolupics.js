@@ -4,8 +4,8 @@ const GoogleImages = require("google-images");
 const { Client, Attachment } = require("discord.js");
 const client = new Client();
 const googleImages = new GoogleImages(
-	"010961700159796361448:i5ktfv5bm9g", // CSE ID
-	"AIzaSyAgQxkX6V7qWRonzwakqGdKZMXPohpDhMI" // API Key
+	"", // CSE ID
+	"" // API Key
 );
 
 module.exports = {
