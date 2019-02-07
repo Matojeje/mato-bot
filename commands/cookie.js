@@ -6,9 +6,10 @@ module.exports = {
 	cooldown: 1,
 	guildOnly: false,
 	description: "Recieve a cookie for free!",
-	usage: "\n"
+	usage: "\n",
+	
 
 	execute(message, args) {
-		message.reply("🍪");
+		message.react("🍪");
 	},
 };
