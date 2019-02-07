@@ -1,5 +1,5 @@
 module.exports = {
-	name: 'random',
+	name: 'cookie',
 	errorVerb: "bake the cookies",
 	missingArgsVerb: "baking",
 	aliases: [],
