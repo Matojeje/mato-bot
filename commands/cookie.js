@@ -9,8 +9,6 @@ module.exports = {
 	usage: "\n"
 
 	execute(message, args) {
-		message.react("🍪")
-      .then(console.log)
-      .catch(console.error);
+		message.reply("🍪");
 	},
 };
