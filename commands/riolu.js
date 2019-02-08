@@ -10,19 +10,18 @@ const googleImages = new GoogleImages(
 
 module.exports = {
 	name: 'rioulupics',
-	errorVerb: "sends a random image of riolu",
-	missingArgsVerb: "pics",
+	errorVerb: "look up Riolu pics",
+	missingArgsVerb: "Riolu",
 
-	aliases: ['rpics', 'rp'],
-	args: true,
+	aliases: ['rpics', 'rii', 'riolupics'],
+	args: false,
 	cooldown: 10,
 	guildOnly: false,
-	description: "sends a random image of riolu",
-	usage: "riolu pics",
+	description: "This command will look up a random Riolu picture from Google Images.",
+	usage: "\n",
 
 // This function is used to get a random image from Google and then send it to Discord
 execute(message, args, client) {
-	if (message.content !== "riolu pics") return;
 	try {
 		const results = googleImages.search("Riolu"); // Indexing Google images
 		const reply = !results
@@ -30,7 +29,6 @@ execute(message, args, client) {
 			: new Attachment(results[Math.floor(Math.random() * results.length)].url); // Randomize output
 		message.channel.send(reply);
 	} catch (e) {
-		console.error(e);
-		message.channel.send("Error happened, see the console"); // Error Handling
+		return e;
 	}
 }
