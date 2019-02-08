@@ -17,10 +17,12 @@ module.exports = {
 		const riiInfo = new Discord.RichEmbed()
 			.setColor("#2990bb")
 			.setAuthor("**About mato-bot**", "https://i.imgur.com/Hny5LS4.png", "")
-			.setTitle("**v1.3.0** (in development)")
+			.setTitle("**v1.4.0** (in development)")
 			.setDescription("6. 2. 2019\nRunning on Discord.js@11.4.2!\n\n**Use " + process.env.PREFIX + "help to check the available commands.**")
 			.addField("Uptime", Math.round(client.uptime) + " milliseconds, since *" + client.readyAt.toString().replace("00 (Střední Evropa (běžný čas))", "").replace("GMT+0", "GMT+").replace("GMT-0", "GMT-") + "*", true)
 			.addField("Ping", Math.round(client.ping) + " milliseconds", true)
+			.addField("Development", "https://github.com/Matojeje/mato-bot | License: MIT", false)
+			.setURL("https://github.com/Matojeje/mato-bot")
 			.setImage('https://i.imgur.com/akVZfty.png')
 			.setTimestamp()
 			.setFooter('By Mato', "https://cdn.discordapp.com/avatars/334780937135194112/07e19132e1f110b9dc8aa82b80d09a5a.png");
