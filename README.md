@@ -9,4 +9,12 @@ Pull requests are welcome! Please keep the license (MIT) and add your username b
 
 ## Credits
 
-Code: Matojeje
+### Code:
+* Matojeje
+* IamRifki
+
+## Legal
+
+Discord.JS Apache 2.0 © 2015 - 2018 Amish Shah
+
+pokedex-promise-v2 MIT © 2016 Thomas Asadurian
