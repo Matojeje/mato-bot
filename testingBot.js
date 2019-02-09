@@ -59,26 +59,26 @@ client.on("message", (message) => {
 		commandName = args.shift().toLowerCase();
 		console.log(`Secret mato command: ${args[0]} (${message.content})`);
 		switch (args[0]) {
-			case "send": // ;mato § send § 12345 § henlo (§ settings)
-				matoChannel = client.channels.get(args[1]);
-				if (matoChannel == undefined) {
-					console.log("Can't send there");
-					break;
-				}
-				matoChannel.send(args[2], args[3] || "");
+		case "send": // ;mato § send § 12345 § henlo (§ settings)
+			matoChannel = client.channels.get(args[1]);
+			if (matoChannel == undefined) {
+				console.log("Can't send there");
 				break;
-			case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
-				matoUser = client.users.get(args[1]);
-				matoUser.send(args[2], args[3] || "");
-				console.log("I secretly sent a DM to " + matoUser.tag + "!");
-				break;
-			case "test":
-				message.author.send("rii");
-				break;
-			case "music":
-				client.user.setActivity(args[1], { type: "LISTENING" });
-				break;
-			default:
+			}
+			matoChannel.send(args[2], args[3] || "");
+			break;
+		case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
+			matoUser = client.users.get(args[1]);
+			matoUser.send(args[2], args[3] || "");
+			console.log("I secretly sent a DM to " + matoUser.tag + "!");
+			break;
+		case "test":
+			message.author.send("rii");
+			break;
+		case "music":
+			client.user.setActivity(args[1], { type: "LISTENING" });
+			break;
+		default:
 		}
 	}
 

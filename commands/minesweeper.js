@@ -29,31 +29,31 @@ module.exports = {
 		if (args[0]) {
 			diff = args[0].toString().toLowerCase();
 			switch (args[0].toString().toLowerCase()) {
-				case "intermediate":
-					mines = 22;
-					width = 12;
-					height = 12;
-					break;
-				case "advanced":
-					mines = 40;
-					width = 14;
-					height = 14;
-					break;
-				case "custom":
-					console.log("Time for a custom game! Args: " + args);
-					mines = parseInt(args[1]) || 9;
-					width = parseInt(args[2]) || 10;
-					height = parseInt(args[3]) || 10;
-					break;
-				case "beginner":
-					mines = 10;
-					width = 9;
-					height = 9;
-					break;
-				default:
-					return Error(
-						"Wait, " + args[0].toString().toLowerCase() + " isn't a difficulty!"
-					);
+			case "intermediate":
+				mines = 22;
+				width = 12;
+				height = 12;
+				break;
+			case "advanced":
+				mines = 40;
+				width = 14;
+				height = 14;
+				break;
+			case "custom":
+				console.log("Time for a custom game! Args: " + args);
+				mines = parseInt(args[1]) || 9;
+				width = parseInt(args[2]) || 10;
+				height = parseInt(args[3]) || 10;
+				break;
+			case "beginner":
+				mines = 10;
+				width = 9;
+				height = 9;
+				break;
+			default:
+				return Error(
+					"Wait, " + args[0].toString().toLowerCase() + " isn't a difficulty!"
+				);
 			}
 		} else {
 			mines = 10;

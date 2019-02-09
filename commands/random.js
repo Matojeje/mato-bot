@@ -22,27 +22,27 @@ module.exports = {
 			r = Math.random();
 		} else {
 			switch (args[0].toString().toLowerCase()) {
-				case "coin":
-					r = getRandomInt(0, 1);
-					break;
-				case "dice":
-					r = getRandomInt(1, 6);
-					break;
-				case "d20":
-					r = getRandomInt(1, 20);
-					break;
-				case "int":
-					r = getRandomInt(1, 100);
-					break;
-				case "range":
-					r = getRandomInt(parseInt(args[1]), parseInt(args[2]));
-					break;
-				case "arbitrary":
-					r = getRandomArbitrary(parseFloat(args[1]), parseFloat(args[2]));
-					break;
-				default:
-					r = Math.random();
-					break;
+			case "coin":
+				r = getRandomInt(0, 1);
+				break;
+			case "dice":
+				r = getRandomInt(1, 6);
+				break;
+			case "d20":
+				r = getRandomInt(1, 20);
+				break;
+			case "int":
+				r = getRandomInt(1, 100);
+				break;
+			case "range":
+				r = getRandomInt(parseInt(args[1]), parseInt(args[2]));
+				break;
+			case "arbitrary":
+				r = getRandomArbitrary(parseFloat(args[1]), parseFloat(args[2]));
+				break;
+			default:
+				r = Math.random();
+				break;
 			}
 		}
 
