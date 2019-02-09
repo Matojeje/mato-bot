@@ -1,7 +1,8 @@
 # Mato-bot
+
 My little Discord bot using **Node.js**, **Discord.js** and **pokedex-promise-v2**.
 
-\[~~Add bot to your server~~\]  *This bot is not finalized yet.*
+\[~~Add bot to your server~~\] _This bot is not finalized yet._
 
 ## Pull requests
 
@@ -10,8 +11,9 @@ Pull requests are welcome! Please keep the license (MIT) and add your username b
 ## Credits
 
 ### Code:
-* Matojeje
-* IamRifki
+
+- Matojeje
+- IamRifki
 
 ## Legal
 

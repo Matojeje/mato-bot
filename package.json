@@ -1,25 +1,25 @@
 {
-  "name": "bawt",
-  "version": "1.0.0",
-  "description": "",
-  "engines": {
-    "node": "8.x",
-    "npm": "*"
-  },
-  "main": "testingBot.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node testingBot.js"
-  },
-  "dependencies": {
-    "discord.js": "^11.4.2",
-    "dotenv": "^6.2.0",
-    "npm": "^6.7.0",
-    "pokedex-promise-v2": "^3.1.1",
-    "google-images": "^2.1.0"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "prettier": "^1.16.4"
-  }
+	"name": "bawt",
+	"version": "1.0.0",
+	"description": "",
+	"engines": {
+		"node": "8.x",
+		"npm": "*"
+	},
+	"main": "testingBot.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node testingBot.js"
+	},
+	"dependencies": {
+		"discord.js": "^11.4.2",
+		"dotenv": "^6.2.0",
+		"npm": "^6.7.0",
+		"pokedex-promise-v2": "^3.1.1",
+		"google-images": "^2.1.0"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"prettier": "^1.16.4"
+	}
 }
