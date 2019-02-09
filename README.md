@@ -15,8 +15,8 @@ Pull requests are welcome! Please keep the license (MIT) and add your username b
 
 ## Legal
 
-Discord.JS Apache 2.0 © 2015 - 2018 Amish Shah
+[Discord.JS](https://discord.js.org) Apache 2.0 © 2015 - 2018 Amish Shah
 
-pokedex-promise-v2 MIT © 2016 Thomas Asadurian
+[pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) MIT © 2016 Thomas Asadurian
 
-google-images MIT © Vadim Demedes
+[google-images](https://github.com/vadimdemedes/google-images) MIT © Vadim Demedes
