@@ -1,13 +1,12 @@
 module.exports = {
-	name: 'cookie',
+	name: "cookie",
 	errorVerb: "bake the cookies",
 	missingArgsVerb: "baking",
-	aliases: ['yummy'],
+	aliases: ["yummy"],
 	cooldown: 1,
 	guildOnly: false,
 	description: "Recieve a cookie for free!",
 	usage: "\n",
-	
 
 	execute(message, args) {
 		message.react("🍪");
