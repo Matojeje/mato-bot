@@ -20,3 +20,5 @@ Pull requests are welcome! Please keep the license (MIT) and add your username b
 [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) MIT © 2016 Thomas Asadurian
 
 [google-images](https://github.com/vadimdemedes/google-images) MIT © Vadim Demedes
+
+[View all dependencies](https://github.com/Matojeje/mato-bot/network/dependencies)
