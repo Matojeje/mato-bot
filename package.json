@@ -12,11 +12,12 @@
     "start": "node testingBot.js"
   },
   "dependencies": {
+    "csvjson": "^5.1.0",
     "discord.js": "^11.4.2",
     "dotenv": "^6.2.0",
+    "google-images": "^2.1.0",
     "npm": "^6.7.0",
-    "pokedex-promise-v2": "^3.1.1",
-    "google-images": "^2.1.0"
+    "pokedex-promise-v2": "^3.1.1"
   },
   "license": "MIT",
   "devDependencies": {
