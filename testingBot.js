@@ -1,7 +1,7 @@
 const fs = require('fs');
-
+var path = require('path');
 require('dotenv').config();
-
+var csvjson = require('csvjson');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -13,7 +13,7 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-const musicList = require('./tunes.json');
+const musicList = loadSongs();
 const cooldowns = new Discord.Collection();
 
 client.on('guildCreate', guild => {
@@ -29,8 +29,11 @@ client.on('guildCreate', guild => {
 client.on('ready', () => {
 	console.log('Logged in as ' + client.user.tag + '!');
 	client.setInterval(() => mixtape(), 5 * 60 * 1000);
-	mixtape();
-	// client.user.setActivity('Mato', { type: 'LISTENING' });
+	mixtape("J̲u̲s̲t̲ ̲s̲t̲a̲r̲t̲e̲d̲ ̲u̲p̲!");
+
+	client.users.get(process.env.MATO).send(
+		`Bot is up! (${new Date().toLocaleTimeString()})`
+		)
 });
 
 client.on('message', message => { // Command check
@@ -40,39 +43,11 @@ client.on('message', message => { // Command check
 		return;
 	}
 	console.log(message.author.id);
-	if (message.author.id == 189400498497912832 && message.content.startsWith(`${process.env.PREFIX}mato`) && !message.channel.name) {
-		args = message.content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
-		commandName = args.shift().toLowerCase();
-		console.log(`Secret mato command: ${args[0]} (${message.content})`);
-		switch (args[0]) {
-		case "send": // ;mato § send § 12345 § henlo (§ settings)
-			matoChannel = client.channels.get(args[1]);
-			if (matoChannel == undefined) {
-				console.log("Can't send there");
-				break;
-			}
-			matoChannel.send(args[2], args[3] || "");
-			break;
-		case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
-			matoUser = client.users.get(args[1]);
-			matoUser.send(args[2], args[3] || "");
-			console.log("I secretly sent a DM to " + matoUser.tag + "!");
-			break;
-		case "test":
-			message.author.send("rii");
-			break;
-		case "music":
-			client.user.setActivity(args[1], { type: 'LISTENING' });
-			break;
-		default:
-		}
+	if (message.author.id == process.env.MATO
+		&& message.content.startsWith(`${process.env.PREFIX}mato`)
+		&& !message.channel.name) {
+		secretCommand();
 	}
-
-	/* if (message.content.toString().toLowerCase() == "f") {
-		if (new Date.getSeconds().toString().endsWith(0) || new Date.getSeconds().toString().endsWith(5)) {
-			message.channel.send("F");
-		}
-	} */
 
 	args = message.content.slice(process.env.PREFIX.length).split(/ +/); // Splitting out arguments and prefix
 	commandName = args.shift().toLowerCase();
@@ -103,7 +78,7 @@ client.on('message', message => { // Command check
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	if (process.env.DEBUG == true) {
+	if (process.env.DEBUG) {
 		cooldownAmount = 0;
 	} else {
 		cooldownAmount = (command.cooldown || 3) * 1000; // default value is 3 seconds => ms
@@ -135,22 +110,6 @@ client.on('message', message => { // Command check
 	if (!itsCommand) {
 		onDM(message);
 	}
-
-	/* switch(command){
-		case "help":
-			message.channel.send("**About bot**\n\n"+
-			"Commands: \\*help, \\*metronome\n"+
-			"Testing commands: \\*beep, \\*boop, \\*blep, \\*pingme, \\*cookie\n"+
-			"Made by <@189400498497912832>");
-			break;
-		case "metronome": metronome(message.author,message.channel); break;
-		case "beep": message.channel.send("boop"); break;
-		case "boop": message.channel.send("beep"); break;
-		case "blep": message.channel.send("blep"); break;
-		case "cookie": message.channel.send(":cookie:"); break;
-		case "pingme": message.channel.send(message.author); break;
-		default: console.log("Unknown command");
-	} */
 });
 
 client.login(process.env.CLIENT_TOKEN);
@@ -158,9 +117,18 @@ console.log("Prefix: " + process.env.PREFIX);
 
 process.on('unhandledRejection', error => console.error(`Uncaught Promise Rejection:\n${error}`));
 
-function mixtape() {
-	n = Math.floor(Math.random() * musicList.length);
-	music = musicList[n].By + " :: " + musicList[n].Song;
+function loadSongs() {
+	musicFilePath = path.join(__dirname, 'mixtape.csv');
+	musicData = fs.readFileSync(musicFilePath, { encoding: 'utf-8' });
+	tempList = csvjson.toObject(musicData);
+	console.log("Loaded a list of " + tempList.length + " songs!");
+	return tempList;
+}
+
+function mixtape(message) {
+	musicTrack = Math.floor(Math.random() * musicList.length);
+	div = " :: "
+	music = (message || "") + div + musicList[musicTrack].By + div + musicList[musicTrack].Song;
 	client.user.setActivity(music, { type: 'LISTENING' });
 	console.log("Music changed to " + music + "!");
 }
@@ -168,6 +136,34 @@ function mixtape() {
 function onDM(message) {
 	if (message.channel.type == "dm" && !message.content.startsWith(`${process.env.PREFIX}mato`) && message.author.id != 342273963734466561) {
 		console.log("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
-		// client.users.get(189400498497912832).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
+		// client.users.get(process.env.MATO).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
+	}
+}
+
+function secretCommand() {
+	args = message.content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
+	commandName = args.shift().toLowerCase();
+	console.log(`Secret mato command: ${args[0]} (${message.content})`);
+	switch (args[0]) {
+	case "send": // ;mato § send § 12345 § henlo (§ settings)
+		matoChannel = client.channels.get(args[1]);
+		if (matoChannel == undefined) {
+			console.log("Can't send there");
+			break;
+		}
+		matoChannel.send(args[2], args[3] || "");
+		break;
+	case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
+		matoUser = client.users.get(args[1]);
+		matoUser.send(args[2], args[3] || "");
+		console.log("I secretly sent a DM to " + matoUser.tag + "!");
+		break;
+	case "test":
+		message.author.send("rii");
+		break;
+	case "music":
+		client.user.setActivity(args[1], { type: 'LISTENING' });
+		break;
+	default:
 	}
 }
