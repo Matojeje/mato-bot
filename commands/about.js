@@ -21,7 +21,7 @@ module.exports = {
 			.setDescription(
 				`11. 2. 2019
 				Running on Discord.js@11.4.2!
-				
+
 				**Use ${process.env.PREFIX}help to check the available commands.**
 				https://github.com/Matojeje/mato-bot
 				License: MIT`)
@@ -29,7 +29,7 @@ module.exports = {
 			.addField("Woke up at", client.readyAt.toLocaleString(), true)
 			.addField("Ping", client.ping.toFixed(1) + " ms", true)
 			.addField("Cookies in belly", Math.round(Math.random() * 5000), true)
-			/*.setURL("https://github.com/Matojeje/mato-bot")*/
+			/* .setURL("https://github.com/Matojeje/mato-bot") */
 			.setImage('https://i.imgur.com/akVZfty.png')
 			.setTimestamp()
 			.setFooter('By Mato', "https://cdn.discordapp.com/avatars/334780937135194112/07e19132e1f110b9dc8aa82b80d09a5a.png");

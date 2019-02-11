@@ -38,9 +38,9 @@ module.exports = {
 
 		data.push(`**:: ${command.name} ::**`);
 
-		if (command.aliases) data.push(`(aka ${command.aliases.join(', ')})`);
-		if (command.description) data.push(`**>** ${command.description}`);
-		if (command.usage) data.push(`Usage: **${process.env.PREFIX}${command.name}** ${command.usage}`);
+		if (command.aliases) { data.push(`(aka ${command.aliases.join(', ')})`); }
+		if (command.description) { data.push(`**>** ${command.description}`); }
+		if (command.usage) { data.push(`Usage: **${process.env.PREFIX}${command.name}** ${command.usage}`); }
 
 		data.push(`Cooldown: ${command.cooldown || 3}s`);
 

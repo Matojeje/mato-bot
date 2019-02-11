@@ -18,12 +18,12 @@ module.exports = {
 	execute(message, args, client) {
 
 		setEmojis();
-		showPower = true;
+		let showPower = true;
 
 		console.log("Metronome cmd called by " + message.author.tag + " in " + message.channel.name);
-		moveCount = movesData.length;
-		move = movesData[Math.ceil(Math.random() * moveCount)];
-		user = message.author.username.toUpperCase();
+		const moveCount = movesData.length;
+		const move = movesData[Math.ceil(Math.random() * moveCount)];
+		const user = message.author.username.toUpperCase();
 
 		if (args[0] == "x" || args[0] == "t" || args[0] == "h") {
 			mode = args[0];
@@ -95,31 +95,29 @@ module.exports = {
 			message.channel.send(moveAnnounce[Math.floor(Math.random() * moveAnnounce.length)]);
 		}
 
-		if (args != []) {
-			if (args[0] == "info" || args[0] == "moveInfo" || args[0] == "i") {
-				const moveInfo = new Discord.RichEmbed()
-					.setColor("#2990bb")
-					.setTitle(move.Name)
-					.setURL("https://bulbapedia.bulbagarden.net/wiki/" + encodeURI(`${move.Name} (move)`))
-					.setAuthor("Move info", "https://i.imgur.com/b09usvv.png", "")
-					.setDescription(`Move number ${move["#"]} from generation ${move.Gen}`)
-					.addField("Type", move.Type || "None", true)
-					.addField("Damage category", move.Category || "None", true)
-					.addField("Contest condition", move.Contest || "???", true)
-					.addField("Power points", move.PP || "None", true)
-					.addField("Power", move.Power || "None", true)
-					.addField("Accuracy", (move.Accuracy || "??? ") + "%", true)
-					.setTimestamp()
-					.setFooter("⏪ Mato bot", "https://i.imgur.com/fXuM1BT.png");
+		if (args.length > 0 && (args[0] == "info" || args[0] == "moveInfo" || args[0] == "i")) {
+			const moveInfo = new Discord.RichEmbed()
+				.setColor("#2990bb")
+				.setTitle(move.Name)
+				.setURL("https://bulbapedia.bulbagarden.net/wiki/" + encodeURI(`${move.Name} (move)`))
+				.setAuthor("Move info", "https://i.imgur.com/b09usvv.png", "")
+				.setDescription(`Move number ${move["#"]} from generation ${move.Gen}`)
+				.addField("Type", move.Type || "None", true)
+				.addField("Damage category", move.Category || "None", true)
+				.addField("Contest condition", move.Contest || "???", true)
+				.addField("Power points", move.PP || "None", true)
+				.addField("Power", move.Power || "None", true)
+				.addField("Accuracy", (move.Accuracy || "??? ") + "%", true)
+				.setTimestamp()
+				.setFooter("⏪ Mato bot", "https://i.imgur.com/fXuM1BT.png");
 
-				message.channel.send({ embed: moveInfo });
-				showPower = false;
-			}
+			message.channel.send({ embed: moveInfo });
+			showPower = false;
 		}
 
 		moveSuccessful = 1;
 
-		if (move.Power != "") {
+		if (move.Power !== "") {
 			critCalc = Math.ceil(Math.random() * 24);
 			if (critCalc === 24) {
 				moveSuccessful = 2;
@@ -183,4 +181,5 @@ module.exports = {
 			return string[0].toUpperCase() + string.slice(1);
 		}
 	},
+
 };
