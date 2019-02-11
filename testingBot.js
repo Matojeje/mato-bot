@@ -1,7 +1,7 @@
 const fs = require('fs');
-var path = require('path');
+const path = require('path');
 require('dotenv').config();
-var csvjson = require('csvjson');
+const csvjson = require('csvjson');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -33,12 +33,12 @@ client.on('ready', () => {
 
 	client.users.get(process.env.MATO).send(
 		`Bot is up! (${new Date().toLocaleTimeString()})`
-		)
+	);
 });
 
 client.on('message', message => { // Command check
 	if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) {
-		itsCommand = false;
+		const itsCommand = false;
 		onDM(message);
 		return;
 	}
@@ -49,8 +49,8 @@ client.on('message', message => { // Command check
 		secretCommand();
 	}
 
-	args = message.content.slice(process.env.PREFIX.length).split(/ +/); // Splitting out arguments and prefix
-	commandName = args.shift().toLowerCase();
+	const args = message.content.slice(process.env.PREFIX.length).split(/ +/); // Splitting out arguments and prefix
+	const commandName = args.shift().toLowerCase();
 
 	console.log(`Got command! ${commandName}, from ${message.author.username} at ${(message.channel.name || "DMs")}`);
 	const command = client.commands.get(commandName) // Is that a real command?
@@ -126,9 +126,9 @@ function loadSongs() {
 }
 
 function mixtape(message) {
-	musicTrack = Math.floor(Math.random() * musicList.length);
-	div = " :: "
-	music = (message || "") + div + musicList[musicTrack].By + div + musicList[musicTrack].Song;
+	const musicTrack = Math.floor(Math.random() * musicList.length);
+	div = " :: ";
+	const music = (message || "") + div + musicList[musicTrack].By + div + musicList[musicTrack].Song;
 	client.user.setActivity(music, { type: 'LISTENING' });
 	console.log("Music changed to " + music + "!");
 }

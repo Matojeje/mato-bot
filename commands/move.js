@@ -20,7 +20,7 @@ module.exports = {
 		input = args.toString().replace(",", " ");
 		console.log("i: " + input);
 
-		formattedMove = input.toLowerCase().replace(/\ /g, "-");
+		formattedMove = input.toLowerCase().replace(/ /g, "-");
 		console.log("f: " + formattedMove);
 		P.getMoveByName(formattedMove)
 			.then(function(response) {
