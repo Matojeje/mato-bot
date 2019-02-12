@@ -100,7 +100,7 @@ module.exports = {
 				.setColor("#2990bb")
 				.setTitle(move.Name)
 				.setURL("https://bulbapedia.bulbagarden.net/wiki/" + encodeURI(`${move.Name} (move)`))
-				.setAuthor("Move info", "https://i.imgur.com/b09usvv.png", "")
+				.setAuthor("Move info", "./resources/badgeMoveInfo.png", "")
 				.setDescription(`Move number ${move["#"]} from generation ${move.Gen}`)
 				.addField("Type", move.Type || "None", true)
 				.addField("Damage category", move.Category || "None", true)
@@ -109,7 +109,7 @@ module.exports = {
 				.addField("Power", move.Power || "None", true)
 				.addField("Accuracy", (move.Accuracy || "??? ") + "%", true)
 				.setTimestamp()
-				.setFooter("⏪ Mato bot", "https://i.imgur.com/fXuM1BT.png");
+				.setFooter("⏪ Mato bot", "./resources/iconMatoBot.png");
 
 			message.channel.send({ embed: moveInfo });
 			showPower = false;

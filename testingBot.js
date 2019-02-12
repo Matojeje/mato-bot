@@ -21,7 +21,7 @@ client.on('guildCreate', guild => {
 	if (guild.available) {
 		const riiHello = new Discord.RichEmbed()
 			.setColor("#2990bb")
-			.setImage("https://i.imgur.com/RNYfcer.png");
+			.setImage("./resources/drawingBotWelcome.png");
 		client.channels.get(guild.systemChannelID).send(`Hello! I'm Mato-bot. My prefix is \`${process.env.PREFIX}\`. Type \`${process.env.PREFIX}help\` to get started, beep!`, { embed: riiHello });
 	}
 });
