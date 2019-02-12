@@ -20,7 +20,7 @@ module.exports = {
 	async execute(message) {
 		try {
 			const results = await googleImages.search("Riolu", { "type": "image" }); // Indexing Google images
-			const reply = !results.length
+			const reply = !results
 				? "No results"
 				: new Attachment(results[Math.floor(Math.random() * results.length)].url); // Randomize output
 			message.channel.send(reply);
