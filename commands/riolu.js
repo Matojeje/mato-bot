@@ -1,5 +1,5 @@
 require('dotenv').config();
-const Discord = require('discord.js');
+const { Attachment } = require('discord.js'); // You could also do: const Attachment = require('discord.js').Attachment;
 
 const GoogleImages = require("google-images");
 const googleImages = new GoogleImages(process.env.CSE_ID, process.env.API_KEY);
@@ -17,15 +17,17 @@ module.exports = {
 	usage: "\n",
 
 	// This function is used to get a random image from Google and then send it to Discord
-	execute(message, args, client) {
+	async execute(message) {
 		try {
-			const results = googleImages.search("Riolu"); // Indexing Google images
-			const reply = !results
+			const results = await googleImages.search("Riolu", { "type": "image" }); // Indexing Google images
+			const reply = !results.length
 				? "No results"
 				: new Attachment(results[Math.floor(Math.random() * results.length)].url); // Randomize output
 			message.channel.send(reply);
 		} catch (e) {
-			return e;
+			console.error(e);
+			message.channel.send("Error happened, see the console"); // Error Handling
 		}
 	},
 };
+
