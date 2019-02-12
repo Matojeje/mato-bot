@@ -1,5 +1,5 @@
 require('dotenv').config();
-const Attachment = require('discord.js');
+const { Attachment } = require('discord.js'); // You could also do: const Attachment = require('discord.js').Attachment;
 
 const GoogleImages = require("google-images");
 const googleImages = new GoogleImages(process.env.CSE_ID, process.env.API_KEY);
