@@ -1,5 +1,3 @@
-// https://i.imgur.com/Ppji6sz.jpg
-
 require('dotenv').config();
 const Discord = require('discord.js');
 
@@ -16,10 +14,10 @@ module.exports = {
 	execute(message, args, client) {
 		const riiInfo = new Discord.RichEmbed()
 			.setColor("#2990bb")
-			.setAuthor("About mato-bot", "https://i.imgur.com/Hny5LS4.png", "")
-			.setTitle("**v1.5.0** (in development)")
+			.setAuthor("About mato-bot", "./resources/badgeAbout.png", "")
+			.setTitle("**v1.5.1** (in development)")
 			.setDescription(
-				`11. 2. 2019
+				`12. 2. 2019
 				Running on Discord.js@11.4.2!
 
 				**Use ${process.env.PREFIX}help to check the available commands.**
@@ -30,9 +28,9 @@ module.exports = {
 			.addField("Ping", client.ping.toFixed(1) + " ms", true)
 			.addField("Cookies in belly", Math.round(Math.random() * 5000), true)
 			/* .setURL("https://github.com/Matojeje/mato-bot") */
-			.setImage('https://i.imgur.com/akVZfty.png')
+			.setImage("./resources/drawingBotHD.png")
 			.setTimestamp()
-			.setFooter('By Mato', "https://cdn.discordapp.com/avatars/334780937135194112/07e19132e1f110b9dc8aa82b80d09a5a.png");
+			.setFooter("By Mato", "./resources/iconMato.png");
 		message.channel.send({ embed: riiInfo });
 	},
 };
