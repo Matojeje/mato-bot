@@ -12,12 +12,16 @@ module.exports = {
 	usage: "",
 
 	execute(message, args, client) {
+		const badge = new Discord.Attachment("./resources/badgeAbout.png", "badge.png");
+		const drawing = new Discord.Attachment("./resources/drawingBotHD.png", "drawing.png");
+		const icon = new Discord.Attachment("./resources/iconMato.png", "icon.png");
+
 		const riiInfo = new Discord.RichEmbed()
 			.setColor("#2990bb")
-			.setAuthor("About mato-bot", "./resources/badgeAbout.png", "")
+			.setAuthor("About mato-bot", "attachment://badge.png", "")
 			.setTitle("**v1.5.1** (in development)")
 			.setDescription(
-				`12. 2. 2019
+				`13. 2. 2019
 				Running on Discord.js@11.4.2!
 
 				**Use ${process.env.PREFIX}help to check the available commands.**
@@ -28,9 +32,13 @@ module.exports = {
 			.addField("Ping", client.ping.toFixed(1) + " ms", true)
 			.addField("Cookies in belly", Math.round(Math.random() * 5000), true)
 			/* .setURL("https://github.com/Matojeje/mato-bot") */
-			.setImage("./resources/drawingBotHD.png")
+			.setImage("attachment://drawing.png")
 			.setTimestamp()
-			.setFooter("By Mato", "./resources/iconMato.png");
-		message.channel.send({ embed: riiInfo });
+			.setFooter("By Mato", "attachment://icon.png");
+
+		message.channel.send({
+			embed: riiInfo,
+			files: [badge, drawing, icon]
+		});
 	},
 };

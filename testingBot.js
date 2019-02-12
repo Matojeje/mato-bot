@@ -19,10 +19,20 @@ const cooldowns = new Discord.Collection();
 client.on('guildCreate', guild => {
 	console.log("Got added to " + guild);
 	if (guild.available) {
+		const drawing = new Discord.Attachment("./resources/drawingBotWelcome.png", "drawing.png");
+
 		const riiHello = new Discord.RichEmbed()
 			.setColor("#2990bb")
-			.setImage("./resources/drawingBotWelcome.png");
-		client.channels.get(guild.systemChannelID).send(`Hello! I'm Mato-bot. My prefix is \`${process.env.PREFIX}\`. Type \`${process.env.PREFIX}help\` to get started, beep!`, { embed: riiHello });
+			.setImage("attachment://drawing.png");
+
+		client.channels.get(guild.systemChannelID).send(
+			`Hello! I'm Mato-bot. My prefix is \`${process.env.PREFIX}\`. ` +
+			`Type \`${process.env.PREFIX}help\` to get started, beep!`,
+			{
+				embed: riiHello,
+				files: [drawing]
+			}
+		);
 	}
 });
 
