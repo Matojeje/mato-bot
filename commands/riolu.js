@@ -19,7 +19,7 @@ module.exports = {
 	// This function is used to get a random image from Google and then send it to Discord
 	async execute(message) {
 		try {
-			const results = await googleImages.search("Riolu"); // Indexing Google images
+			const results = await googleImages.search("Riolu", { "type": "image/png", "type": "image/jpeg", "type": "image/gif", "type": "image/jpg" }); // Indexing Google images
 			const reply = !results.length
 				? "No results"
 				: new Attachment(results[Math.floor(Math.random() * results.length)].url); // Randomize output
@@ -30,3 +30,4 @@ module.exports = {
 		}
 	},
 };
+
