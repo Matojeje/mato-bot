@@ -2,7 +2,7 @@
 
 My little Discord bot using **Node.js**, **Discord.js** and **pokedex-promise-v2**.
 
-\[~~Add bot to your server~~\]  *This bot is not finalized yet.*
+*This bot is not finalized yet.*
 
 ## Pull requests
 
@@ -12,8 +12,13 @@ Pull requests are welcome! Please keep the license (MIT) and add your username b
 
 ### Code:
 
-* Matojeje
-* IamRifki
+* [Matojeje](https://github.com/Matojeje)
+* [IamRifki](https://github.com/IamRifki)
+
+### Artwork:
+
+* [HavocDusk](https://duskyumbreon.deviantart.com)
+* [Spray-POKA](https://www.deviantart.com/spray-poka)
 
 ### Special Thanks:
 
