@@ -18,15 +18,10 @@ module.exports = {
 
 	// This function is used to get a random image from Google and then send it to Discord
 	async execute(message) {
-		try {
-			const results = await bing.list({ keyword: 'riolu', detail: true }); // Indexing Bing
+		const results = await bing.list({ keyword: 'riolu', detail: true }); // Indexing Bing
 			const reply = !results.length
 				? "No results"
 				: new Attachment(results[Math.floor(Math.random() * results.length)].url); // Randomize output
 			message.channel.send(reply);
-		} catch (e) {
-			console.log (e);
-		}
-	},
+		},
 };
-
