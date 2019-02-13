@@ -21,7 +21,7 @@ Thanks to [Discord.JS' great guide](https://github.com/discordjs/guide) for gett
 
 [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) MIT © 2016 Thomas Asadurian
 
-[google-images](https://github.com/vadimdemedes/google-images) MIT © 2012 - 2017 Vadim Demedes
+[images-scraper](https://github.com/pevers/images-scraper) ISC © 2015 Peter Evers
 
 [csvjson](https://github.com/pradeep-mishra/csvjson) MIT © 2014 - 2018 Pradeep Mishra
 
