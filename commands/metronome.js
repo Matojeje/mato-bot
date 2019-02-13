@@ -1,5 +1,7 @@
 const movesData = require('../moves.json');
 const Discord = require('discord.js');
+const Pokedex = require('pokedex-promise-v2');
+const P = new Pokedex();
 
 module.exports = {
 	name: "metronome",
@@ -18,7 +20,6 @@ module.exports = {
 	execute(message, args, client) {
 
 		setEmojis();
-		let showPower = true;
 
 		console.log("Metronome cmd called by " + message.author.tag + " in " + message.channel.name);
 		const moveCount = movesData.length;
@@ -99,26 +100,38 @@ module.exports = {
 			const badge = new Discord.Attachment("./resources/badgeMoveInfo.png", "badge.png");
 			const icon = new Discord.Attachment("./resources/iconMatoBot.png", "icon.png");
 
-			const moveInfo = new Discord.RichEmbed()
-				.setColor("#2990bb")
-				.setTitle(move.Name)
-				.setURL("https://bulbapedia.bulbagarden.net/wiki/" + encodeURI(`${move.Name} (move)`))
-				.setAuthor("Move info", "attachment://badge.png", "")
-				.setDescription(`Move number ${move["#"]} from generation ${move.Gen}`)
-				.addField("Type", move.Type || "None", true)
-				.addField("Damage category", move.Category || "None", true)
-				.addField("Contest condition", move.Contest || "???", true)
-				.addField("Power points", move.PP || "None", true)
-				.addField("Power", move.Power || "None", true)
-				.addField("Accuracy", (move.Accuracy || "??? ") + "%", true)
-				.setTimestamp()
-				.setFooter("⏪ Mato bot", "attachment://icon.png");
+			P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-"))
+			.then(function(dexResponse) {
+				const flavorTexts = dexResponse.flavor_text_entries;
+				for (x in flavorTexts) {
+					if (flavorTexts[x].language.name == "en"
+					&& flavorTexts[x].version_group.name == "ultra-sun-ultra-moon")
+					{
+						infoText = flavorTexts[x].flavor_text;
+						break;
+					}
+				}
 
-			message.channel.send({
-				embed: moveInfo,
-				files: [badge, icon]
+				const moveInfo = new Discord.RichEmbed()
+					.setColor("#2990bb")
+					.setTitle(move.Name)
+					.setURL("https://bulbapedia.bulbagarden.net/wiki/" + encodeURI(`${move.Name} (move)`))
+					.setAuthor("Move info", "attachment://badge.png", "")
+					.setDescription(`\`\`\`${infoText}\`\`\`\nMove number ${move["#"]} from generation ${move.Gen}.`)
+					.addField("Type", move.Type || "None", true)
+					.addField("Damage category", move.Category || "None", true)
+					.addField("Contest condition", move.Contest || "???", true)
+					.addField("Power points", move.PP || "None", true)
+					.addField("Power", move.Power || "None", true)
+					.addField("Accuracy", (move.Accuracy || "??? ") + "%", true)
+					.setTimestamp()
+					.setFooter("⏪ Mato bot", "attachment://icon.png");
+
+				message.channel.send({
+					embed: moveInfo,
+					files: [badge, icon]
+				});
 			});
-			showPower = false;
 		}
 
 		moveSuccessful = 1;
