@@ -25,8 +25,7 @@ module.exports = {
 				: new Attachment(results[Math.floor(Math.random() * results.length)].url); // Randomize output
 			message.channel.send(reply);
 		} catch (e) {
-			console.error(e);
-			message.channel.send("Error happened, see the console"); // Error Handling
+			return e; 
 		}
 	},
 };
