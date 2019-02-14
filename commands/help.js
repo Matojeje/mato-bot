@@ -15,7 +15,7 @@ module.exports = {
 		const { commands } = message.client;
 
 		if (!args.length) {
-			data.push("[Help] `Beep` ``, here's what I can do:");
+			data.push("[Help] `Beep` `beep`, here's what I can do:");
 			data.push(commands.map((command) => command.name).join(", "));
 			data.push(
 				`And if you'd like to know more about one of these, send the command name after ${

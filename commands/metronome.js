@@ -46,33 +46,33 @@ module.exports = {
 			mode = args[0];
 			args.shift();
 			switch (mode) {
-				case "x":
-					message.channel.send(`**${move.Name}**`);
+			case "x":
+				message.channel.send(`**${move.Name}**`);
+				break;
+			case "t":
+				toSend = `**${move.Name}**\n`;
+				switch (move.Category) {
+				case "Physical":
+					toSend += "⚔ (Physical)";
 					break;
-				case "t":
-					toSend = `**${move.Name}**\n`;
-					switch (move.Category) {
-						case "Physical":
-							toSend += "⚔ (Physical)";
-							break;
-						case "Special":
-							toSend += "☄ (Special)";
-							break;
-						case "Status":
-							toSend += "🌧 (Status)";
-							break;
-					}
-					t = move.Type;
-					toSend += `\n${emojiData[move.Type]} (${
-						move.Type
-					}) Power: ${move.Power || "?"}   Accuracy: ${move.Accuracy || "?"}`;
-					message.channel.send(toSend);
-					showPower = false;
+				case "Special":
+					toSend += "☄ (Special)";
 					break;
-				case "h":
-					message.reply(emojiData);
+				case "Status":
+					toSend += "🌧 (Status)";
 					break;
-				default:
+				}
+				t = move.Type;
+				toSend += `\n${emojiData[move.Type]} (${
+					move.Type
+				}) Power: ${move.Power || "?"}   Accuracy: ${move.Accuracy || "?"}`;
+				message.channel.send(toSend);
+				showPower = false;
+				break;
+			case "h":
+				message.reply(emojiData);
+				break;
+			default:
 			}
 		} else {
 			if (
@@ -82,26 +82,26 @@ module.exports = {
 				args[0] == "p"
 			) {
 				switch (args[0]) {
-					case "m":
-						personal = "he";
-						possesive = "his";
-						demonstrative = "him";
-						verb = "s";
-						break;
-					case "f":
-						personal = "she";
-						possesive = "her";
-						demonstrative = "her";
-						verb = "s";
-						break;
-					case "p":
-						personal = "they";
-						possesive = "their";
-						demonstrative = "them";
-						verb = "";
-						break;
-					default:
-						setDefaultHeckinPronouns();
+				case "m":
+					personal = "he";
+					possesive = "his";
+					demonstrative = "him";
+					verb = "s";
+					break;
+				case "f":
+					personal = "she";
+					possesive = "her";
+					demonstrative = "her";
+					verb = "s";
+					break;
+				case "p":
+					personal = "they";
+					possesive = "their";
+					demonstrative = "them";
+					verb = "";
+					break;
+				default:
+					setDefaultHeckinPronouns();
 				}
 				args.shift();
 			} else {
@@ -213,13 +213,13 @@ module.exports = {
 
 		console.log(moveSuccessful);
 		switch (moveSuccessful) {
-			case 0:
-				message.channel.send("**`...but it missed!`**");
-				break;
-			case 2:
-				message.channel.send("**`Critical hit!`**");
-				break;
-			default:
+		case 0:
+			message.channel.send("**`...but it missed!`**");
+			break;
+		case 2:
+			message.channel.send("**`Critical hit!`**");
+			break;
+		default:
 		}
 
 		function setEmojis() {
