@@ -56,7 +56,7 @@ client.on('message', message => { // Command check
 	if (message.author.id == process.env.MATO
 		&& message.content.startsWith(`${process.env.PREFIX}mato`)
 		&& !message.channel.name) {
-		secretCommand();
+		secretCommand(message);
 	}
 
 	const args = message.content.slice(process.env.PREFIX.length).split(/ +/); // Splitting out arguments and prefix
@@ -150,7 +150,7 @@ function onDM(message) {
 	}
 }
 
-function secretCommand() {
+function secretCommand(message) {
 	args = message.content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
 	commandName = args.shift().toLowerCase();
 	console.log(`Secret mato command: ${args[0]} (${message.content})`);
