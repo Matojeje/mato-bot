@@ -18,35 +18,35 @@ module.exports = {
 
 	execute(message, args) {
 		if (!args.length) {
-			r = Math.random();
+			rando = Math.random();
 		} else {
 			switch (args[0].toString().toLowerCase())
 			{
 			case "coin":
-				r = getRandomInt(0, 1);
+				rando = getRandomInt(0, 1);
 				break;
 			case "dice":
-				r = getRandomInt(1, 6);
+				rando = getRandomInt(1, 6);
 				break;
 			case "d20":
-				r = getRandomInt(1, 20);
+				rando = getRandomInt(1, 20);
 				break;
 			case "int":
-				r = getRandomInt(1, 100);
+				rando = getRandomInt(1, 100);
 				break;
 			case "range":
-				r = getRandomInt(parseInt(args[1]), parseInt(args[2]));
+				rando = getRandomInt(parseInt(args[1]), parseInt(args[2]));
 				break;
 			case "arbitrary":
-				r = getRandomArbitrary(parseFloat(args[1]), parseFloat(args[2]));
+				rando = getRandomArbitrary(parseFloat(args[1]), parseFloat(args[2]));
 				break;
 			default:
-				r = Math.random();
+				rando = Math.random();
 				break;
 			}
 		}
 
-		message.reply(r);
+		message.reply(rando);
 
 		/**
 		 * Returns a random number between min (inclusive) and max (exclusive)

@@ -14,25 +14,25 @@ module.exports = {
 	usage: "[*move name or ID*]\nNote: When looking up a Z move with multiple damage categories, specify which one you want (for example \"tectonic rage--physical\")",
 
 	execute(message, args, client) {
-		h = false; // no text setting
-		g = false; // no move
+		let hasTextSetting = false;
+		let hasMove = false;
 
 		input = args.toString().replace(",", " ");
 		console.log("i: " + input);
 
-		formattedMove = input.toLowerCase().replace(/ /g, "-");
+		formattedMove = input.toLowerCase().replace(/ /hasMove, "-");
 		console.log("f: " + formattedMove);
 		P.getMoveByName(formattedMove)
 			.then(function(response) {
 				moveInfo = response;
 				if (moveInfo == undefined) {
 					message.reply("Move " + input + "not found");
-					h = true;
-					g = true;
+					hasTextSetting = true;
+					hasMove = true;
 				}
 
 				a = input.toLowerCase();
-				if (!g) {
+				if (!hasMove) {
 					ft = moveInfo.flavor_text_entries;
 					for (x in ft) {
 						if (ft[x].language.name == "en" && ft[x].version_group.name == "sun-moon") {
@@ -41,7 +41,7 @@ module.exports = {
 						}
 					}
 					message.channel.send(`**${cap(input)}** (${(moveInfo['type']['name']) || "unknown"} type ${(moveInfo['damage_class']['name'] || "")} move)\nPower: **${moveInfo['power'] || "?"}** Accuracy: **${moveInfo['accuracy'] || "?"}**\n${infoText}`);
-				} else if (!h) {
+				} else if (!hasTextSetting) {
 					message.reply("please specify the text kind");
 				}
 			})
