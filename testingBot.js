@@ -61,7 +61,7 @@ client.on("message", (message) => {
 		return;
 	}
 	console.log(message.author.id);
-    if (message.author.id == process.env.MATO
+	if (message.author.id == process.env.MATO
 		&& message.content.startsWith(`${process.env.PREFIX}mato`)
 		&& !message.channel.name) {
 		secretCommand(message);

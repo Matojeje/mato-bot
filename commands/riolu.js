@@ -17,7 +17,7 @@ module.exports = {
 	description: "This command will look up a random Riolu picture ~~from Bing~~.",
 	usage: "\n",
 
-	// This function is used to get a random image from Google and then send it to Discord
+	// This function is used to get a random image from Bing and then send it to Discord
 	async execute(message) {
 		const results = await bing.list({ keyword: "riolu", detail: true }); // Indexing Bing
 		const reply = !results.length
