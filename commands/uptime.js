@@ -1,9 +1,9 @@
 module.exports = {
-	name: 'uptime',
+	name: "uptime",
 	errorVerb: "look up my uptime",
 	missingArgsVerb: "timing",
 
-	aliases: ['up'],
+	aliases: ["up"],
 	args: false,
 	cooldown: 0,
 	guildOnly: false,
@@ -11,6 +11,8 @@ module.exports = {
 	usage: "",
 
 	execute(message, args, client) {
-		message.channel.send("My uptime's " + Math.round(client.uptime / 1000) + "s!");
+		message.channel.send(
+			"My uptime's " + Math.round(client.uptime / 1000) + "s!"
+		);
 	},
 };
