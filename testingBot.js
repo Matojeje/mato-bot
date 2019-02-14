@@ -61,12 +61,10 @@ client.on("message", (message) => {
 		return;
 	}
 	console.log(message.author.id);
-	if (
-		message.author.id == process.env.MATO &&
-		message.content.startsWith(`${process.env.PREFIX}mato`) &&
-		!message.channel.name
-	) {
-		secretCommand();
+    if (message.author.id == process.env.MATO
+		&& message.content.startsWith(`${process.env.PREFIX}mato`)
+		&& !message.channel.name) {
+		secretCommand(message);
 	}
 
 	const args = message.content.slice(process.env.PREFIX.length).split(/ +/); // Splitting out arguments and prefix
@@ -199,11 +197,9 @@ function onDM(message) {
 	}
 }
 
-function secretCommand() {
-	const args = message.content
-		.slice(process.env.PREFIX.length)
-		.split(/\s?§\s?/g); // Splitting out arguments and prefix
-	const commandName = args.shift().toLowerCase();
+function secretCommand(message) {
+	const args = message.content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
+	commandName = args.shift().toLowerCase();
 	console.log(`Secret mato command: ${args[0]} (${message.content})`);
 	switch (args[0]) {
 	case "send": // ;mato § send § 12345 § henlo (§ settings)
