@@ -1,5 +1,5 @@
-require('dotenv').config();
-const Discord = require('discord.js');
+require("dotenv").config();
+const Discord = require("discord.js");
 
 module.exports = {
 	name: "about",
@@ -7,13 +7,20 @@ module.exports = {
 	missingArgsVerb: "rii",
 	aliases: ["bot"],
 	cooldown: 40,
-	description: "In " + process.env.PREFIX + "about, I tell you a little about myself!",
+	description:
+		"In " + process.env.PREFIX + "about, I tell you a little about myself!",
 	guildOnly: false,
 	usage: "",
 
 	execute(message, args, client) {
-		const badge = new Discord.Attachment("./resources/badgeAbout.png", "badge.png");
-		const drawing = new Discord.Attachment("./resources/drawingBotHD.png", "drawing.png");
+		const badge = new Discord.Attachment(
+			"./resources/badgeAbout.png",
+			"badge.png"
+		);
+		const drawing = new Discord.Attachment(
+			"./resources/drawingBotHD.png",
+			"drawing.png"
+		);
 		const icon = new Discord.Attachment("./resources/iconMato.png", "icon.png");
 
 		const riiInfo = new Discord.RichEmbed()
@@ -26,7 +33,8 @@ module.exports = {
 
 				**Use ${process.env.PREFIX}help to check the available commands.**
 				https://github.com/Matojeje/mato-bot
-				License: MIT`)
+				License: MIT`
+			)
 			.addField("Uptime", Math.round(client.uptime) + " ms", true)
 			.addField("Woke up at", client.readyAt.toLocaleString(), true)
 			.addField("Ping", client.ping.toFixed(1) + " ms", true)
@@ -38,7 +46,7 @@ module.exports = {
 
 		message.channel.send({
 			embed: riiInfo,
-			files: [badge, drawing, icon]
+			files: [badge, drawing, icon],
 		});
 	},
 };

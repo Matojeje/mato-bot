@@ -1,16 +1,28 @@
 /* eslint-disable no-multi-spaces */
 module.exports = {
-	name: 'minesweeper',
+	name: "minesweeper",
 	errorVerb: "place mines",
 	missingArgsVerb: "... minesweeping",
-	aliases: ['mine', 'mines', 'miny', 'minesweeper', 'hledánímin', 'hledání-min', 'hledanimin', 'hledani-min', 'hledani_min'],
+	aliases: [
+		"mine",
+		"mines",
+		"miny",
+		"minesweeper",
+		"hledánímin",
+		"hledání-min",
+		"hledanimin",
+		"hledani-min",
+		"hledani_min",
+	],
 	cooldown: 10,
 	guildOnly: false,
-	description: "This command generates a minesweeper-like field using spoiler tags!",
-	usage: "(**beginner**/**intermediate**/**advanced**) ([*mines*] [*width*] [*height*])\n" +
-			"\nOptional | Arg 1: Set the difficulty, using the beginner difficulty (10 mines, 9×9) by default, or specify your own." +
-			"\nConditional | Args 2, 3, 4: Set up the minefield's mine count (m ∈ ℕ₀), field width and height. (w;h ∈ ℕ*) ※ Set a custom difficulty to use this." +
-			"\n",
+	description:
+		"This command generates a minesweeper-like field using spoiler tags!",
+	usage:
+		"(**beginner**/**intermediate**/**advanced**) ([*mines*] [*width*] [*height*])\n" +
+		"\nOptional | Arg 1: Set the difficulty, using the beginner difficulty (10 mines, 9×9) by default, or specify your own." +
+		"\nConditional | Args 2, 3, 4: Set up the minefield's mine count (m ∈ ℕ₀), field width and height. (w;h ∈ ℕ*) ※ Set a custom difficulty to use this." +
+		"\n",
 
 	execute(message, args) {
 		diff = "beginner";
@@ -39,7 +51,9 @@ module.exports = {
 				height = 9;
 				break;
 			default:
-				return Error("Wait, " + args[0].toString().toLowerCase() + " isn't a difficulty!");
+				return Error(
+					"Wait, " + args[0].toString().toLowerCase() + " isn't a difficulty!"
+				);
 			}
 		} else {
 			mines = 10;
@@ -50,8 +64,11 @@ module.exports = {
 		hide = true;
 		hint = true;
 
-		if (mines >= (width * height)) {
-			return Error(`There are too many mines! (${mines} mines, but ${width * height - 1} max)`);
+		if (mines >= width * height) {
+			return Error(
+				`There are too many mines! (${mines} mines, but ${width * height -
+					1} max)`
+			);
 		}
 
 		// Prepare the minefield
@@ -94,7 +111,9 @@ module.exports = {
 		if (hide) {
 			h = "||";
 			placedHint = false;
-		} else {h = "";}
+		} else {
+			h = "";
+		}
 
 		// Replace the mines first
 
@@ -102,14 +121,27 @@ module.exports = {
 
 		// Turn the numbers into their emojis
 
-		const emojis = { "0":":zero:", "1":":one:", "2":":two:", "3":":three:", "4":":four:", "5":":five:", "6":":six:", "7":":seven:", "8":":eight:" };
+		const emojis = {
+			"0": ":zero:",
+			"1": ":one:",
+			"2": ":two:",
+			"3": ":three:",
+			"4": ":four:",
+			"5": ":five:",
+			"6": ":six:",
+			"7": ":seven:",
+			"8": ":eight:",
+		};
 
 		for (let i = 0; i <= 8; i++) {
 			if (i == 0 && hide && placedHint == false && diff == "beginner") {
 				h = "";
 				placedHint = true;
 			}
-			output = output.replace(new RegExp(`${i.toString()}`, "g"), h + emojis[i] + h);
+			output = output.replace(
+				new RegExp(`${i.toString()}`, "g"),
+				h + emojis[i] + h
+			);
 			if (hide && placedHint == true) {
 				h = "||";
 			}
@@ -126,16 +158,18 @@ module.exports = {
 		// Check the message length
 
 		if (output.length >= 2000) {
-			new Error(`The message is too long! (It's using ${output.length} out of 2000 characters.)`);
+			new Error(
+				`The message is too long! (It's using ${
+					output.length
+				} out of 2000 characters.)`
+			);
 		}
 
 		// And send!
 
 		message.channel.send(output);
 
-
 		// ================ Functions ================
-
 
 		/*	(a) x > 0						(b) x < width
 
@@ -144,26 +178,42 @@ module.exports = {
 			[x-1][y+1]		[x  ][y+1]		[x+1][y+1]		(d) y < height		*/
 
 		function around(x, y, w, h, f) {
-
-			const a = (x > 0);
-			const b = (x < w - 1);
-			const c = (y > 0);
-			const d = (y < h - 1);
+			const a = x > 0;
+			const b = x < w - 1;
+			const c = y > 0;
+			const d = y < h - 1;
 
 			e = [x, y];
 
-			if (a && c) {check(f[x - 1][y - 1], e, f);}
-			if (a) {	 check(f[x - 1][y	 ], e, f);}
-			if (a && d) {check(f[x - 1][y + 1], e, f);}
-			if (b && c) {check(f[x + 1][y - 1], e, f);}
-			if (b) {	 check(f[x + 1][y	 ], e, f);}
-			if (b && d) {check(f[x + 1][y + 1], e, f);}
-			if (c) {	 check(f[x    ][y - 1], e, f);}
-			if (d) {	 check(f[x    ][y + 1], e, f);}
+			if (a && c) {
+				check(f[x - 1][y - 1], e, f);
+			}
+			if (a) {
+				check(f[x - 1][y], e, f);
+			}
+			if (a && d) {
+				check(f[x - 1][y + 1], e, f);
+			}
+			if (b && c) {
+				check(f[x + 1][y - 1], e, f);
+			}
+			if (b) {
+				check(f[x + 1][y], e, f);
+			}
+			if (b && d) {
+				check(f[x + 1][y + 1], e, f);
+			}
+			if (c) {
+				check(f[x][y - 1], e, f);
+			}
+			if (d) {
+				check(f[x][y + 1], e, f);
+			}
 		}
 
 		function check(g, e, f) {
-			if (g > 99) { // If there's a mine, it's 100 or more
+			if (g > 99) {
+				// If there's a mine, it's 100 or more
 				f[e[0]][e[1]]++;
 			}
 		}
