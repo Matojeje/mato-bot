@@ -38,8 +38,8 @@ Thanks to [Discord.JS' great guide](https://github.com/discordjs/guide) for gett
 
 ## License
 
+![MIT Image](resources/logoMIT.png)
+
 mato-bot is free software: you can distribute it under the Massachusetts Institute of Technology (MIT) License.
 
 The MIT License grants the software end user rights such as copying, modifying, merging, distributing, etc.
-
-![MIT Image](resources/logoMIT.png)
