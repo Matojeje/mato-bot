@@ -1,4 +1,4 @@
-var im = require("imperial-metric");
+const im = require("imperial-metric");
 
 module.exports = {
 	name: "convert",
@@ -8,8 +8,7 @@ module.exports = {
 	cooldown: 1,
 	args: true,
 	guildOnly: false,
-	description:
-	`Converts between metric and imperial units.
+	description: `Converts between metric and imperial units.
 	Available units: inch, foot, mm, cm, m, km, sqrt-m, sqrt-cm, sqrt-mm, sqrt-km, sqrt-inch, sqrt-foot.`,
 	usage: "[**value**] [**from this unit**] (to) [**to this unit**]",
 
@@ -23,11 +22,9 @@ module.exports = {
 		}
 
 		message.reply(
-			`${value} ${from} = **${
-				im(value.replace(/,/,"."))
-					.from(from)
-					.to(to)
-				} ${to}**`
+			`${value} ${from} = **${im(value.replace(/,/, "."))
+				.from(from)
+				.to(to)} ${to}**`
 		);
 	},
 };

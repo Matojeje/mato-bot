@@ -140,11 +140,11 @@ client.on("message", (message) => {
 		command.execute(message, args, client);
 	} catch (error) {
 		console.error(error);
-		dmRecipient = ""
+		dmRecipient = "";
 		if (message.channel.type !== "text") {
 			dmRecipient = tag(message.author) + ", ";
 		}
-		message.reply(dmRecipient + 
+		message.reply(dmRecipient +
 			"there was some sort of weird error when I was trying to " +
 				command.errorVerb +
 				".\n\n*a small rolled up paper strip prints out, saying:*\n```js\n" +

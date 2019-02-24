@@ -8,6 +8,6 @@ module.exports = {
 	usage: "",
 
 	execute() {
-		throw new Error("User-induced error")
+		throw new Error("User-induced error");
 	},
 };
