@@ -23,8 +23,8 @@ module.exports = {
 		"The user waggles a finger and stimulates its brain into randomly using nearly any move.\nThis command has different formatting modes and calculates critical hits and misses.",
 	guildOnly: false,
 	usage:
-		"(**x**/**t**) (**m**/**f**/**p**/**n**) (**moveInfo** / **info** / **i**)\n" +
-		"\nOptional | Arg 1: Set mode: *nothing* for normal mode, *x* for attack name only or *t* for __T__icki-style." +
+		"(**x**/**t**/**h**) (**m**/**f**/**p**/**n**) (**moveInfo** / **info** / **i**)\n" +
+		"\nOptional | Arg 1: Set mode: *nothing* for normal mode, *x* for attack name only, *t* for __T__icki-style or *h* to list attack type emojis." +
 		"\nOptional | Arg 2: Set the grammatical gender (__m__ale,__f__emale,__p__lural,__n__eutral) for the game-like message box" +
 		"\nOptional | Arg 3: Show more detailed information about the move (rich embed)." +
 		"\n",
@@ -32,12 +32,6 @@ module.exports = {
 	execute(message, args, client) {
 		setEmojis();
 
-		console.log(
-			"Metronome cmd called by " +
-				message.author.tag +
-				" in " +
-				message.channel.name
-		);
 		const moveCount = movesData.length;
 		const move = movesData[Math.ceil(Math.random() * moveCount)];
 		const user = message.author.username.toUpperCase();
@@ -46,31 +40,18 @@ module.exports = {
 			mode = args[0];
 			args.shift();
 			switch (mode) {
-			case "x":
+			case "x": // Attack name only
 				message.channel.send(`**${move.Name}**`);
 				break;
-			case "t":
-				toSend = `**${move.Name}**\n`;
-				switch (move.Category) {
-				case "Physical":
-					toSend += "⚔ (Physical)";
-					break;
-				case "Special":
-					toSend += "☄ (Special)";
-					break;
-				case "Status":
-					toSend += "🌧 (Status)";
-					break;
-				}
-				t = move.Type;
-				toSend += `\n${emojiData[move.Type]} (${
-					move.Type
-				}) Power: ${move.Power || "?"}   Accuracy: ${move.Accuracy || "?"}`;
-				message.channel.send(toSend);
-				showPower = false;
+			case "t": // Ticki style attack display
+				tickiStyle(move, message);
 				break;
-			case "h":
-				message.reply(emojiData);
+			case "h": // Emoji help
+				emojiMessage = "**Move type emojis**:\n\n"
+				for (const type in emojiData) {
+					emojiMessage += emojiData[type] + " | " + type + "\n";
+				}
+				message.reply(emojiMessage);
 				break;
 			default:
 			}
@@ -108,21 +89,7 @@ module.exports = {
 				setDefaultHeckinPronouns();
 			}
 
-			moveAnnounce = [
-				`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${
-					move.Name
-				}!\``,
-				`\`${user} used Metronome!\n${user} used ${move.Name}!\``,
-				`\`${user}'s Metronome let ${demonstrative} use ${move.Name}!\``,
-				`\`${user} holds ${possesive} finger in the air and wags it. ${cap(
-					personal
-				)} use${verb} ${move.Name}!\``,
-				`\`${user} waves ${possesive} finger and uses ${move.Name}!\``,
-				`\`${user} waves ${possesive} finger, using ${move.Name}!\``,
-				`\`${user} waves one of ${possesive} arms, and the tip starts to glow. ${cap(
-					personal
-				)} then use${verb} ${move.Name}!\``,
-			];
+			makeMoveMessages(user, move);
 
 			message.channel.send(
 				moveAnnounce[Math.floor(Math.random() * moveAnnounce.length)]
@@ -133,56 +100,7 @@ module.exports = {
 			args.length > 0 &&
 			(args[0] == "info" || args[0] == "moveInfo" || args[0] == "i")
 		) {
-			const badge = new Discord.Attachment(
-				"./resources/badgeMoveInfo.png",
-				"badge.png"
-			);
-			const icon = new Discord.Attachment(
-				"./resources/iconMatoBot.png",
-				"icon.png"
-			);
-
-			P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(function(
-				dexResponse
-			) {
-				const flavorTexts = dexResponse.flavor_text_entries;
-				for (x in flavorTexts) {
-					if (
-						flavorTexts[x].language.name == "en" &&
-						flavorTexts[x].version_group.name == "ultra-sun-ultra-moon"
-					) {
-						infoText = flavorTexts[x].flavor_text;
-						break;
-					}
-				}
-
-				const moveInfo = new Discord.RichEmbed()
-					.setColor("#2990bb")
-					.setTitle(move.Name)
-					.setURL(
-						"https://bulbapedia.bulbagarden.net/wiki/" +
-							encodeURI(`${move.Name} (move)`)
-					)
-					.setAuthor("Move info", "attachment://badge.png", "")
-					.setDescription(
-						`\`\`\`${infoText}\`\`\`\nMove number ${
-							move["#"]
-						} from generation ${move.Gen}.`
-					)
-					.addField("Type", move.Type || "None", true)
-					.addField("Damage category", move.Category || "None", true)
-					.addField("Contest condition", move.Contest || "???", true)
-					.addField("Power points", move.PP || "None", true)
-					.addField("Power", move.Power || "None", true)
-					.addField("Accuracy", (move.Accuracy || "??? ") + "%", true)
-					.setTimestamp()
-					.setFooter("⏪ Mato bot", "attachment://icon.png");
-
-				message.channel.send({
-					embed: moveInfo,
-					files: [badge, icon],
-				});
-			});
+			setupMoveInfo(move, message);
 		}
 
 		moveSuccessful = 1;
@@ -221,40 +139,104 @@ module.exports = {
 			break;
 		default:
 		}
-
-		function setEmojis() {
-			emojiData = new Array();
-			emojiData["Normal"] = "⬜";
-			emojiData["Fighting"] = "👊";
-			emojiData["Flying"] = "🐦";
-			emojiData["Poison"] = "☣";
-			emojiData["Ground"] = "⛰";
-			emojiData["Rock"] = "🌑";
-			emojiData["Bug"] = "🐛";
-			emojiData["Ghost"] = "👻";
-			emojiData["Steel"] = "🔩";
-			emojiData["Fire"] = "🔥";
-			emojiData["Water"] = "💦";
-			emojiData["Grass"] = "🌿";
-			emojiData["Electric"] = "⚡";
-			emojiData["Psychic"] = "🌟";
-			emojiData["Ice"] = "❄";
-			emojiData["Dragon"] = "🐲";
-			emojiData["Dark"] = "🕶";
-			emojiData["Fairy"] = "✨";
-			emojiData["???"] = "❔";
-			return;
-		}
-
-		function setDefaultHeckinPronouns() {
-			personal = "it"; // ${personal}
-			possesive = "its"; // ${possesive}
-			demonstrative = "it"; // ${demonstrative}
-			verb = "s"; // ${verb}
-		}
-
-		function cap(string) {
-			return string[0].toUpperCase() + string.slice(1);
-		}
 	},
 };
+function tickiStyle(move, message) {
+	toSend = `**${move.Name}**\n`;
+	switch (move.Category) {
+		case "Physical":
+			toSend += "⚔ (Physical)";
+			break;
+		case "Special":
+			toSend += "☄ (Special)";
+			break;
+		case "Status":
+			toSend += "🌧 (Status)";
+			break;
+	}
+	t = move.Type;
+	toSend += `\n${emojiData[move.Type]} (${move.Type}) Power: ${move.Power || "?"}   Accuracy: ${move.Accuracy || "?"}`;
+	message.channel.send(toSend);
+	showPower = false;
+}
+
+function makeMoveMessages(user, move) {
+	moveAnnounce = [
+		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${move.Name}!\``,
+		`\`${user} used Metronome!\n${user} used ${move.Name}!\``,
+		`\`${user}'s Metronome let ${demonstrative} use ${move.Name}!\``,
+		`\`${user} holds ${possesive} finger in the air and wags it. ${cap(personal)} use${verb} ${move.Name}!\``,
+		`\`${user} waves ${possesive} finger and uses ${move.Name}!\``,
+		`\`${user} waves ${possesive} finger, using ${move.Name}!\``,
+		`\`${user} waves one of ${possesive} arms, and the tip starts to glow. ${cap(personal)} then use${verb} ${move.Name}!\``,
+	];
+}
+
+function setupMoveInfo(move, message) {
+	const badge = new Discord.Attachment("./resources/badgeMoveInfo.png", "badge.png");
+	const icon = new Discord.Attachment("./resources/iconMatoBot.png", "icon.png");
+	P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(function (dexResponse) {
+		const flavorTexts = dexResponse.flavor_text_entries;
+		for (x in flavorTexts) {
+			if (flavorTexts[x].language.name == "en" &&
+				flavorTexts[x].version_group.name == "ultra-sun-ultra-moon") {
+				infoText = flavorTexts[x].flavor_text;
+				break;
+			}
+		}
+		const moveInfo = new Discord.RichEmbed()
+			.setColor("#2990bb")
+			.setTitle(move.Name)
+			.setURL("https://bulbapedia.bulbagarden.net/wiki/" +
+				encodeURI(`${move.Name} (move)`))
+			.setAuthor("Move info", "attachment://badge.png", "")
+			.setDescription(`\`\`\`${infoText}\`\`\`\nMove number ${move["#"]} from generation ${move.Gen}.`)
+			.addField("Type", move.Type || "None", true)
+			.addField("Damage category", move.Category || "None", true)
+			.addField("Contest condition", move.Contest || "???", true)
+			.addField("Power points", move.PP || "None", true)
+			.addField("Power", move.Power || "None", true)
+			.addField("Accuracy", (move.Accuracy || "??? ") + "%", true)
+			.setTimestamp()
+			.setFooter("⏪ Mato bot", "attachment://icon.png");
+		message.channel.send({
+			embed: moveInfo,
+			files: [badge, icon],
+		});
+	});
+}
+
+function setEmojis() {
+	emojiData = new Array();
+	emojiData["Normal"] = "⬜";
+	emojiData["Fighting"] = "👊";
+	emojiData["Flying"] = "🐦";
+	emojiData["Poison"] = "☣";
+	emojiData["Ground"] = "⛰";
+	emojiData["Rock"] = "🌑";
+	emojiData["Bug"] = "🐛";
+	emojiData["Ghost"] = "👻";
+	emojiData["Steel"] = "🔩";
+	emojiData["Fire"] = "🔥";
+	emojiData["Water"] = "💦";
+	emojiData["Grass"] = "🌿";
+	emojiData["Electric"] = "⚡";
+	emojiData["Psychic"] = "🌟";
+	emojiData["Ice"] = "❄";
+	emojiData["Dragon"] = "🐲";
+	emojiData["Dark"] = "🕶";
+	emojiData["Fairy"] = "✨";
+	emojiData["???"] = "❔";
+	return;
+}
+
+function setDefaultHeckinPronouns() {
+	personal = "it"; // ${personal}
+	possesive = "its"; // ${possesive}
+	demonstrative = "it"; // ${demonstrative}
+	verb = "s"; // ${verb}
+}
+
+function cap(string) {
+	return string[0].toUpperCase() + string.slice(1);
+}
