@@ -8,6 +8,8 @@ My little Discord bot using **Node.js**, **Discord.js** and **pokedex-promise-v2
 
 Pull requests are welcome! Please follow these steps before making one.
 
+Check out the [command template](./commands/template.md) for help!
+
 1. Think about what you'd like to add and if it's going to be useful.
 2. Set up Node.js and npm according to the [package.json dependencies](https://github.com/Matojeje/mato-bot/network/dependencies#package.json).
 3. Refer to [the enviroment variables guide](./EnviromentVariables.md) and the [.env example file](./.env.example) to set up enviroment variables correctly.
