@@ -15,7 +15,7 @@ module.exports = {
 	cooldown: 10,
 	guildOnly: false,
 	description: "This command will look up a random Riolu picture from Bing. This might take a while.",
-	usage: "\n",
+	usage: "",
 
 	// This function is used to get a random image from Bing and then send it to Discord
 	async execute(message) {

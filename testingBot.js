@@ -26,7 +26,7 @@ client.on("guildCreate", (guild) => {
 			"drawing.png"
 		);
 
-		const riiHello = new Discord.RichEmbed()
+		const joinEmbed = new Discord.RichEmbed()
 			.setColor("#2990bb")
 			.setImage("attachment://drawing.png");
 
@@ -36,7 +36,7 @@ client.on("guildCreate", (guild) => {
 				`Hello! I'm Mato-bot. My prefix is \`${process.env.PREFIX}\`. ` +
 					`Type \`${process.env.PREFIX}help\` to get started, beep!`,
 				{
-					embed: riiHello,
+					embed: joinEmbed,
 					files: [drawing],
 				}
 			);
@@ -96,9 +96,7 @@ client.on("message", (message) => {
 
 		if (command.usage) {
 			// Did I write how to use it then?
-			reply += `. You should say it like ${process.env.PREFIX}${command.name} ${
-				command.usage
-			}`;
+			reply += `. You should say it like ${process.env.PREFIX}**${command.name}** ${command.usage}`;
 		} else {
 			reply += ", silly";
 		}
@@ -142,7 +140,11 @@ client.on("message", (message) => {
 		command.execute(message, args, client);
 	} catch (error) {
 		console.error(error);
-		message.reply(
+		dmRecipient = ""
+		if (message.channel.type !== "text") {
+			dmRecipient = tag(message.author) + ", ";
+		}
+		message.reply(dmRecipient + 
 			"there was some sort of weird error when I was trying to " +
 				command.errorVerb +
 				".\n\n*a small rolled up paper strip prints out, saying:*\n```js\n" +
@@ -223,4 +225,8 @@ function secretCommand(message) {
 		break;
 	default:
 	}
+}
+
+function tag(user) {
+	return "<@" + user.id + ">";
 }

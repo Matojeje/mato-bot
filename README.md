@@ -34,6 +34,8 @@ Thanks to [Discord.JS' great guide](https://github.com/discordjs/guide) for gett
 
 [csvjson](https://github.com/pradeep-mishra/csvjson) MIT © 2014 - 2018 Pradeep Mishra
 
+[imperial-metric](https://github.com/tiansijie/imperial-metric) © 2016 Sijie Tian
+
 [View all dependencies](https://github.com/Matojeje/mato-bot/network/dependencies)
 
 ## License
