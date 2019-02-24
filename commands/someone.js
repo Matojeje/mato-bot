@@ -2,7 +2,7 @@ module.exports = {
 	name: "someone",
 	errorVerb: "pick a user",
 	missingArgsVerb: "booping",
-	aliases: ["pick", "randomuser", "randuser", "randusr", "ru", "who"],
+	aliases: ["@someone", "pick", "randomuser", "randuser", "randusr", "ru", "who"],
 	cooldown: 4,
 	guildOnly: false,
 	args: false,
