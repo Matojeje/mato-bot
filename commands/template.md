@@ -44,9 +44,25 @@ module.exports = {
 
 * **Usage** – How to specify the command's arguments. Leave empty&nbsp;(`""`) if there are none. If there's more information regarding the arguments, add one or two newlines&nbsp;(`\n`) before and one after the extra block of text.
 
-  Formatting: *variable* \[*default*=10\] \[*opt.variable*\] \<flag\> \[\<optional&nbsp;flag\>\] \<flag1\|flag2\|flag3\> \[\<opt.flag1\|flag2\|flag3\>\]
-  
-  **\***&nbsp;Note that a variable that defaults to something is always optional.
+### Usage formatting
+
+#### Variables
+
+|*variable* \[*default*=__10__\] \[*opt.variable*\]|`*variable* [*default*=__10__] [*opt.variable*]`|
+|--------------------------------------------------|------------------------------------------------|
+
+* Note that a variable that defaults to something is always optional.
+
+#### Flags
+
+|\<**flag**\> \[\<**optional&nbsp;flag**\>\]|`<**flag**> [<**optional flag**>]`|
+|-------------------------------------------|----------------------------------|
+
+Multiple choices for a flag:
+
+|\<**flag1**\|**flag2**\|**flag3**\> \[\<**opt.flag1**\|**flag2**\|**flag3**\>\]|
+|-------------------------------------------------------------------------------|
+**<code><\*\*flag1\*\*\|\*\*flag2\*\*\|\*\*flag3\*\*> [<\*\*opt.flag1\*\*\|\*\*flag2\*\*\|\*\*flag3\*\*>]</code>**|
 
 ## Command code
 
