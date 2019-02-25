@@ -21,7 +21,7 @@ module.exports = {
 				"send the command name after " + process.env.PREFIX + "help!```**"
 			);
 			data.push(commands.map(command => {
-				return `• ${process.env.PREFIX}**${command.name}**: ${command.shortDesc || ""}`
+				return `• ${process.env.PREFIX}**${command.name}**: ${command.shortDesc || ""}`;
 			}).join("\n"));
 
 			return message.author
@@ -64,7 +64,7 @@ module.exports = {
 			} else {
 				let usage = "Usage:";
 				for (let i = 0; i < command.usage.length; i++) {
-					usage += `\n${process.env.PREFIX}**${command.name}** ${command.usage[i]}`
+					usage += `\n${process.env.PREFIX}**${command.name}** ${command.usage[i]}`;
 				}
 				data.push(usage + "\n");
 			}
