@@ -11,7 +11,7 @@ module.exports = {
 	args: true,
 	description:
 		"Get information about a specific pokémon berry (using Pokéapi).",
-		shortDesc: "Look up berry info",
+	shortDesc: "Look up berry info",
 	usage: "[*berry name*]",
 
 	execute(message, args) {

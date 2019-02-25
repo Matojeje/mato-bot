@@ -101,9 +101,9 @@ client.on("message", (message) => {
 				`${process.env.PREFIX}**${command.name}** ${command.usage}.`;
 			} else { // There are multiple usages
 				for (let i = 0; i < command.usage.length - 1; i++) {
-					usage += `${process.env.PREFIX}**${command.name}** ${command.usage[i]} or `
+					usage += `${process.env.PREFIX}**${command.name}** ${command.usage[i]} or `;
 				}
-				usage += `${process.env.PREFIX}**${command.name}** ${command.usage[i]}.`
+				usage += `${process.env.PREFIX}**${command.name}** ${command.usage[i]}.`;
 			}
 		} else {
 			reply += ", silly";
