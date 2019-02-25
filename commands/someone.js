@@ -2,28 +2,41 @@ module.exports = {
 	name: "someone",
 	errorVerb: "pick a user",
 	missingArgsVerb: "booping",
-	aliases: ["@someone", "pick", "randomuser", "randuser", "randusr", "ru", "who"],
+	aliases: [
+		"@someone",
+		"pick",
+		"randomuser",
+		"randuser",
+		"randusr",
+		"ru",
+		"who",
+	],
 	cooldown: 4,
 	guildOnly: false,
 	args: false,
-	description: "This command will return the name of a randomly picked user on this text channel. It will not tag them. Doesn't work in DMs.",
+	description:
+		"This command will return the name of a randomly picked user on this text channel. It will not tag them. Doesn't work in DMs.",
 	usage: "",
 
 	execute(message) {
 		if (message.guild.available) {
-			let botPickCount = 0
-			while (true) {
+			let botPickCount = 0;
+			for (;;) {
 				randomMember = message.channel.members.random();
 				if (!randomMember.user.bot) {
 					break;
 				} else {
-					botPickCount++
+					botPickCount++;
 				}
 			}
 			if (randomMember.nickname !== null) {
 				member =
-				"***" + randomMember.user.username + "*** " +
-				"(**" + randomMember.nickname + "**)";
+					"***" +
+					randomMember.user.username +
+					"*** " +
+					"(**" +
+					randomMember.nickname +
+					"**)";
 			} else {
 				member = "**" + randomMember.user.username + "**";
 			}

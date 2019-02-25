@@ -18,6 +18,8 @@ Check out the [command template](./commands/template.md) for help!
 6. Keep the license (MIT) and add your username below.
 7. If everything works fine, make a pull request.
 
+Additional Note: Please clean up your code with Prettier and with the following command ```prettier --use-tabs true --trailing-comma es5 --single-quote false  --write directory/of/the/bot/commands/*.js```
+
 ## Credits
 
 ### Code

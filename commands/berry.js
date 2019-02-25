@@ -83,7 +83,12 @@ module.exports = {
 							capitalizedBerryName + " berry.png"
 						);
 
-						const moveInfo = buildBerryEmbed(capitalizedBerryName, berryItem, berry, mmToInch);
+						const moveInfo = buildBerryEmbed(
+							capitalizedBerryName,
+							berryItem,
+							berry,
+							mmToInch
+						);
 
 						message.channel.send({
 							embed: moveInfo,
@@ -103,36 +108,57 @@ module.exports = {
 };
 
 function buildBerryEmbed(capitalizedBerryName, berryItem, berry, mmToInch) {
-	return new Discord.RichEmbed()
-		.setColor("#2990bb")
-		.setTitle(capitalizedBerryName + " Berry")
-		.setAuthor("Berry info", "attachment://badge.png", "")
-		.setImage("attachment://image.png")
-		.setURL("https://bulbapedia.bulbagarden.net/wiki/" +
-			capitalizedBerryName +
-			"_Berry")
-		.setDescription(berryItem.effect_entries[0].effect
-			.replace(/\n: /gm, ": ")
-			.replace(/^.*:/gm, "**$&**"))
-		.addField("Flavor", capitalizeFirstLetter(berryFlavor) || "???", true)
-		.addField("Firmness", capitalizeFirstLetter(berry.firmness.name.replace(/-/g, " ")) ||
-			"???", true)
-		.addField("Smoothness", berry.smoothness + "% water" || "???", true)
-		.addField("Growth time", berry.growth_time + " hours per stage" || "???", true)
-		// .addField("Growth stage", berry.growth_time + " hours" || "???", true)
-		.addField("Harvest", "Up to " + berry.max_harvest + " on one tree" || "???", true)
-		.addField("Size", berrySizeMetric +
-			" / " +
-			parseFloat((berry.size * mmToInch).toFixed(2)) +
-			"″" || "???", true)
-		// .addField("Cost", berryItem.cost + " Poké" || "???", true)
-        /* .addField("Natural gift",
+	return (
+		new Discord.RichEmbed()
+			.setColor("#2990bb")
+			.setTitle(capitalizedBerryName + " Berry")
+			.setAuthor("Berry info", "attachment://badge.png", "")
+			.setImage("attachment://image.png")
+			.setURL(
+				"https://bulbapedia.bulbagarden.net/wiki/" +
+					capitalizedBerryName +
+					"_Berry"
+			)
+			.setDescription(
+				berryItem.effect_entries[0].effect
+					.replace(/\n: /gm, ": ")
+					.replace(/^.*:/gm, "**$&**")
+			)
+			.addField("Flavor", capitalizeFirstLetter(berryFlavor) || "???", true)
+			.addField(
+				"Firmness",
+				capitalizeFirstLetter(berry.firmness.name.replace(/-/g, " ")) || "???",
+				true
+			)
+			.addField("Smoothness", berry.smoothness + "% water" || "???", true)
+			.addField(
+				"Growth time",
+				berry.growth_time + " hours per stage" || "???",
+				true
+			)
+			// .addField("Growth stage", berry.growth_time + " hours" || "???", true)
+			.addField(
+				"Harvest",
+				"Up to " + berry.max_harvest + " on one tree" || "???",
+				true
+			)
+			.addField(
+				"Size",
+				berrySizeMetric +
+					" / " +
+					parseFloat((berry.size * mmToInch).toFixed(2)) +
+					"″" || "???",
+				true
+			)
+			// .addField("Cost", berryItem.cost + " Poké" || "???", true)
+			/* .addField("Natural gift",
             capitalizeFirstLetter(berry.natural_gift_type.name) +
             " (power: " + berry.natural_gift_power + ")"
             || "??? ", true
         ) */
-		.setTimestamp()
-		.setFooter("Mato bot using PokéAPI", "attachment://icon.png");
+			.setTimestamp()
+			.setFooter("Mato bot using PokéAPI", "attachment://icon.png")
+	);
 }
 
 // https://stackoverflow.com/a/1026087

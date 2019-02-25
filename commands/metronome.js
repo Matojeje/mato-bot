@@ -47,7 +47,7 @@ module.exports = {
 				tickiStyle(move, message);
 				break;
 			case "h": // Emoji help
-				emojiMessage = "**Move type emojis**:\n\n"
+				emojiMessage = "**Move type emojis**:\n\n";
 				for (const type in emojiData) {
 					emojiMessage += emojiData[type] + " | " + type + "\n";
 				}
@@ -144,42 +144,59 @@ module.exports = {
 function tickiStyle(move, message) {
 	toSend = `**${move.Name}**\n`;
 	switch (move.Category) {
-		case "Physical":
-			toSend += "⚔ (Physical)";
-			break;
-		case "Special":
-			toSend += "☄ (Special)";
-			break;
-		case "Status":
-			toSend += "🌧 (Status)";
-			break;
+	case "Physical":
+		toSend += "⚔ (Physical)";
+		break;
+	case "Special":
+		toSend += "☄ (Special)";
+		break;
+	case "Status":
+		toSend += "🌧 (Status)";
+		break;
 	}
 	t = move.Type;
-	toSend += `\n${emojiData[move.Type]} (${move.Type}) Power: ${move.Power || "?"}   Accuracy: ${move.Accuracy || "?"}`;
+	toSend += `\n${emojiData[move.Type]} (${move.Type}) Power: ${move.Power ||
+		"?"}   Accuracy: ${move.Accuracy || "?"}`;
 	message.channel.send(toSend);
 	showPower = false;
 }
 
 function makeMoveMessages(user, move) {
 	moveAnnounce = [
-		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${move.Name}!\``,
+		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${
+			move.Name
+		}!\``,
 		`\`${user} used Metronome!\n${user} used ${move.Name}!\``,
 		`\`${user}'s Metronome let ${demonstrative} use ${move.Name}!\``,
-		`\`${user} holds ${possesive} finger in the air and wags it. ${cap(personal)} use${verb} ${move.Name}!\``,
+		`\`${user} holds ${possesive} finger in the air and wags it. ${cap(
+			personal
+		)} use${verb} ${move.Name}!\``,
 		`\`${user} waves ${possesive} finger and uses ${move.Name}!\``,
 		`\`${user} waves ${possesive} finger, using ${move.Name}!\``,
-		`\`${user} waves one of ${possesive} arms, and the tip starts to glow. ${cap(personal)} then use${verb} ${move.Name}!\``,
+		`\`${user} waves one of ${possesive} arms, and the tip starts to glow. ${cap(
+			personal
+		)} then use${verb} ${move.Name}!\``,
 	];
 }
 
 function setupMoveInfo(move, message) {
-	const badge = new Discord.Attachment("./resources/badgeMoveInfo.png", "badge.png");
-	const icon = new Discord.Attachment("./resources/iconMatoBot.png", "icon.png");
-	P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(function (dexResponse) {
+	const badge = new Discord.Attachment(
+		"./resources/badgeMoveInfo.png",
+		"badge.png"
+	);
+	const icon = new Discord.Attachment(
+		"./resources/iconMatoBot.png",
+		"icon.png"
+	);
+	P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(function(
+		dexResponse
+	) {
 		const flavorTexts = dexResponse.flavor_text_entries;
 		for (x in flavorTexts) {
-			if (flavorTexts[x].language.name == "en" &&
-				flavorTexts[x].version_group.name == "ultra-sun-ultra-moon") {
+			if (
+				flavorTexts[x].language.name == "en" &&
+				flavorTexts[x].version_group.name == "ultra-sun-ultra-moon"
+			) {
 				infoText = flavorTexts[x].flavor_text;
 				break;
 			}
@@ -187,10 +204,16 @@ function setupMoveInfo(move, message) {
 		const moveInfo = new Discord.RichEmbed()
 			.setColor("#2990bb")
 			.setTitle(move.Name)
-			.setURL("https://bulbapedia.bulbagarden.net/wiki/" +
-				encodeURI(`${move.Name} (move)`))
+			.setURL(
+				"https://bulbapedia.bulbagarden.net/wiki/" +
+					encodeURI(`${move.Name} (move)`)
+			)
 			.setAuthor("Move info", "attachment://badge.png", "")
-			.setDescription(`\`\`\`${infoText}\`\`\`\nMove number ${move["#"]} from generation ${move.Gen}.`)
+			.setDescription(
+				`\`\`\`${infoText}\`\`\`\nMove number ${move["#"]} from generation ${
+					move.Gen
+				}.`
+			)
 			.addField("Type", move.Type || "None", true)
 			.addField("Damage category", move.Category || "None", true)
 			.addField("Contest condition", move.Contest || "???", true)

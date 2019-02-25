@@ -38,7 +38,10 @@ module.exports = {
 				randomNumber = getRandomInt(parseInt(args[1]), parseInt(args[2]));
 				break;
 			case "arbitrary":
-				randomNumber = getRandomArbitrary(parseFloat(args[1]), parseFloat(args[2]));
+				randomNumber = getRandomArbitrary(
+					parseFloat(args[1]),
+					parseFloat(args[2])
+				);
 				break;
 			default:
 				randomNumber = Math.random();

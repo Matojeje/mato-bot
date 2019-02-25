@@ -1,9 +1,7 @@
-require("dotenv").config();
 const { Attachment } = require("discord.js"); // You could also do: const Attachment = require('discord.js').Attachment;
 
-const Scraper = require ('images-scraper');
+const Scraper = require("images-scraper");
 const bing = new Scraper.Bing();
-
 
 module.exports = {
 	name: "riolu",
@@ -14,7 +12,8 @@ module.exports = {
 	args: false,
 	cooldown: 10,
 	guildOnly: false,
-	description: "This command will look up a random Riolu picture from Bing. This might take a while.",
+	description:
+		"This command will look up a random Riolu picture from Bing. This might take a while.",
 	usage: "",
 
 	// This function is used to get a random image from Bing and then send it to Discord
