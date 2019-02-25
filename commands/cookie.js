@@ -5,6 +5,7 @@ module.exports = {
 	aliases: ["yummy"],
 	cooldown: 1,
 	guildOnly: false,
+	shortDesc: "Reacts with a cookie",
 	description: "Recieve a cookie for free!",
 	usage: "",
 

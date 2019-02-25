@@ -12,6 +12,7 @@ module.exports = {
     guildOnly: false,
     args: true,
     description: "This command will boop someone.",
+    shortDesc: "Boops someone",
     usage: "[__user__]",
 
     execute(message, args, client) {
@@ -41,6 +42,8 @@ module.exports = {
 * **Args** – Another boolean that specifies if it's necessary to specify at least one argument for the command to work. See description for&nbsp;`missingArgsVerb` above.
 
 * **Description** – A long description that will be shown when `help`&nbsp;is called for this command.
+
+* **Short description** – A short description to be shown for this command when listing all commands again with `help`.
 
 * **Usage** – A string or an array describing how to specify the command's arguments. Leave empty&nbsp;(`""`) if there are none. If there's more information regarding the arguments, add one or two newlines&nbsp;(`\n`) before and one after the extra block of text.
 

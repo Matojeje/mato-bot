@@ -16,6 +16,7 @@ module.exports = {
 	],
 	cooldown: 10,
 	guildOnly: false,
+	shortDesc: "Generates a game of minesweeper",
 	description:
 		"This command generates a minesweeper-like field using spoiler tags!",
 	usage:

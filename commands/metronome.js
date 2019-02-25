@@ -19,6 +19,7 @@ module.exports = {
 		"paw",
 	],
 	cooldown: 6,
+	shortDesc: "Replies with a random Pokémon move",
 	description:
 		"The user waggles a finger and stimulates its brain into randomly using nearly any move.\nThis command has different formatting modes and calculates critical hits and misses.",
 	guildOnly: false,

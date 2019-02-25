@@ -7,6 +7,7 @@ module.exports = {
 	missingArgsVerb: "rii",
 	aliases: ["bot"],
 	cooldown: 40,
+	shortDesc: "View info about the bot",
 	description:
 		"In " + process.env.PREFIX + "about, I tell you a little about myself!",
 	guildOnly: false,
@@ -26,9 +27,9 @@ module.exports = {
 		const riiInfo = new Discord.RichEmbed()
 			.setColor("#2990bb")
 			.setAuthor("About mato-bot", "attachment://badge.png", "")
-			.setTitle("**v1.6.1** (in development)")
+			.setTitle("**v1.6.2** (in development)")
 			.setDescription(
-				`24. 2. 2019
+				`25. 2. 2019
 				Running on Discord.js@11.4.2!
 
 				**Use ${process.env.PREFIX}help to check the available commands.**

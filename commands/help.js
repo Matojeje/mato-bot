@@ -9,19 +9,20 @@ module.exports = {
 	description:
 		"This thingy shows various useful things to know about what I can do, `beep!`",
 	guildOnly: false,
+	shortDesc: "Lists all commands or shows details of one (you're here!)",
 	usage: "[*command name*]",
 	execute(message, args) {
 		const data = [];
 		const { commands } = message.client;
 
 		if (!args.length) {
-			data.push("[Help] `Beep beep`, here's what I can do:");
-			data.push(commands.map((command) => command.name).join(", "));
-			data.push(
-				`And if you'd like to know more about one of these, send the command name after ${
-					process.env.PREFIX
-				}help!`
+			data.push("**```ini\n[Help] Beep beep, here's what I can do:\n" +
+				"If you'd like to know more about one of these, " +
+				"send the command name after " + process.env.PREFIX + "help!```**"
 			);
+			data.push(commands.map(command => {
+				return `• ${process.env.PREFIX}**${command.name}**: ${command.shortDesc || ""}`
+			}).join("\n"));
 
 			return message.author
 				.send(data, { split: true })
@@ -44,7 +45,7 @@ module.exports = {
 			commands.find((c) => c.aliases && c.aliases.includes(name));
 
 		if (!command) {
-			return message.reply("I dunno that one!");
+			return message.reply("I don't know that one!");
 		}
 
 		data.push(`**:: ${command.name} ::**`);

@@ -6,6 +6,7 @@ module.exports = {
 	cooldown: 5,
 	guildOnly: false,
 	args: false,
+	shortDesc: "Adds various reactions as a base for users to react to an idea",
 	description:
 		"Mato-bot will add the following reactions to your idea: ♥ 🇾 🇲 🇳 ❔",
 	usage: "",

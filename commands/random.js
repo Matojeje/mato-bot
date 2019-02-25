@@ -5,6 +5,7 @@ module.exports = {
 	aliases: ["r", "rnd", "rand"],
 	cooldown: 1,
 	guildOnly: false,
+	shortDesc: "Returns a random number",
 	description: "This command returns a random number!", // using `Math.random()`!",
 	usage:
 		"(**coin**/**dice**/**d20**/**int**/**range** [*min*] [*max*]/**arbitrary** [*min*] [*max*])\n" +

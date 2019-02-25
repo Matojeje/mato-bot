@@ -7,6 +7,7 @@ module.exports = {
 	args: false,
 	cooldown: 0,
 	guildOnly: false,
+	shortDesc: "Tells you the bot's uptime",
 	description: "This tells you how long is it since I woke up.",
 	usage: "",
 

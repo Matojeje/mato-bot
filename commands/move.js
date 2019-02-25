@@ -10,6 +10,7 @@ module.exports = {
 	args: true,
 	cooldown: 10,
 	guildOnly: false,
+	shortDesc: "Returns info about your specified Pokémon move",
 	description: "Looks up what a move does. (Returns flavor text using Pokéapi)",
 	usage:
 		'[*move name or ID*]\nNote: When looking up a Z move with multiple damage categories, specify which one you want (for example "tectonic rage--physical")',

@@ -12,6 +12,7 @@ module.exports = {
 	args: false,
 	cooldown: 10,
 	guildOnly: false,
+	shortDesc: "Fetches and sends a Riolu picture",
 	description:
 		"This command will look up a random Riolu picture from Bing. This might take a while.",
 	usage: "",

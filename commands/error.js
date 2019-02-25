@@ -4,6 +4,7 @@ module.exports = {
 	missingArgsVerb: "error",
 	cooldown: 0,
 	guildOnly: false,
+	shortDesc: "Throws an error",
 	description: "Throws an error.",
 	usage: "",
 
