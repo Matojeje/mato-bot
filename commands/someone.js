@@ -12,7 +12,7 @@ module.exports = {
 		"who",
 	],
 	cooldown: 4,
-	guildOnly: false,
+	guildOnly: true,
 	args: false,
 	shortDesc: "Randomly picks one server member",
 	description:
