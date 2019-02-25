@@ -26,11 +26,11 @@ module.exports = {
 
 * **Error verb** – This string will be used as a part of an error message, should the command return an error to&nbsp;`testingBot.js`. For this example:
 
-  „*There was some sort of weird error when I was trying to **boop someone**.*“
+  > There was some sort of weird error when I was trying to **boop someone**.
 
 * **Missing args verb** – Similar to above, but this will be used in the error message that'll occur if the command requires arguments, but doesn't get any. For this example:
 
-  „*You forgot to tell me the **booping** settings.*“
+  > You forgot to tell me the **booping** settings.
 
 * **Aliases** – An optional array of strings that serve as aliases for the command: If an alias is used, the same code exectues. Each alias must be unique across all the commands and their aliases. The `help`&nbsp;command lists a command's aliases if specified.
 
@@ -42,9 +42,22 @@ module.exports = {
 
 * **Description** – A long description that will be shown when `help`&nbsp;is called for this command.
 
-* **Usage** – How to specify the command's arguments. Leave empty&nbsp;(`""`) if there are none. If there's more information regarding the arguments, add one or two newlines&nbsp;(`\n`) before and one after the extra block of text.
+* **Usage** – A string or an array describing how to specify the command's arguments. Leave empty&nbsp;(`""`) if there are none. If there's more information regarding the arguments, add one or two newlines&nbsp;(`\n`) before and one after the extra block of text.
 
-### Usage formatting
+### Regarding usage
+
+#### Multiple usages
+
+If there are multiple ways to input the arguments, write each usage as an item in an   array (called `usage`). It will be detected automatically.
+
+#### Examples
+
+  |                  |In ;help code                       |Example                    |
+  |-----------------:|------------------------------------|---------------------------|
+  |*Single usage*    |Usage: \*\*`prefix + name`\*\* `usage`  |Usage: **;boop** \[*user*\]|
+  |*Multiple usages* |Usage:<br>\*\*`prefix + name`\*\* `usage[0]`<br>\*\*`prefix + name`\*\* `usage[1]`<br>⋮<br>\*\*`prefix + name`\*\* `usage[n]`|Usage:<br>;**minesweeper** \<**beginner**\|**intermediate**\|**advanced**\><br>;**minesweeper** \[*mines*=__10__\] \[*width*=__9__\] \[*height*=__9__\]|
+
+### Usage syntax
 
 #### Variables
 
@@ -66,17 +79,19 @@ Multiple choices for a flag:
 
 ## Command code
 
-All the command's main code takes place inside the execute()&nbsp;function. New functions can be specified anywhere in the code.
+All of the command's main code takes place inside the `execute()`&nbsp;function. New functions can be specified anywhere in the code.
 
 ### Input arguments
 
-The function is called from `testingBot.js` with three arguments: `message`, `args` and `client`. Due to how JavaScript works, you can set your execute()&nbsp;function to load only 1&nbsp;or two of these, but mind the order.
+The function is called from `testingBot.js` with three arguments: `message`, `args` and `client`. Due to how JavaScript works, you can set your execute()&nbsp;function to load only 1&nbsp;or 2 of these, but mind the order.
 
-Valid options:
+Valid options*:
 
 * `function execute(message)`
 * `function execute(message, args)`
 * `function execute(message, args, client)`
+
+\* Here, the variable names that will be used inside the function are the same as the variables the function is called with in `testingBot.js`. This is preferred but not necessary.
 
 In the example, not all three of the input arguments are used, and therefore using `function execute(message)` would be enough.
 
