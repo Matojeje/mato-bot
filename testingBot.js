@@ -96,7 +96,15 @@ client.on("message", (message) => {
 
 		if (command.usage) {
 			// Did I write how to use it then?
-			reply += `. You should say it like ${process.env.PREFIX}**${command.name}** ${command.usage}`;
+			if (typeof command.usage === "string") {
+				reply += ". You should write it like " +
+				`${process.env.PREFIX}**${command.name}** ${command.usage}.`;
+			} else { // There are multiple usages
+				for (let i = 0; i < command.usage.length - 1; i++) {
+					usage += `${process.env.PREFIX}**${command.name}** ${command.usage[i]} or `
+				}
+				usage += `${process.env.PREFIX}**${command.name}** ${command.usage[i]}.`
+			}
 		} else {
 			reply += ", silly";
 		}

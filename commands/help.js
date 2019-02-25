@@ -9,13 +9,13 @@ module.exports = {
 	description:
 		"This thingy shows various useful things to know about what I can do, `beep!`",
 	guildOnly: false,
-	usage: "[**command name**]",
-	execute(message, args, client) {
+	usage: "[*command name*]",
+	execute(message, args) {
 		const data = [];
 		const { commands } = message.client;
 
 		if (!args.length) {
-			data.push("[Help] `Beep` `beep`, here's what I can do:");
+			data.push("[Help] `Beep beep`, here's what I can do:");
 			data.push(commands.map((command) => command.name).join(", "));
 			data.push(
 				`And if you'd like to know more about one of these, send the command name after ${
@@ -55,10 +55,18 @@ module.exports = {
 		if (command.description) {
 			data.push(`**>** ${command.description}`);
 		}
-		if (command.usage) {
-			data.push(
-				`Usage: **${process.env.PREFIX}${command.name}** ${command.usage}`
-			);
+		if (command.usage && command.usage !== "") {
+			if (typeof command.usage === "string") {
+				data.push(
+					`Usage: ${process.env.PREFIX}**${command.name}** ${command.usage}`
+				);
+			} else {
+				let usage = "Usage:";
+				for (let i = 0; i < command.usage.length; i++) {
+					usage += `\n${process.env.PREFIX}**${command.name}** ${command.usage[i]}`
+				}
+				data.push(usage + "\n");
+			}
 		}
 
 		data.push(`Cooldown: ${command.cooldown || 3}s`);
