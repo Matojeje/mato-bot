@@ -12,7 +12,7 @@ module.exports = {
     guildOnly: false,
     args: true,
     description: "This command will boop someone.",
-    usage: "[*user*]",
+    usage: "[__user__]",
 
     execute(message, args, client) {
         message.channel.send(`*boops ${args[0]}!*`)
@@ -55,13 +55,13 @@ If there are multiple ways to input the arguments, write each usage as an item i
   |                  |In ;help code                       |Example                    |
   |-----------------:|------------------------------------|---------------------------|
   |*Single usage*    |Usage: \*\*`prefix + name`\*\* `usage`  |Usage: **;boop** \[*user*\]|
-  |*Multiple usages* |Usage:<br>\*\*`prefix + name`\*\* `usage[0]`<br>\*\*`prefix + name`\*\* `usage[1]`<br>⋮<br>\*\*`prefix + name`\*\* `usage[n]`|Usage:<br>;**minesweeper** \<**beginner**\|**intermediate**\|**advanced**\><br>;**minesweeper** \[*mines*=__10__\] \[*width*=__9__\] \[*height*=__9__\]|
+  |*Multiple usages* |Usage:<br>\*\*`prefix + name`\*\* `usage[0]`<br>\*\*`prefix + name`\*\* `usage[1]`<br>⋮<br>\*\*`prefix + name`\*\* `usage[n]`|Usage:<br>;**minesweeper** \<**beginner**\|**intermediate**\|**advanced**\><br>;**minesweeper** \[<u>mines</u>=*10*\] \[<u>width</u>=*9*\] \[<u>height</u>=*9*\]|
 
 ### Usage syntax
 
 #### Variables
 
-|*variable* \[*default*=__10__\] \[*opt.variable*\]|`*variable* [*default*=__10__] [*opt.variable*]`|
+|<u>variable</u> \[<u>default</u>=*10*\] \[<u>opt.variable</u>\]|`__variable__ [__default__=*10*] [__opt.variable__]`|
 |--------------------------------------------------|------------------------------------------------|
 
 * Note that a variable that defaults to something is always optional.
