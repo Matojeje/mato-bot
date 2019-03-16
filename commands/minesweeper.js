@@ -1,4 +1,3 @@
-/* eslint-disable no-multi-spaces */
 module.exports = {
 	name: "minesweeper",
 	errorVerb: "place mines",

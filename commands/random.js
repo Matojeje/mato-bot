@@ -2,7 +2,7 @@ module.exports = {
 	name: "random",
 	errorVerb: "summon RNGesus",
 	missingArgsVerb: "randomizing",
-	aliases: ["r", "rnd", "rand"],
+	aliases: ["r", "rnd", "rand", "stochastic"],
 	cooldown: 1,
 	guildOnly: false,
 	shortDesc: "Returns a random number",
