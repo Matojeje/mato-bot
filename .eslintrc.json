@@ -8,7 +8,7 @@
         "ecmaVersion": 8
     },
     "rules": {
-        "brace-style": ["off", "stroustrup", { "allowSingleLine": true }],
+        "brace-style": ["off", "1tbs", { "allowSingleLine": true }],
         "comma-dangle": ["error", "always-multiline"],
         "comma-spacing": "error",
         "comma-style": "error",
