@@ -8,103 +8,114 @@ module.exports = {
 	missingArgsVerb: "berry",
 	cooldown: 10,
 	guildOnly: false,
-	args: true,
+	args: false,
 	description:
-		"Get information about a specific pokémon berry (using Pokéapi).",
+		"Get information about a random/specific pokémon berry or a list of them (using Pokéapi).",
 	shortDesc: "Look up berry info",
-	usage: "[*berry name*]",
+	usage: "(**list**/[*berry name*])",
 
 	execute(message, args) {
-		const mmToInch = Math.pow(25.4, -1);
+		P.getBerriesList().then(function(berryList) {
 
-		const badge = new Discord.Attachment(
-			"./resources/badgeMoveInfo.png",
-			"badge.png"
-		);
-		const icon = new Discord.Attachment(
-			"./resources/iconMatoBot.png",
-			"icon.png"
-		);
+			if (args[0] && args[0].toLowerCase() === "list") {
+				message.channel.send("**Current list of berries**:");
+				berries = [];
+				berryList.results.forEach(berry => {
+					berries.push(berry.name);
+				});
+				message.channel.send(berries.join(", "));
+			} else {
+				berryName = (args[0])
+					? args[0].toLowerCase().match(/^[a-z]+/gm)[0]
+					: berryList.results[getRandomInt(1, berryList.count)].name;
 
-		berryName = args[0].toLowerCase().replace(/\W?(berry)?$/gm, "");
-		P.getItemByName(berryName + "-berry")
-			.then(function(berryItem) {
-				P.getBerryByName(berryName)
-					.then(function(berry) {
-						const capitalizedBerryName = capitalizeFirstLetter(berryName);
+				console.log("berry name:" + berryName);
 
-						const flavorTexts = berryItem.flavor_text_entries;
-						for (const x in flavorTexts) {
-							if (
-								flavorTexts[x].language.name === "en" &&
-								flavorTexts[x].version_group.name == "ultra-sun-ultra-moon"
-							) {
-								infoText = flavorTexts[x].text;
-								break;
-							}
-						}
+				P.getItemByName(berryName + "-berry")
+					.then(function(berryItem) {
+						P.getBerryByName(berryName)
+							.then(function(berry) {
+								const capitalizedBerryName = capitalizeFirstLetter(berryName);
+								console.log("berry: " + capitalizedBerryName);
 
-						const names = berryItem.names;
-						for (const x in names) {
-							if (names[x].language.name === "en") {
-								berryName = names[x].name;
-								break;
-							}
-						}
-
-						const flavors = berry.flavors;
-						berryFlavor = "";
-						numberOfFlavors = 0;
-						for (const x in flavors) {
-							// console.log(flavors[x].flavor.name + ": " + flavors[x].potency)
-							if (flavors[x].potency > 0) {
-								numberOfFlavors++;
-								if (numberOfFlavors > 1) {
-									berryFlavor += ", ";
+								const flavorTexts = berryItem.flavor_text_entries;
+								for (const x in flavorTexts) {
+									if (
+										flavorTexts[x].language.name === "en" &&
+										flavorTexts[x].version_group.name == "ultra-sun-ultra-moon"
+									) {
+										infoText = flavorTexts[x].text;
+										break;
+									}
 								}
-								if (flavors[x].potency > 10) {
-									berryFlavor += "very ";
+
+								const names = berryItem.names;
+								for (const x in names) {
+									if (names[x].language.name === "en") {
+										berryName = names[x].name;
+										break;
+									}
 								}
-								berryFlavor += flavors[x].flavor.name;
-							}
-						}
 
-						if (berry.size >= 100) {
-							berrySizeMetric = berry.size / 10 + " cm";
-						} else {
-							berrySizeMetric = berry.size + " mm";
-						}
+								const flavors = berry.flavors;
+								berryFlavor = "";
+								numberOfFlavors = 0;
+								for (const x in flavors) {
+									// console.log(flavors[x].flavor.name + ": " + flavors[x].potency)
+									if (flavors[x].potency > 0) {
+										numberOfFlavors++;
+										if (numberOfFlavors > 1) {
+											berryFlavor += ", ";
+										}
+										if (flavors[x].potency > 10) {
+											berryFlavor += "very ";
+										}
+										berryFlavor += flavors[x].flavor.name;
+									}
+								}
 
-						const image = new Discord.Attachment(
-							berryItem.sprites.default,
-							"image.png"
-						);
-						const sprite = new Discord.Attachment(
-							berryItem.sprites.default,
-							capitalizedBerryName + " berry.png"
-						);
+								berrySizeMetric = (berry.size >= 100)
+									? berry.size / 10 + " cm"
+									: berrySizeMetric = berry.size + " mm";
 
-						const moveInfo = buildBerryEmbed(
-							capitalizedBerryName,
-							berryItem,
-							berry,
-							mmToInch
-						);
+								const image = new Discord.Attachment(
+									berryItem.sprites.default,
+									"image.png"
+								);
+								const sprite = new Discord.Attachment(
+									berryItem.sprites.default,
+									capitalizedBerryName + " berry.png"
+								);
 
-						message.channel.send({
-							embed: moveInfo,
-							files: [sprite, badge, image, icon],
-						});
+								const mmToInch = Math.pow(25.4, -1);
+
+								const moveInfo = buildBerryEmbed(
+									capitalizedBerryName,
+									berryItem,
+									berry,
+									mmToInch
+								);
+
+								const badge = new Discord.Attachment(
+									"./resources/badgeMoveInfo.png",
+									"badge.png"
+								);
+								const icon = new Discord.Attachment(
+									"./resources/iconMatoBot.png",
+									"icon.png"
+								);
+
+								message.channel.send({
+									embed: moveInfo,
+									files: [sprite, badge, image, icon],
+								});
+							})
+							.catch(error => (errorPokeAPI(error)));
 					})
-					.catch(function(error) {
-						console.log("Pokédex API error:\n\n" + error);
-						message.channel.send("**PokéAPI error**:\n" + error);
-					});
-			})
-			.catch(function(error) {
-				console.log("Pokédex API error:\n\n" + error);
-				message.channel.send("**PokéAPI error**:\n" + error);
-			});
+					.catch(error => (errorPokeAPI(error)));
+			}
+
+		}).catch(error => (errorPokeAPI(error)));
 	},
 };
 
@@ -112,7 +123,7 @@ function buildBerryEmbed(capitalizedBerryName, berryItem, berry, mmToInch) {
 	return (
 		new Discord.RichEmbed()
 			.setColor("#2990bb")
-			.setTitle(capitalizedBerryName + " Berry")
+			.setTitle("**" + capitalizedBerryName + " Berry**")
 			.setAuthor("Berry info", "attachment://badge.png", "")
 			.setImage("attachment://image.png")
 			.setURL(
@@ -165,4 +176,15 @@ function buildBerryEmbed(capitalizedBerryName, berryItem, berry, mmToInch) {
 // https://stackoverflow.com/a/1026087
 function capitalizeFirstLetter(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function errorPokeAPI(error) {
+	console.log("Pokédex API error:\n\n" + error);
+	message.channel.send("**PokéAPI error**:\n" + error);
 }

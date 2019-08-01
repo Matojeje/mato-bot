@@ -27,9 +27,9 @@ module.exports = {
 		const riiInfo = new Discord.RichEmbed()
 			.setColor("#2990bb")
 			.setAuthor("About mato-bot", "attachment://badge.png", "")
-			.setTitle("**v1.6.2** (in development)")
+			.setTitle("**v1.6.3** (in development)")
 			.setDescription(
-				`25. 2. 2019
+				`31. 7. 2019
 				Running on Discord.js@11.4.2!
 
 				**Use ${process.env.PREFIX}help to check the available commands.**
