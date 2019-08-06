@@ -8,7 +8,7 @@ module.exports = {
 	cooldown: 1,
 	args: true,
 	guildOnly: false,
-	shortDesc: "Convert between metric and imperial units",
+	shortDesc: "Converts between metric and imperial units",
 	description: `Converts between metric and imperial units.
 	Available units: inch, foot, mm, cm, m, km, sqrt-m, sqrt-cm, sqrt-mm, sqrt-km, sqrt-inch, sqrt-foot.`,
 	usage: "[**value**] [**from this unit**] (to) [**to this unit**]",

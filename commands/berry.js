@@ -10,7 +10,7 @@ module.exports = {
 	guildOnly: false,
 	args: false,
 	description:
-		"Get information about a random/specific pokémon berry or a list of them (using Pokéapi).",
+		"Gets information about a random/specific pokémon berry or a list of them (using Pokéapi).",
 	shortDesc: "Look up berry info",
 	usage: "(**list**/[*berry name*])",
 

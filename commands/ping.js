@@ -8,7 +8,7 @@ module.exports = {
 	cooldown: 1,
 	guildOnly: false,
 	description: "Ping!",
-	shortDesc: "Gives back a \"pong\", or the actual ping time",
+	shortDesc: 'Gives back a "pong", or the actual ping time',
 	usage: "(**a**) to display actual ping",
 
 	execute(message, args, client) {

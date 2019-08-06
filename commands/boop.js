@@ -7,7 +7,7 @@ module.exports = {
 	guildOnly: false,
 	args: true,
 	description: "This command will boop someone.",
-	shortDesc: "Boop someone",
+	shortDesc: "Boops someone",
 	usage: "[__user__]",
 
 	execute(message, args, client) {

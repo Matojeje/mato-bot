@@ -31,6 +31,7 @@ Additional Note: Please clean up your code with Prettier and with the following 
 
 * [HavocDusk](https://duskyumbreon.deviantart.com)
 * [Spray-POKA](https://www.deviantart.com/spray-poka)
+* [ParaPetch](https://twitter.com/Parapetch_)
 
 ### Special Thanks
 

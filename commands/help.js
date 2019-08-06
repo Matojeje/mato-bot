@@ -9,7 +9,7 @@ module.exports = {
 	description:
 		"This thingy shows various useful things to know about what I can do, `beep!`",
 	guildOnly: false,
-	shortDesc: "Lists all commands or shows details of one (you're here!)",
+	shortDesc: "Lists all commands or shows details of one *(you're here!)*",
 	usage: "[*command name*]",
 	execute(message, args) {
 		const data = [];
