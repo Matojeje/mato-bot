@@ -15,107 +15,118 @@ module.exports = {
 	usage: "(**list**/[*berry name*])",
 
 	execute(message, args) {
-		P.getBerriesList().then(function(berryList) {
+		P.getBerriesList()
+			.then(function(berryList) {
+				if (args[0] && args[0].toLowerCase() === "list") {
+					message.channel.send("**Current list of berries**:");
+					berries = [];
+					berryList.results.forEach(berry => {
+						berries.push(berry.name);
+					});
+					message.channel.send(berries.join(", "));
+				} else {
+					berryName = args[0]
+						? args[0].toLowerCase().match(/^[a-z]+/gm)[0]
+						: berryList.results[getRandomInt(1, berryList.count)]
+								.name;
 
-			if (args[0] && args[0].toLowerCase() === "list") {
-				message.channel.send("**Current list of berries**:");
-				berries = [];
-				berryList.results.forEach(berry => {
-					berries.push(berry.name);
-				});
-				message.channel.send(berries.join(", "));
-			} else {
-				berryName = (args[0])
-					? args[0].toLowerCase().match(/^[a-z]+/gm)[0]
-					: berryList.results[getRandomInt(1, berryList.count)].name;
+					console.log("berry name:" + berryName);
 
-				console.log("berry name:" + berryName);
+					P.getItemByName(berryName + "-berry")
+						.then(function(berryItem) {
+							P.getBerryByName(berryName)
+								.then(function(berry) {
+									const capitalizedBerryName = capitalizeFirstLetter(
+										berryName
+									);
+									console.log(
+										"berry: " + capitalizedBerryName
+									);
 
-				P.getItemByName(berryName + "-berry")
-					.then(function(berryItem) {
-						P.getBerryByName(berryName)
-							.then(function(berry) {
-								const capitalizedBerryName = capitalizeFirstLetter(berryName);
-								console.log("berry: " + capitalizedBerryName);
-
-								const flavorTexts = berryItem.flavor_text_entries;
-								for (const x in flavorTexts) {
-									if (
-										flavorTexts[x].language.name === "en" &&
-										flavorTexts[x].version_group.name == "ultra-sun-ultra-moon"
-									) {
-										infoText = flavorTexts[x].text;
-										break;
-									}
-								}
-
-								const names = berryItem.names;
-								for (const x in names) {
-									if (names[x].language.name === "en") {
-										berryName = names[x].name;
-										break;
-									}
-								}
-
-								const flavors = berry.flavors;
-								berryFlavor = "";
-								numberOfFlavors = 0;
-								for (const x in flavors) {
-									// console.log(flavors[x].flavor.name + ": " + flavors[x].potency)
-									if (flavors[x].potency > 0) {
-										numberOfFlavors++;
-										if (numberOfFlavors > 1) {
-											berryFlavor += ", ";
+									const flavorTexts =
+										berryItem.flavor_text_entries;
+									for (const x in flavorTexts) {
+										if (
+											flavorTexts[x].language.name ===
+												"en" &&
+											flavorTexts[x].version_group.name ==
+												"ultra-sun-ultra-moon"
+										) {
+											infoText = flavorTexts[x].text;
+											break;
 										}
-										if (flavors[x].potency > 10) {
-											berryFlavor += "very ";
-										}
-										berryFlavor += flavors[x].flavor.name;
 									}
-								}
 
-								berrySizeMetric = (berry.size >= 100)
-									? berry.size / 10 + " cm"
-									: berrySizeMetric = berry.size + " mm";
+									const names = berryItem.names;
+									for (const x in names) {
+										if (names[x].language.name === "en") {
+											berryName = names[x].name;
+											break;
+										}
+									}
 
-								const image = new Discord.Attachment(
-									berryItem.sprites.default,
-									"image.png"
-								);
-								const sprite = new Discord.Attachment(
-									berryItem.sprites.default,
-									capitalizedBerryName + " berry.png"
-								);
+									const flavors = berry.flavors;
+									berryFlavor = "";
+									numberOfFlavors = 0;
+									for (const x in flavors) {
+										// console.log(flavors[x].flavor.name + ": " + flavors[x].potency)
+										if (flavors[x].potency > 0) {
+											numberOfFlavors++;
+											if (numberOfFlavors > 1) {
+												berryFlavor += ", ";
+											}
+											if (flavors[x].potency > 10) {
+												berryFlavor += "very ";
+											}
+											berryFlavor +=
+												flavors[x].flavor.name;
+										}
+									}
 
-								const mmToInch = Math.pow(25.4, -1);
+									berrySizeMetric =
+										berry.size >= 100
+											? berry.size / 10 + " cm"
+											: (berrySizeMetric =
+													berry.size + " mm");
 
-								const moveInfo = buildBerryEmbed(
-									capitalizedBerryName,
-									berryItem,
-									berry,
-									mmToInch
-								);
+									const image = new Discord.Attachment(
+										berryItem.sprites.default,
+										"image.png"
+									);
+									const sprite = new Discord.Attachment(
+										berryItem.sprites.default,
+										capitalizedBerryName + " berry.png"
+									);
 
-								const badge = new Discord.Attachment(
-									"./resources/badgeMoveInfo.png",
-									"badge.png"
-								);
-								const icon = new Discord.Attachment(
-									"./resources/iconMatoBot.png",
-									"icon.png"
-								);
+									const mmToInch = Math.pow(25.4, -1);
 
-								message.channel.send({
-									embed: moveInfo,
-									files: [sprite, badge, image, icon],
-								});
-							})
-							.catch(error => (errorPokeAPI(error)));
-					})
-					.catch(error => (errorPokeAPI(error)));
-			}
+									const moveInfo = buildBerryEmbed(
+										capitalizedBerryName,
+										berryItem,
+										berry,
+										mmToInch
+									);
 
-		}).catch(error => (errorPokeAPI(error)));
+									const badge = new Discord.Attachment(
+										"./resources/badgeMoveInfo.png",
+										"badge.png"
+									);
+									const icon = new Discord.Attachment(
+										"./resources/iconMatoBot.png",
+										"icon.png"
+									);
+
+									message.channel.send({
+										embed: moveInfo,
+										files: [sprite, badge, image, icon],
+									});
+								})
+								.catch(error => errorPokeAPI(error));
+						})
+						.catch(error => errorPokeAPI(error));
+				}
+			})
+			.catch(error => errorPokeAPI(error));
 	},
 };
 
@@ -136,10 +147,15 @@ function buildBerryEmbed(capitalizedBerryName, berryItem, berry, mmToInch) {
 					.replace(/\n: /gm, ": ")
 					.replace(/^.*:/gm, "**$&**")
 			)
-			.addField("Flavor", capitalizeFirstLetter(berryFlavor) || "???", true)
+			.addField(
+				"Flavor",
+				capitalizeFirstLetter(berryFlavor) || "???",
+				true
+			)
 			.addField(
 				"Firmness",
-				capitalizeFirstLetter(berry.firmness.name.replace(/-/g, " ")) || "???",
+				capitalizeFirstLetter(berry.firmness.name.replace(/-/g, " ")) ||
+					"???",
 				true
 			)
 			.addField("Smoothness", berry.smoothness + "% water" || "???", true)

@@ -21,7 +21,8 @@ module.exports = {
 	cooldown: 6,
 	shortDesc: "Replies with a random Pokémon move",
 	description:
-		"The user waggles a finger and stimulates its brain into randomly using nearly any move.\nThis command has different formatting modes and calculates critical hits and misses.",
+		"The user waggles a finger and stimulates its brain into randomly using nearly any move.\n \
+		This command has different formatting modes and calculates critical hits and misses.",
 	guildOnly: false,
 	usage:
 		"(**x**/**t**/**h**) (**m**/**f**/**p**/**n**) (**moveInfo** / **info** / **i**)\n" +
@@ -41,20 +42,20 @@ module.exports = {
 			mode = args[0];
 			args.shift();
 			switch (mode) {
-			case "x": // Attack name only
-				message.channel.send(`**${move.Name}**`);
-				break;
-			case "t": // Ticki style attack display
-				tickiStyle(move, message);
-				break;
-			case "h": // Emoji help
-				emojiMessage = "**Move type emojis**:\n\n";
-				for (const type in emojiData) {
-					emojiMessage += emojiData[type] + " | " + type + "\n";
-				}
-				message.reply(emojiMessage);
-				break;
-			default:
+				case "x": // Attack name only
+					message.channel.send(`**${move.Name}**`);
+					break;
+				case "t": // Ticki style attack display
+					tickiStyle(move, message);
+					break;
+				case "h": // Emoji help
+					emojiMessage = "**Move type emojis**:\n\n";
+					for (const type in emojiData) {
+						emojiMessage += emojiData[type] + " | " + type + "\n";
+					}
+					message.reply(emojiMessage);
+					break;
+				default:
 			}
 		} else {
 			if (
@@ -64,26 +65,26 @@ module.exports = {
 				args[0] == "p"
 			) {
 				switch (args[0]) {
-				case "m":
-					personal = "he";
-					possesive = "his";
-					demonstrative = "him";
-					verb = "s";
-					break;
-				case "f":
-					personal = "she";
-					possesive = "her";
-					demonstrative = "her";
-					verb = "s";
-					break;
-				case "p":
-					personal = "they";
-					possesive = "their";
-					demonstrative = "them";
-					verb = "";
-					break;
-				default:
-					setDefaultHeckinPronouns();
+					case "m":
+						personal = "he";
+						possesive = "his";
+						demonstrative = "him";
+						verb = "s";
+						break;
+					case "f":
+						personal = "she";
+						possesive = "her";
+						demonstrative = "her";
+						verb = "s";
+						break;
+					case "p":
+						personal = "they";
+						possesive = "their";
+						demonstrative = "them";
+						verb = "";
+						break;
+					default:
+						setDefaultHeckinPronouns();
 				}
 				args.shift();
 			} else {
@@ -117,9 +118,7 @@ module.exports = {
 		if (move.Accuracy != 100 && move.Accuracy != "") {
 			accuracyCalc = Math.floor(Math.random() * 100);
 			console.log(
-				`Accuracy for ${move.Name} with ${
-					move.Accuracy
-				} accuracy: ${accuracyCalc}`
+				`Accuracy for ${move.Name} with ${move.Accuracy} accuracy: ${accuracyCalc}`
 			);
 			if (accuracyCalc > move.Accuracy) {
 				moveSuccessful = 0;
@@ -132,28 +131,28 @@ module.exports = {
 
 		console.log(moveSuccessful);
 		switch (moveSuccessful) {
-		case 0:
-			message.channel.send("**`...but it missed!`**");
-			break;
-		case 2:
-			message.channel.send("**`Critical hit!`**");
-			break;
-		default:
+			case 0:
+				message.channel.send("**`...but it missed!`**");
+				break;
+			case 2:
+				message.channel.send("**`Critical hit!`**");
+				break;
+			default:
 		}
 	},
 };
 function tickiStyle(move, message) {
 	toSend = `**${move.Name}**\n`;
 	switch (move.Category) {
-	case "Physical":
-		toSend += "⚔ (Physical)";
-		break;
-	case "Special":
-		toSend += "☄ (Special)";
-		break;
-	case "Status":
-		toSend += "🌧 (Status)";
-		break;
+		case "Physical":
+			toSend += "⚔ (Physical)";
+			break;
+		case "Special":
+			toSend += "☄ (Special)";
+			break;
+		case "Status":
+			toSend += "🌧 (Status)";
+			break;
 	}
 	t = move.Type;
 	toSend += `\n${emojiData[move.Type]} (${move.Type}) Power: ${move.Power ||
@@ -164,9 +163,7 @@ function tickiStyle(move, message) {
 
 function makeMoveMessages(user, move) {
 	moveAnnounce = [
-		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${
-			move.Name
-		}!\``,
+		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${move.Name}!\``,
 		`\`${user} used Metronome!\n${user} used ${move.Name}!\``,
 		`\`${user}'s Metronome let ${demonstrative} use ${move.Name}!\``,
 		`\`${user} holds ${possesive} finger in the air and wags it. ${cap(
@@ -211,9 +208,9 @@ function setupMoveInfo(move, message) {
 			)
 			.setAuthor("Move info", "attachment://badge.png", "")
 			.setDescription(
-				`\`\`\`${infoText}\`\`\`\nMove number ${move["#"]} from generation ${
-					move.Gen
-				}.`
+				`\`\`\`${infoText}\`\`\`\nMove number ${
+					move["#"]
+				} from generation ${move.Gen}.`
 			)
 			.addField("Type", move.Type || "None", true)
 			.addField("Damage category", move.Category || "None", true)

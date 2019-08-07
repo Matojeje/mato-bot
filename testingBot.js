@@ -8,7 +8,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs
 	.readdirSync("./commands")
-	.filter((file) => file.endsWith(".js"));
+	.filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -18,7 +18,7 @@ for (const file of commandFiles) {
 const musicList = loadSongs();
 const cooldowns = new Discord.Collection();
 
-client.on("guildCreate", (guild) => {
+client.on("guildCreate", guild => {
 	console.log("Got added to " + guild);
 	if (guild.available) {
 		const drawing = new Discord.Attachment(
@@ -53,7 +53,7 @@ client.on("ready", () => {
 		.send(`Bot is up! (${new Date().toLocaleTimeString()})`);
 });
 
-client.on("message", (message) => {
+client.on("message", message => {
 	// Command check
 	if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) {
 		const itsCommand = false;
@@ -61,9 +61,11 @@ client.on("message", (message) => {
 		return;
 	}
 	console.log(message.author.id);
-	if (message.author.id == process.env.MATO
-		&& message.content.startsWith(`${process.env.PREFIX}mato`)
-		&& !message.channel.name) {
+	if (
+		message.author.id == process.env.MATO &&
+		message.content.startsWith(`${process.env.PREFIX}mato`) &&
+		!message.channel.name
+	) {
 		secretCommand(message);
 	}
 
@@ -71,13 +73,14 @@ client.on("message", (message) => {
 	const commandName = args.shift().toLowerCase();
 
 	console.log(
-		`Got command! ${commandName}, from ${message.author.username} at ${message
-			.channel.name || "DMs"}`
+		`Got command! ${commandName}, from ${
+			message.author.username
+		} at ${message.channel.name || "DMs"}`
 	);
 	const command =
 		client.commands.get(commandName) || // Is that a real command?
 		client.commands.find(
-			(cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+			cmd => cmd.aliases && cmd.aliases.includes(commandName)
 		);
 	if (!command) return;
 
@@ -90,16 +93,16 @@ client.on("message", (message) => {
 
 	if (command.args && !args.length) {
 		// Argument count check from "args"
-		let reply = `${message.author}, you forgot to tell me the ${
-			command.missingArgsVerb
-		} settings`;
+		let reply = `${message.author}, you forgot to tell me the ${command.missingArgsVerb} settings`;
 
 		if (command.usage) {
 			// Did I write how to use it then?
 			if (typeof command.usage === "string") {
-				reply += ". You should write it like " +
-				`${process.env.PREFIX}**${command.name}** ${command.usage}.`;
-			} else { // There are multiple usages
+				reply +=
+					". You should write it like " +
+					`${process.env.PREFIX}**${command.name}** ${command.usage}.`;
+			} else {
+				// There are multiple usages
 				for (let i = 0; i < command.usage.length - 1; i++) {
 					usage += `${process.env.PREFIX}**${command.name}** ${command.usage[i]} or `;
 				}
@@ -129,7 +132,8 @@ client.on("message", (message) => {
 		timestamps.set(message.author.id, now);
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 	} else {
-		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+		const expirationTime =
+			timestamps.get(message.author.id) + cooldownAmount;
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
 			return message.reply(
@@ -152,8 +156,9 @@ client.on("message", (message) => {
 		if (message.channel.type !== "text") {
 			dmRecipient = tag(message.author) + ", ";
 		}
-		message.reply(dmRecipient +
-			"there was some sort of weird error when I was trying to " +
+		message.reply(
+			dmRecipient +
+				"there was some sort of weird error when I was trying to " +
 				command.errorVerb +
 				".\n\n*a small rolled up paper strip prints out, saying:*\n```js\n" +
 				error +
@@ -169,7 +174,7 @@ client.on("message", (message) => {
 client.login(process.env.CLIENT_TOKEN);
 console.log("Prefix: " + process.env.PREFIX);
 
-process.on("unhandledRejection", (error) =>
+process.on("unhandledRejection", error =>
 	console.error(`Uncaught Promise Rejection:\n${error}`)
 );
 
@@ -201,37 +206,42 @@ function onDM(message) {
 		message.author.id != 342273963734466561
 	) {
 		console.log(
-			"Recieved a non-command DM from " + message.author.tag + ":\n" + message
+			"Recieved a non-command DM from " +
+				message.author.tag +
+				":\n" +
+				message
 		);
 		// client.users.get(process.env.MATO).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
 	}
 }
 
 function secretCommand(message) {
-	const args = message.content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
+	const args = message.content
+		.slice(process.env.PREFIX.length)
+		.split(/\s?§\s?/g); // Splitting out arguments and prefix
 	commandName = args.shift().toLowerCase();
 	console.log(`Secret mato command: ${args[0]} (${message.content})`);
 	switch (args[0]) {
-	case "send": // ;mato § send § 12345 § henlo (§ settings)
-		matoChannel = client.channels.get(args[1]);
-		if (matoChannel == undefined) {
-			console.log("Can't send there");
+		case "send": // ;mato § send § 12345 § henlo (§ settings)
+			matoChannel = client.channels.get(args[1]);
+			if (matoChannel == undefined) {
+				console.log("Can't send there");
+				break;
+			}
+			matoChannel.send(args[2], args[3] || "");
 			break;
-		}
-		matoChannel.send(args[2], args[3] || "");
-		break;
-	case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
-		matoUser = client.users.get(args[1]);
-		matoUser.send(args[2], args[3] || "");
-		console.log("I secretly sent a DM to " + matoUser.tag + "!");
-		break;
-	case "test":
-		message.author.send("rii");
-		break;
-	case "music":
-		client.user.setActivity(args[1], { type: "LISTENING" });
-		break;
-	default:
+		case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
+			matoUser = client.users.get(args[1]);
+			matoUser.send(args[2], args[3] || "");
+			console.log("I secretly sent a DM to " + matoUser.tag + "!");
+			break;
+		case "test":
+			message.author.send("rii");
+			break;
+		case "music":
+			client.user.setActivity(args[1], { type: "LISTENING" });
+			break;
+		default:
 	}
 }
 

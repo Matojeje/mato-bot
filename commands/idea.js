@@ -13,7 +13,7 @@ module.exports = {
 
 	async execute(message) {
 		// https://hackernoon.com/lets-make-a-javascript-wait-function-fa3a2eb88f11
-		const wait = (ms) => new Promise((r, j) => setTimeout(r, ms || 1000));
+		const wait = ms => new Promise((r, j) => setTimeout(r, ms || 1000));
 
 		message.react("♥");
 		await wait();

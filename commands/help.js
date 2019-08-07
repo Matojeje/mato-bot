@@ -16,13 +16,22 @@ module.exports = {
 		const { commands } = message.client;
 
 		if (!args.length) {
-			data.push("**```ini\n[Help] Beep beep, here's what I can do:\n" +
-				"If you'd like to know more about one of these, " +
-				"send the command name after " + process.env.PREFIX + "help!```**"
+			data.push(
+				"**```ini\n[Help] Beep beep, here's what I can do:\n" +
+					"If you'd like to know more about one of these, " +
+					"send the command name after " +
+					process.env.PREFIX +
+					"help!```**"
 			);
-			data.push(commands.map(command => {
-				return `• ${process.env.PREFIX}**${command.name}**: ${command.shortDesc || ""}`;
-			}).join("\n"));
+			data.push(
+				commands
+					.map(command => {
+						return `• ${process.env.PREFIX}**${
+							command.name
+						}**: ${command.shortDesc || ""}`;
+					})
+					.join("\n")
+			);
 
 			return message.author
 				.send(data, { split: true })
@@ -30,7 +39,7 @@ module.exports = {
 					if (message.channel.type === "dm") return;
 					message.reply("I've sent you a DM with all my commands!");
 				})
-				.catch((error) => {
+				.catch(error => {
 					console.error(
 						`Could not send help DM to ${message.author.tag}.\n`,
 						error
@@ -42,7 +51,7 @@ module.exports = {
 		const name = args[0].toLowerCase();
 		const command =
 			commands.get(name) ||
-			commands.find((c) => c.aliases && c.aliases.includes(name));
+			commands.find(c => c.aliases && c.aliases.includes(name));
 
 		if (!command) {
 			return message.reply("I don't know that one!");

@@ -16,7 +16,8 @@ module.exports = {
 	args: false,
 	shortDesc: "Randomly picks one server member",
 	description:
-		"This command will return the name of a randomly picked user on this text channel. It will not tag them. Doesn't work in DMs. Doesn't return bots.",
+		"This command will return the name of a randomly picked user on this text channel. \
+		 It will not tag them. Doesn't work in DMs. Doesn't return bots.",
 	usage: "",
 
 	execute(message) {

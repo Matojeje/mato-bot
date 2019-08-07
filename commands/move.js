@@ -11,9 +11,11 @@ module.exports = {
 	cooldown: 10,
 	guildOnly: false,
 	shortDesc: "Returns info about your specified Pokémon move",
-	description: "Looks up what a move does. (Returns flavor text using Pokéapi)",
+	description:
+		"Looks up what a move does. (Returns flavor text using Pokéapi)",
 	usage:
-		'[*move name or ID*]\nNote: When looking up a Z move with multiple damage categories, specify which one you want (for example "tectonic rage--physical")',
+		'[*move name or ID*]\nNote: When looking up a Z move with multiple damage categories, \
+		specify which one you want (for example "tectonic rage--physical")',
 
 	execute(message, args, client) {
 		let hasTextSetting = false;
@@ -47,9 +49,11 @@ module.exports = {
 					}
 					message.channel.send(
 						`**${cap(input)}** (${moveInfo["type"]["name"] ||
-							"unknown"} type ${moveInfo["damage_class"]["name"] ||
-							""} move)\nPower: **${moveInfo["power"] ||
-							"?"}** Accuracy: **${moveInfo["accuracy"] || "?"}**\n${infoText}`
+							"unknown"} type ${moveInfo["damage_class"][
+							"name"
+						] || ""} move)\nPower: **${moveInfo["power"] ||
+							"?"}** Accuracy: **${moveInfo["accuracy"] ||
+							"?"}**\n${infoText}`
 					);
 				} else if (!hasTextSetting) {
 					message.reply("please specify the text kind");

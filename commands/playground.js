@@ -15,21 +15,24 @@ module.exports = {
 
 	execute(message, args, client) {
 		switch (args[0].toLowerCase()) {
-		case "dataurl":
-			reply("DataURL test!");
+			case "dataurl":
+				reply("DataURL test!");
 
-			loss = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAHCAMAAAAPmYwrAAAABlBMVEUAAAD///+l2Z/dAAAAIElEQVQIW2NgYGBkAGEQBAM0LkwIxoQDrLKoOmFckGIABjsAHwiH5BAAAAAASUVORK5CYII=";
+				loss =
+					"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAHCAMAAAAPmYwrAAAABlBMVEUAAAD///+l2Z/dAAAAIElEQVQIW2NgYGBkAGEQBAM0LkwIxoQDrLKoOmFckGIABjsAHwiH5BAAAAAASUVORK5CYII=";
 
-			message.channel.send({
-				files: [dataURLtoBuffer(loss)],
-			}).catch(e => {
-				throw new Error(e);
-			});
-			break;
+				message.channel
+					.send({
+						files: [dataURLtoBuffer(loss)],
+					})
+					.catch(e => {
+						throw new Error(e);
+					});
+				break;
 
-		default:
-			reply("What??");
-			break;
+			default:
+				reply("What??");
+				break;
 		}
 
 		function reply(text) {
@@ -37,7 +40,7 @@ module.exports = {
 		}
 
 		function dataURLtoBuffer(dataUrl) {
-			return Buffer.from(dataUrl.split(",")[1], 'base64');
+			return Buffer.from(dataUrl.split(",")[1], "base64");
 		}
 	},
 };

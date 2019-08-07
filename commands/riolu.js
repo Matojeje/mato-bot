@@ -5,7 +5,7 @@ const bing = new Scraper.Bing();
 
 module.exports = {
 	name: "riolu",
-	errorVerb: "look up Riolu pics",
+	errorVerb: "look up Riolu pictures",
 	missingArgsVerb: "Riolu",
 
 	aliases: ["rpics", "rii", "riolupics"],
@@ -22,7 +22,9 @@ module.exports = {
 		const results = await bing.list({ keyword: "riolu", detail: true }); // Indexing Bing
 		const reply = !results.length
 			? "No results"
-			: new Attachment(results[Math.floor(Math.random() * results.length)].url); // Randomize output
+			: new Attachment(
+					results[Math.floor(Math.random() * results.length)].url // Randomize output
+			  );
 		message.channel.send(reply);
 	},
 };
