@@ -4,8 +4,8 @@ const Discord = require("discord.js");
 // const meta = cjson.load("../versionInfo.jsonc");
 
 const meta = {
-	version: "1.7",
-	timestamp: new Date(1565136000000), // Time of last edit (±) from Date.now()
+	version: "1.7.1",
+	timestamp: new Date(1566517000000), // Time of last edit (±) from Date.now()
 };
 
 module.exports = {
@@ -39,7 +39,7 @@ module.exports = {
 			.setTitle(`**v${meta.version}** (in development)`)
 			.setDescription(
 				new Date(meta.timestamp).toLocaleString() +
-					`
+				`
 Running on Discord.js@11.4.2!
 
 Use **${process.env.PREFIX}help** to check the available commands.

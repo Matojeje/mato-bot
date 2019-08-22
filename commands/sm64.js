@@ -1,0 +1,241 @@
+const data = require("../resources/sm64");
+const Discord = require("discord.js");
+
+module.exports = {
+	name: "sm64",
+	errorVerb: "BLJ to the nearest QPU",
+	missingArgsVerb: "Super Mario Brothers' Super",
+
+	aliases: ["sign", "textbox", "bup", "mario"],
+	args: false,
+	cooldown: 20,
+	guildOnly: false,
+	description: "Sends a randomly picked dialog, course or star from Super Mario 64.\n:warning: Spoiler warning.\n",
+	shortDesc: "Sends a random text box from Super Mario 64.",
+	usage: "(**C**/**S**) (*number* / **list**)\n" +
+		"\nOptional | Arg 1: **`c`**/**`s`** – Fetch __c__ourses or __s__tars instead of dialog text" +
+		"\nOptional | Arg 2: *number* – Index number to specify which Course, Star or Dialog to fetch (if omitted, picked randomly)" +
+		"\nOptional | Arg 2: **`list`** – (Course or Star only) Send a list of available Courses or Stars.",
+
+	execute(message, args) {
+		const x = "", b = "`", bbb = "```", n = "\n", s = "*", ss = "**", badge = new Discord.Attachment(
+			"./resources/badgePowerStar.png",
+			"badge.png"
+		);
+
+		const blockquoteTrim = /(?:> (?:\n|$))(?!> [^\n])+/g; // I made this myself! Very proud of it.
+
+		const indexTypeError = new Error("Invalid index. Please specify a Number.");
+		const selectorOrIndexError = new Error("Invalid argument! Please specify dialog index (Number) or a type selector (\"C\" or \"S\").");
+		const dialogListError = new Error("Listing dialogs is not allowed.");
+		function indexRangeError(min, max, exclusive) {
+			return new Error("Index out of range. Please specify a Number between " + min + " and " + max + (!exclusive ? " (inclusive)." : " (exclusive)."));
+		}
+
+		let files = []
+		let isDialog = true;
+		let specificDialog = false;
+		let messageText = "";
+
+		marioInfo = new Discord.RichEmbed()
+			.setColor("#ffff00")
+			.setFooter("Super Mario 64", getImage("Power Star Yellow"));
+
+		if (args[0]) {
+			if (isNaN(parseInt(args[0]))) {
+				isDialog = false;
+				switch (args[0].toLowerCase()[0]) {
+
+					case "c": // Course
+
+						if (args[1] && (args[1].toLowerCase().startsWith("li") || false)) { // List
+							marioInfo.setAuthor("Course List", "attachment://badge.png");
+							files.push(badge);
+
+							let courseList = { "normal": "", "special": "" };
+
+							data.courses.forEach((course, courseIndex) => {
+								let target = courseIndex < 15 ? "normal" : "special";
+								courseList[target] += ss + (courseIndex + 1) + "**. " + course + n; // **1**. Bob-omb Battlefield
+							});
+
+							marioInfo
+								.addField("Normal Courses", courseList.normal, true)
+								.addField("Special Courses", courseList.special, true)
+
+						} else {  // Single course
+
+							let index = -1;
+
+							if (args[1]) {
+								const argIndex = parseInt(args[1]);
+								if (isNaN(argIndex)) throw indexTypeError;
+								else if (data.courses[argIndex - 1]) index = argIndex - 1; // Specific course
+								else throw indexRangeError(1, data.courses.length);
+							} else index = randomItemIndex(data.courses); // Random course
+
+							marioInfo
+								.setAuthor(ss + data.courses[index] + ss)
+								.setDescription((index < 14) ? "Course " + ss + (index + 1) + ss : "Special Course");
+
+						}
+
+						break;
+
+					case "s": // Star
+
+						if (args[1] && (args[1].toLowerCase().startsWith("li") || false)) { // List
+							marioInfo.setAuthor("Star List");
+
+							let courseStars = [];
+							for (let i = 0; i < data.courses.length; i++) courseStars.push([]);
+
+							data.stars.forEach((star, starIndex) => courseStars[star.course].push(`*${starIndex}.* ` + star.name));
+
+							let secretStarList = "";
+							let starCount = { "normal": 0, "coin": 0, "special": 0 };
+
+							data.courses.forEach((course, courseIndex) => {
+								const courseStarCount = courseStars[courseIndex].length;
+
+								if (courseIndex < 15) { // Normal Course
+									starCount.normal += courseStarCount;
+									starCount.coin++; marioInfo.addField(
+										ss + course + `** (${courseStarCount}⭐)`, // **Bob-omb Battlefield** (7⭐)
+										"• " + courseStars[courseIndex].join("\n• "), true) // • Star mission name
+								}
+
+								else if (courseStarCount > 0) { // Special Course
+									starCount.special += courseStarCount;
+									secretStarList += "★".repeat(courseStarCount) + " | " + course + n
+									// ⭐⭐ | The Princess's Secret Slide
+								}
+							});
+
+							starCount.total = starCount.normal + starCount.coin + starCount.special;
+
+							marioInfo.addField("**The Castle's Secret Stars**", secretStarList)
+								.setDescription("Total Stars: **" + starCount.total + ss + n +
+									" • Regular Stars: " + starCount.normal + n +
+									" • 100 Coin Stars: " + starCount.coin + n +
+									" • Secret Stars: " + starCount.special);
+
+							break;
+
+						} else { // Single star
+
+							let index = -1;
+
+							if (args[1]) {
+								const argIndex = parseInt(args[1]);
+								if (isNaN(argIndex)) throw indexTypeError;
+								else if (data.stars[argIndex - 1]) index = argIndex - 1; // Specific star
+								else throw indexRangeError(1, data.stars.length);
+							} else index = randomItemIndex(data.stars); // Random star
+
+							marioInfo
+								.setAuthor(ss + data.stars[index].name + ss, getImage("Power Star Yellow"))
+								.setDescription("Star number **" + data.stars[index].id + "** from **" + data.courses[data.stars[index].course] + ss)
+								.setFooter("Super Mario 64")
+						}
+
+						break;
+
+					case "l":
+						if (args[0].toLowerCase().startsWith("li")) throw dialogListError;
+
+					default:
+						throw selectorOrIndexError;
+				}
+			} else specificDialog = true;
+		} if (isDialog) {
+			let index = -1;
+
+			if (specificDialog) {
+				let argIndex = parseInt(args[0]);
+				if (isNaN(argIndex)) throw selectorOrIndexError;
+				else if (data.dialogs[argIndex]) index = argIndex // Specific dialog
+				else throw indexRangeError(0, data.dialogs.length - 1);
+			} else index = randomItemIndex(data.dialogs); // Random dialog
+
+			const dialog = data.dialogs[index];
+
+			const dialogCourse = typeof (dialog.course) === "number" ? data.courses[dialog.course]
+				: dialog.course.map(course => data.courses[course]).join(", ");
+
+			if (data.dialogs[index].icon) marioInfo.setThumbnail(getImage(dialog.icon));
+
+			marioInfo
+				.setAuthor((dialog.actor || dialog.icon || "Dialog text") /* + "  💬" */)
+				.setDescription(splitIntoLineGroups(parseSM64(dialog.text, "> ") || "No text.", dialog.split).join(n).replace(blockquoteTrim, x))
+				.setFooter((!specificDialog ? `${index}: ` : x) + (dialogCourse || "Super Mario 64"), getImage("Power Star Yellow"))
+				.setTimestamp();
+		}
+
+		message.channel.send(messageText, {
+			embed: marioInfo,
+			files: files,
+		});
+	},
+};
+
+/**
+ * Picks a random item from an array.
+ * @param {Array} array Non-empty array
+ * @returns {*} Random array item
+ */
+function randomItem(array) {
+	return array[Math.floor(Math.random() * array.length)];
+}
+
+/**
+ * Returns index of a random item from an array.
+ * @param {Array} array Non-empty array
+ * @returns {Number} Index of random array item
+ */
+function randomItemIndex(array) {
+	return Math.floor(Math.random() * array.length);
+}
+
+/**
+ * Returns a URL link to an image based on `data.imgUrl`.
+ * @param {String} name Image name.
+ * @param {String} [extension] Option image file type without dot, defaults to png.
+ * @returns {String} URI encoded path
+ */
+function getImage(name, extension) {
+	return encodeURI(data.imgUrl + name + "." + (!extension ? "png" : extension));
+}
+
+/**
+ * Splits a string into multiple strings by each nth newline (`\n`).
+ * @url https://stackoverflow.com/a/46494448
+ * @param {String} text Input text. Doesn't have to be multi-line.
+ * Line count doesn't have to be divisible by the split interval.
+ * @param {Number} lineGroupSize Split interval in number of newlines.
+ * Must be an integer bigger than 0. Can be more, less or same as the number of newlines in the input text.
+ * @returns {Array} Array of strings
+ */
+function splitIntoLineGroups(text, lineGroupSize) {
+	return lineGroupSize < 1 ? new Error("lineGroupSize must be more than 0.") :
+		text.match(new RegExp(`(?:.+\\n?){${lineGroupSize}}`, "g"))
+}
+
+/**
+ * Parses SM64 special symbols.
+ *
+ * @param {String} text Input
+ * @param {String} [linePrefix] String to put on the start of every line.
+ * @param {Boolean} [circleButtons] If true, puts button names in circles.
+ * @returns {String} Parsed text
+ */
+function parseSM64(text, linePrefix, circleButtons) {
+	return (linePrefix ? linePrefix : "") + text
+		.replace(/\n/g, linePrefix ? "\n" + linePrefix : "\n")
+		.replace(/\//g, " ") // Using an Em space here!
+		.replace(/\[A\]/g, !circleButtons ? "**A**" : "Ⓐ")
+		.replace(/\[B\]/g, !circleButtons ? "**B**" : "Ⓑ")
+		.replace(/\[C\]/g, !circleButtons ? "**C**" : "Ⓒ")
+		.replace(/\[R\]/g, !circleButtons ? "**R**" : "Ⓡ")
+		.replace(/\[Z\]/g, !circleButtons ? "**Z**" : "Ⓩ")
+}
