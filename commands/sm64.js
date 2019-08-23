@@ -10,12 +10,12 @@ module.exports = {
 	args: false,
 	cooldown: 20,
 	guildOnly: false,
-	description: "Sends a randomly picked dialog, course or star from Super Mario 64.\n:warning: Spoiler warning.\n",
+	description: "Sends a randomly picked dialog, course or star from Super Mario 64.\nAll arguments are case insensitive.\n:warning: Spoiler warning.\n",
 	shortDesc: "Sends a random text box from Super Mario 64.",
 	usage: "(**C**/**S**) (*number* / **list**)\n" +
-		"\nOptional | Arg 1: **`c`**/**`s`** – Fetch __c__ourses or __s__tars instead of dialog text" +
-		"\nOptional | Arg 2: *number* – Index number to specify which Course, Star or Dialog to fetch (if omitted, picked randomly)" +
-		"\nOptional | Arg 2: **`list`** – (Course or Star only) Send a list of available Courses or Stars.",
+		"\nOptional | Arg 1: **`C`**/**`S`** – Fetch __C__ourses or __S__tars instead of Dialog text." +
+		"\nOptional | Arg 2: *number* – Index number to specify which Course/Star/Dialog to fetch (otherwise picked randomly)." +
+		"\nOptional | Arg 2: **`list`** – Send a list of available Dialogs/Courses/Stars.",
 
 	execute(message, args) {
 		const x = "", b = "`", bbb = "```", n = "\n", s = "*", ss = "**", badge = new Discord.Attachment(
@@ -24,10 +24,10 @@ module.exports = {
 		);
 
 		const blockquoteTrim = /(?:> (?:\n|$))(?!> [^\n])+/g; // I made this myself! Very proud of it.
+		const normalCourses = 15; // Amount of normal courses in the game, acting as a breakpoint between normal and special courses
 
 		const indexTypeError = new Error("Invalid index. Please specify a Number.");
-		const selectorOrIndexError = new Error("Invalid argument! Please specify dialog index (Number) or a type selector (\"C\" or \"S\").");
-		const dialogListError = new Error("Listing dialogs is not allowed.");
+		const selectorOrIndexError = new Error("Invalid argument! Please specify dialog index (Number), \"list\", or a type selector (\"C\" or \"S\").");
 		function indexRangeError(min, max, exclusive) {
 			return new Error("Index out of range. Please specify a Number between " + min + " and " + max + (!exclusive ? " (inclusive)." : " (exclusive)."));
 		}
@@ -55,7 +55,7 @@ module.exports = {
 							let courseList = { "normal": "", "special": "" };
 
 							data.courses.forEach((course, courseIndex) => {
-								let target = courseIndex < 15 ? "normal" : "special";
+								let target = courseIndex < normalCourses ? "normal" : "special";
 								courseList[target] += ss + (courseIndex + 1) + "**. " + course + n; // **1**. Bob-omb Battlefield
 							});
 
@@ -76,7 +76,7 @@ module.exports = {
 
 							marioInfo
 								.setAuthor(ss + data.courses[index] + ss)
-								.setDescription((index < 14) ? "Course " + ss + (index + 1) + ss : "Special Course");
+								.setDescription((index < normalCourses - 1) ? "Course " + ss + (index + 1) + ss : "Special Course");
 
 						}
 
@@ -98,7 +98,7 @@ module.exports = {
 							data.courses.forEach((course, courseIndex) => {
 								const courseStarCount = courseStars[courseIndex].length;
 
-								if (courseIndex < 15) { // Normal Course
+								if (courseIndex < normalCourses) { // Normal Course
 									starCount.normal += courseStarCount;
 									starCount.coin++; marioInfo.addField(
 										ss + course + `** (${courseStarCount}⭐)`, // **Bob-omb Battlefield** (7⭐)
@@ -141,8 +141,18 @@ module.exports = {
 
 						break;
 
-					case "l":
-						if (args[0].toLowerCase().startsWith("li")) throw dialogListError;
+					case "l": // Dialog list
+						if (args[0].toLowerCase().startsWith("li")) files.push(badge), marioInfo
+							.setAuthor("Dialog list", "attachment://badge.png")
+							.setFooter("Spoiler warning.", getImage("Power Star Blue"))
+							.setTitle(`There are two files listing the ${data.dialogs.length} dialogs:`)
+							.addField("If you're unsure which one to open, pick **Description list**.", "It's much more readable.")
+							.setDescription(`• **[Description list](${data.dialogListLinks.descriptions})** with short ` +
+								"descriptions of where the dialog appears, for example: ```json\n020 - Peach's letter```\n" +
+								`• **[Data file](${data.dialogListLinks.source})** of this command - essentially source code - ` +
+								"listing everything Mato-bot needs for this command, including dialog text, for example:\n```js\n" +
+								'/* 20 */ { text: "Dear Mario:\\nPlease come to the\\ncastle. I\'ve baked\\n' +
+								"a cake for you.\\nYours truly--\\nPrincess Toadstool\" … }```"); break;
 
 					default:
 						throw selectorOrIndexError;
@@ -163,9 +173,8 @@ module.exports = {
 			const dialogCourse = typeof (dialog.course) === "number" ? data.courses[dialog.course]
 				: dialog.course.map(course => data.courses[course]).join(", ");
 
-			if (data.dialogs[index].icon) marioInfo.setThumbnail(getImage(dialog.icon));
-
 			marioInfo
+				.setThumbnail(getImage(dialog.icon || "default"))
 				.setAuthor((dialog.actor || dialog.icon || "Dialog text") /* + "  💬" */)
 				.setDescription(splitIntoLineGroups(parseSM64(dialog.text, "> ") || "No text.", dialog.split).join(n).replace(blockquoteTrim, x))
 				.setFooter((!specificDialog ? `${index}: ` : x) + (dialogCourse || "Super Mario 64"), getImage("Power Star Yellow"))
