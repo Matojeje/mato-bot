@@ -64,7 +64,7 @@ module.exports = {
 		}
 		if (command.description) {
 			data.push(`**>** ${command.description}`);
-		}
+		} else data.push(`**>** ${command.shortDesc}`);
 		if (command.usage && command.usage !== "") {
 			if (typeof command.usage === "string") {
 				data.push(

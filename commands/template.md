@@ -25,23 +25,23 @@ module.exports = {
 
 * **Name** – Must be the same as the command's filename. This is only used in the `help`&nbsp;command.
 
-* **Error verb** – This string will be used as a part of an error message, should the command return an error to&nbsp;`testingBot.js`. For this example:
+* **Error verb*** – This optional string will be used as a part of an error message, should the command return an error to&nbsp;`testingBot.js`. For this example:
 
   > There was some sort of weird error when I was trying to **boop someone**.
 
-* **Missing args verb** – Similar to above, but this will be used in the error message that'll occur if the command requires arguments, but doesn't get any. For this example:
+* **Missing args verb*** – Similar to above, but this will be used in the error message that'll occur if the command requires arguments, but doesn't get any. Also optional. For this example:
 
   > You forgot to tell me the **booping** settings.
 
-* **Aliases** – An optional array of strings that serve as aliases for the command: If an alias is used, the same code exectues. Each alias must be unique across all the commands and their aliases. The `help`&nbsp;command lists a command's aliases if specified.
+* **Aliases*** – An optional array of strings that serve as aliases for the command: If an alias is used, the same code exectues. Each alias must be unique across all the commands and their aliases. The `help`&nbsp;command lists a command's aliases if specified.
 
-* **Cooldown** – A number of seconds before the command can be used again by the same user in the same text channel.
+* **Cooldown*** – A number of seconds before the command can be used again by the same user in the same text channel. Optional, defaults to 3 seconds.
 
-* **Guild only** – This boolean will determine if you can only use the command outside of DMs. Please try to keep this as&nbsp;`false` if possible.
+* **Guild only*** – This optional boolean will determine if you can only use the command outside of DMs. Please try to keep this as&nbsp;`false` if possible.
 
-* **Args** – Another boolean that specifies if it's necessary to specify at least one argument for the command to work. See description for&nbsp;`missingArgsVerb` above.
+* **Args*** – Another optional boolean that specifies if it's necessary to specify at least one argument for the command to work. See description for&nbsp;`missingArgsVerb` above.
 
-* **Description** – A long description that will be shown when `help`&nbsp;is called for this command.
+* **Description*** – A long description that will be shown when `help`&nbsp;is called for this command. The short description will be used if this is ommited.
 
 * **Short description** – A short description to be shown for this command when listing all commands again with `help`.
 
@@ -49,9 +49,11 @@ module.exports = {
 
 ### Regarding usage
 
+This section is under construction. A formatting overhaul is planned.
+
 #### Multiple usages
 
-If there are multiple ways to input the arguments, write each usage as an item in an   array (called `usage`). It will be detected automatically.
+If there are multiple ways to input the arguments, write each usage as an item in an array (called `usage`). It will be detected automatically.
 
 #### Examples
 

@@ -93,7 +93,7 @@ client.on("message", message => {
 
 	if (command.args && !args.length) {
 		// Argument count check from "args"
-		let reply = `${message.author}, you forgot to tell me the ${command.missingArgsVerb} settings`;
+		let reply = `${message.author}, you forgot to tell me the ${command.missingArgsVerb || "command"} settings`;
 
 		if (command.usage) {
 			// Did I write how to use it then?
@@ -123,6 +123,7 @@ client.on("message", message => {
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
 	if (process.env.DEBUG) {
+		console.log("Cooldown skip!");
 		cooldownAmount = 0;
 	} else {
 		cooldownAmount = (command.cooldown || 3) * 1000; // default value is 3 seconds => ms
@@ -159,7 +160,7 @@ client.on("message", message => {
 		message.reply(
 			dmRecipient +
 				"there was some sort of weird error when I was trying to " +
-				command.errorVerb +
+				(command.errorVerb || "execute the command.") +
 				".\n\n*a small rolled up paper strip prints out, saying:*\n```js\n" +
 				error +
 				"```"
@@ -203,7 +204,7 @@ function onDM(message) {
 	if (
 		message.channel.type == "dm" &&
 		!message.content.startsWith(`${process.env.PREFIX}mato`) &&
-		message.author.id != 342273963734466561
+		message.author.id != client.user.id // Not mato-bot
 	) {
 		console.log(
 			"Recieved a non-command DM from " +
@@ -221,14 +222,20 @@ function secretCommand(message) {
 		.split(/\s?§\s?/g); // Splitting out arguments and prefix
 	commandName = args.shift().toLowerCase();
 	console.log(`Secret mato command: ${args[0]} (${message.content})`);
+
+	// Parse discord stuff
+	args[2] = args[2]
+		.replace(/emoji\((\d+),(\w+)\)/g, "<:$2:$1>") // emoji(id,name)
+		.replace(/animatedEmoji\((\d+),(\w+)\)/g, "<a:$2:$1>") // animatedEmoji(id,name)
+		.replace(/channel\((\d+)\)/g, "<#$1>") // channel(id)
+		.replace(/user\((\d+)\)/g, "<@$1>") // user(id)
+
 	switch (args[0]) {
 		case "send": // ;mato § send § 12345 § henlo (§ settings)
 			matoChannel = client.channels.get(args[1]);
 			if (matoChannel == undefined) {
 				console.log("Can't send there");
-				break;
-			}
-			matoChannel.send(args[2], args[3] || "");
+			} else matoChannel.send(args[2], args[3] || "");
 			break;
 		case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
 			matoUser = client.users.get(args[1]);
