@@ -75,7 +75,7 @@ module.exports = {
 							} else index = randomItemIndex(data.courses); // Random course
 
 							marioInfo
-								.setAuthor(ss + data.courses[index] + ss)
+								.setAuthor(data.courses[index])
 								.setDescription((index < normalCourses - 1) ? "Course " + ss + (index + 1) + ss : "Special Course");
 
 						}
@@ -134,7 +134,7 @@ module.exports = {
 							} else index = randomItemIndex(data.stars); // Random star
 
 							marioInfo
-								.setAuthor(ss + data.stars[index].name + ss, getImage("Power Star Yellow"))
+								.setAuthor(data.stars[index].name, getImage("Power Star Yellow"))
 								.setDescription("Star number **" + data.stars[index].id + "** from **" + data.courses[data.stars[index].course] + ss)
 								.setFooter("Super Mario 64")
 						}
@@ -170,8 +170,8 @@ module.exports = {
 
 			const dialog = data.dialogs[index];
 
-			const dialogCourse = typeof (dialog.course) === "number" ? data.courses[dialog.course]
-				: dialog.course.map(course => data.courses[course]).join(", ");
+			const dialogCourse = dialog.course ? (typeof (dialog.course) === "number" ? data.courses[dialog.course]
+				: dialog.course.map(course => data.courses[course]).join(", ")) : null
 
 			marioInfo
 				.setThumbnail(getImage(dialog.icon || "default"))
