@@ -25,10 +25,11 @@ module.exports = {
 				replyImage(loss);
 
 			case "canvas":
-				canvas = createCanvas(64, 64);
+				canvas = Canvas.createCanvas(64, 64);
 				ctx = canvas.getContext('2d');
 
-				mato = "https://cdn.discordapp.com/avatars/189400498497912832/8059a93a3e44ca4954cb0af13b7afcfc.png?size=128"
+				mato =
+					"https://cdn.discordapp.com/avatars/189400498497912832/8059a93a3e44ca4954cb0af13b7afcfc.png?size=128"
 
 				loadImage(message.author.displayAvatarURL || mato).then(avatar => {
 					ctx.drawImage(avatar, 0, 0, 64, 64);

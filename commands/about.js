@@ -4,8 +4,8 @@ const Discord = require("discord.js");
 // const meta = cjson.load("../versionInfo.jsonc");
 
 const meta = {
-	version: "1.7.3",
-	timestamp: new Date(1567021500000), // Time of last edit (±) from Date.now()
+	version: "1.7.4",
+	timestamp: new Date(1570314700000), // Time of last edit (±) from Date.now()
 };
 
 module.exports = {
