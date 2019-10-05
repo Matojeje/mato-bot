@@ -23,6 +23,7 @@ module.exports = {
 					"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAHCAMAAAAPmYwrAAAABlBMVEUAAAD///+l2Z/dAAAAIElEQVQIW2NgYGBkAGEQBAM0LkwIxoQDrLKoOmFckGIABjsAHwiH5BAAAAAASUVORK5CYII=";
 
 				replyImage(loss);
+				break;
 
 			case "canvas":
 				canvas = Canvas.createCanvas(64, 64);
@@ -36,6 +37,7 @@ module.exports = {
 					ctx.fillText("heya", 5, 40);
 					replyImage(canvas.toDataURL());
 				})
+				break;
 
 			default:
 				reply("What??");
