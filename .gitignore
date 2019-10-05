@@ -12,3 +12,9 @@ desktop.ini
 # Docker
 Dockerfile
 docker-compose.yml
+
+# Layered
+*.pdn
+*.psd
+*.ora
+*.xcf
