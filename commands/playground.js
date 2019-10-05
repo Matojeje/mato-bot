@@ -31,7 +31,7 @@ module.exports = {
 				mato =
 					"https://cdn.discordapp.com/avatars/189400498497912832/8059a93a3e44ca4954cb0af13b7afcfc.png?size=128";
 
-				canvas.loadImage(message.author.displayAvatarURL || mato).then(avatar => {
+				Canvas.loadImage(message.author.displayAvatarURL || mato).then(avatar => {
 					ctx.drawImage(avatar, 0, 0, 64, 64);
 					ctx.fillText("heya", 5, 40);
 					replyImage(canvas.toDataURL());
