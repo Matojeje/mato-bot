@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const Canvas = require("canvas");
 
 module.exports = {
 	name: "playground",
@@ -21,14 +22,16 @@ module.exports = {
 				loss =
 					"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAHCAMAAAAPmYwrAAAABlBMVEUAAAD///+l2Z/dAAAAIElEQVQIW2NgYGBkAGEQBAM0LkwIxoQDrLKoOmFckGIABjsAHwiH5BAAAAAASUVORK5CYII=";
 
-				message.channel
-					.send({
-						files: [dataURLtoBuffer(loss)],
-					})
-					.catch(e => {
-						throw new Error(e);
-					});
-				break;
+				replyImage(loss);
+
+			case "canvas":
+				var canvas = createCanvas(64, 64);
+				var ctx = canvas.getContext('2d');
+
+				loadImage(message.author.displayAvatarURL).then(avatar => {
+					ctx.drawImage(avatar, 0, 0, 64, 64).fillText("heya", 5, 40);
+					replyImage(canvas.toDataURL())
+				})
 
 			default:
 				reply("What??");
@@ -37,6 +40,15 @@ module.exports = {
 
 		function reply(text) {
 			message.channel.send(text);
+		}
+
+		function replyImage(dataURL) {
+			message.channel.send({
+				files: [dataURLtoBuffer(dataURL)],
+			}).catch(e => {
+				throw new Error(e);
+			});
+			break;
 		}
 
 		function dataURLtoBuffer(dataUrl) {
