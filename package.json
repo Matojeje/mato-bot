@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "8.x",
+    "node": "12.x",
     "npm": "*"
   },
   "main": "testingBot.js",
@@ -12,19 +12,19 @@
     "start": "node testingBot.js"
   },
   "dependencies": {
-    "canvas": "^2.6.0",
+    "canvas": "^2.6.1",
     "cjson": "^0.5.0",
     "csvjson": "^5.1.0",
-    "discord.js": "^11.4.2",
-    "dotenv": "^6.2.0",
-    "eslint": "^6.1.0",
-    "images-scraper": "^2.0.11",
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
+    "images-scraper": "^4.0.0",
     "imperial-metric": "^1.2.1",
-    "npm": "^6.13.4",
+    "npm": "^6.13.7",
     "pokedex-promise-v2": "^3.2.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^1.16.4"
+    "prettier": "1.19.1",
+    "eslint": "^6.8.0"
   }
 }

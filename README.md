@@ -15,7 +15,7 @@ Check out the [command template](./commands/template.md) for help!
 3. Refer to [the enviroment variables guide](./EnviromentVariables.md) and the [.env example file](./.env.example) to set up enviroment variables correctly.
 4. Get your Discord bot token and add your version of the bot on your server.
 5. Test the bot for all the commands and other source code files you added or modified, including getting help about the commands.
-6. Keep the license (MIT) and add your username below.
+6. Keep the license under MIT and add your username below.
 7. If everything works fine, make a pull request.
 
 Additional Note: Please clean up your code with Prettier and with the following command ```prettier --use-tabs true --trailing-comma es5 --single-quote false  --write directory/of/the/bot/commands/*.js```
@@ -39,15 +39,15 @@ Thanks to [Discord.JS' great guide](https://github.com/discordjs/guide) for gett
 
 Also thanks to [IamRifki](https://github.com/IamRifki) and [FM-96](https://www.reddit.com/user/FM-96) for code style help.
 
-## Main Dependencies
+## Dependencies
 
-[Discord.JS](https://discord.js.org) Apache 2.0 ©&nbsp;2015 - 2018 Amish Shah
+[Discord.JS](https://discord.js.org) Apache 2.0 ©&nbsp;2015 - 2020 Amish Shah
 
 [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) MIT ©&nbsp;2016 Thomas Asadurian
 
-[images-scraper](https://github.com/pevers/images-scraper) ISC ©&nbsp;2015 Peter Evers
+[images-scraper](https://github.com/pevers/images-scraper) ISC ©&nbsp;2019 Peter Evers
 
-[csvjson](https://github.com/pradeep-mishra/csvjson) MIT ©&nbsp;2014 - 2018 Pradeep Mishra
+[csvjson](https://github.com/pradeep-mishra/csvjson) MIT ©&nbsp;2014 Pradeep Mishra
 
 [imperial-metric](https://github.com/tiansijie/imperial-metric) ISC ©&nbsp;2016 Sijie Tian
 
@@ -58,5 +58,3 @@ Also thanks to [IamRifki](https://github.com/IamRifki) and [FM-96](https://www.r
 ![MIT Image](resources/logoMIT.png)
 
 mato-bot is free software: you can distribute it under the Massachusetts Institute of Technology (MIT) License.
-
-The MIT License grants the software end user rights such as copying, modifying, merging, distributing, etc.
