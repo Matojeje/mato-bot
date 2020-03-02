@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "boop",
 	errorVerb: "boop someone",
 	missingArgsVerb: "booping",
@@ -10,7 +10,7 @@ module.exports = {
 	shortDesc: "Boops someone",
 	usage: "[__user__]",
 
-	execute(message, args, client) {
-		message.channel.send(`*boops ${args[0]}!*`);
+	execute({channel}, args, client) {
+		channel.send(`*boops ${args[0]}!*`);
 	},
 };

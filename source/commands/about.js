@@ -1,35 +1,33 @@
+import Discord from "discord.js";
+
 require("dotenv").config();
-const Discord = require("discord.js");
-// var cjson = require("cjson");
-// const meta = cjson.load("../versionInfo.jsonc");
 
 const meta = {
 	version: "1.7.4",
 	timestamp: new Date(1570314700000), // Time of last edit (±) from Date.now()
 };
 
-module.exports = {
+export default {
 	name: "about",
 	errorVerb: "tell you about myself",
 	missingArgsVerb: "rii",
 	aliases: ["bot"],
 	cooldown: 40,
 	shortDesc: "Shows info about the bot",
-	description:
-		"In " + process.env.PREFIX + "about, I tell you a little about myself!",
+	description: `In ${process.env.PREFIX}about, I tell you a little about myself!`,
 	guildOnly: false,
 	usage: "**credits** to include credits",
 
-	execute(message, args, client) {
-		const badge = new Discord.Attachment(
+	execute({ channel }, args, client) {
+		const badge = new Discord.MessageAttachment(
 			"./resources/badgeAbout.png",
 			"badge.png"
 		);
-		const drawing = new Discord.Attachment(
+		const drawing = new Discord.MessageAttachment(
 			"./resources/drawingBotHD.png",
 			"drawing.png"
 		);
-		// const icon = new Discord.Attachment("./resources/iconMato.png", "icon.png");
+		// const icon = new Discord.MessageAttachment("./resources/iconMato.png", "icon.png");
 
 		const blank = "\u200B";
 
@@ -39,15 +37,15 @@ module.exports = {
 			.setTitle(`**v${meta.version}** (in development)`)
 			.setDescription(
 				new Date(meta.timestamp).toLocaleString() +
-				`
-Running on Discord.js@11.4.2!
+					`
+Running on Discord.js!
 
 Use **${process.env.PREFIX}help** to check the available commands.
 https://github.com/Matojeje/mato-bot`
 			)
-			.addField("Uptime", Math.round(client.uptime) + " ms", true)
+			.addField("Uptime", `${Math.round(client.uptime)} ms`, true)
 			.addField("Woke up at", client.readyAt.toLocaleString(), true)
-			.addField("Ping", client.ping.toFixed(1) + " ms", true)
+			.addField("Ping", `${client.ping.toFixed(1)} ms`, true)
 			.addField(
 				"Cookies in belly",
 				Math.round(Math.random() * 5000),
@@ -68,7 +66,7 @@ https://github.com/Matojeje/mato-bot`
 					"Code:",
 					`
 \\🍪 Mato | https://github.com/Matojeje
-\\🍪 Rifki K. | https://github.com/IAmRifki`,
+\\🍪 Rifki K. | https://github.com/IamRifki`,
 					false
 				)
 				.addField(
@@ -83,10 +81,10 @@ https://github.com/Matojeje/mato-bot`
 			riiInfo.addField("He", "<a:He:608354487836475394>", true);
 		}
 
-		client.fetchUser(process.env.MATO).then(mato => {
-			avatarURL = `https://cdn.discordapp.com/avatars/${mato.id}/${mato.avatar}.webp`;
-			riiInfo.setFooter("By " + mato.username, avatarURL);
-			message.channel.send({
+		client.fetchUser(process.env.MATO).then(({ id, avatar, username }) => {
+			avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.webp`;
+			riiInfo.setFooter(`By ${username}`, avatarURL);
+			channel.send({
 				embed: riiInfo,
 				files: [badge, drawing],
 			});

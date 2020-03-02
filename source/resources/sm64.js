@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	imgUrl: "https://rawcdn.githack.com/SM64-TAS-ABC/STROOP/c260e427ad9e4533b4eb00845059478cd7307b57/STROOP/Resources/Object Images/",
 	courses: [
 		/* 0 */ "Bob-omb Battlefield",
@@ -323,4 +323,4 @@ module.exports = {
 		source: "https://github.com/Matojeje/mato-bot/blob/master/resources/sm64.js#L151",
 		descriptions: "https://gitlab.com/Pilzinsel64/sm64-rom-manager/blob/master/SM64%20ROM%20Manager/bin/Debug/Data/Text%20Manager/dialogs.txt"
 	}
-}
+};

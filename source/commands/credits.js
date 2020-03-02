@@ -1,28 +1,29 @@
-require("dotenv").config();
-const Discord = require("discord.js");
+import Discord from "discord.js";
 
-module.exports = {
+require("dotenv").config();
+
+export default {
 	name: "credits",
 	errorVerb: "credit people",
 	missingArgsVerb: "staff",
 	cooldown: 20,
 	shortDesc: "Shows who worked on this bot",
 	description:
-		process.env.PREFIX + "credits tells you who worked on me, beep!",
+		`${process.env.PREFIX}credits tells you who worked on me, beep!`,
 	guildOnly: false,
 	args: false,
 
-	execute(message) {
-		const badge = new Discord.Attachment(
+	execute({channel}) {
+		const badge = new Discord.MessageAttachment(
 			"./resources/badgeAbout.png",
 			"badge.png"
 		);
-		const drawing = new Discord.Attachment(
+		const drawing = new Discord.MessageAttachment(
 			"./resources/drawingBotWelcome.png",
 			"drawing.png"
 		);
 
-		const icon = new Discord.Attachment(
+		const icon = new Discord.MessageAttachment(
 			"./resources/iconMato.png",
 			"icon.png"
 		);
@@ -44,7 +45,7 @@ module.exports = {
 				`
 \\🍪 HavocDusk | https://DuskyUmbreon.deviantart.com
 \\🍪 Spray-POKA | https://Spray-POKA.deviantart.com
-\\🍪 ParaPetch | https://twitter.com/Parapetch_/`,
+\\🍪 Parapetch | https://twitter.com/Parapetch_/`,
 				false
 			)
 			.setURL("https://github.com/Matojeje/mato-bot")
@@ -52,7 +53,7 @@ module.exports = {
 			.setTimestamp()
 			.setFooter("By Mato", "attachment://icon.png");
 
-		message.channel.send({
+		channel.send({
 			embed: credits,
 			files: [badge, drawing, icon],
 		});

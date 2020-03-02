@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "ping",
 	errorVerb: "ping you",
 	missingArgsVerb: "pinging",
@@ -11,11 +11,11 @@ module.exports = {
 	shortDesc: 'Gives back a "pong", or the actual ping time',
 	usage: "(**a**) to display actual ping",
 
-	execute(message, args, client) {
+	execute({ channel }, args, { ping }) {
 		if (args[0] === "a") {
-			message.channel.send("Ping: " + client.ping);
+			channel.send(`Ping: ${ping}`);
 		} else {
-			message.channel.send("Pong!");
+			channel.send("Pong!");
 		}
 	},
 };

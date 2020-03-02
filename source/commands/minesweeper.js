@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "minesweeper",
 	errorVerb: "place mines",
 	missingArgsVerb: "... minesweeping",
@@ -24,7 +24,7 @@ module.exports = {
 		"\nConditional | Args 2, 3, 4: Set up the minefield's mine count (m ∈ ℕ₀), field width and height. (w;h ∈ ℕ*) ※ Set a custom difficulty to use this." +
 		"\n",
 
-	execute(message, args) {
+	execute({ channel }, args) {
 		diff = "beginner";
 		if (args[0]) {
 			diff = args[0].toString().toLowerCase();
@@ -40,7 +40,7 @@ module.exports = {
 					height = 14;
 					break;
 				case "custom":
-					console.log("Time for a custom game! Args: " + args);
+					console.log(`Time for a custom game! Args: ${args}`);
 					mines = parseInt(args[1]) || 9;
 					width = parseInt(args[2]) || 10;
 					height = parseInt(args[3]) || 10;
@@ -52,9 +52,9 @@ module.exports = {
 					break;
 				default:
 					return Error(
-						"Wait, " +
-							args[0].toString().toLowerCase() +
-							" isn't a difficulty!"
+						`Wait, ${args[0]
+							.toString()
+							.toLowerCase()} isn't a difficulty!`
 					);
 			}
 		} else {
@@ -86,7 +86,7 @@ module.exports = {
 			rnH = Math.trunc(Math.random() * height);
 			if (field[rnW][rnH] == 0) {
 				field[rnW][rnH] = 100;
-				console.log("Mine " + i + " added at " + rnW + "," + rnH);
+				console.log(`Mine ${i} added at ${rnW},${rnH}`);
 				i++;
 			}
 		}
@@ -104,7 +104,7 @@ module.exports = {
 		output = "";
 		for (let i = 0; i < field.length; i++) {
 			for (let j = 0; j < field[i].length; j++) {
-				output += field[i][j] + "\t";
+				output += `${field[i][j]}\t`;
 			}
 			output += "\n";
 		}
@@ -120,7 +120,7 @@ module.exports = {
 
 		// Replace the mines first
 
-		output = output.replace(/10\S/g, h + ":boom:" + h);
+		output = output.replace(/10\S/g, `${h}:boom:${h}`);
 
 		// Turn the numbers into their emojis
 
@@ -151,15 +151,12 @@ module.exports = {
 		}
 
 		// Get rid of tabs
-
 		output = output.replace(/\t/g, "");
 
 		// Add first line
-
-		output = "**Minesweeper** :: " + diff + " difficulty\n" + output;
+		output = `**Minesweeper** :: ${diff} difficulty\n${output}`;
 
 		// Check the message length
-
 		if (output.length >= 2000) {
 			new Error(
 				`The message is too long! (It's using ${output.length} out of 2000 characters.)`
@@ -167,8 +164,7 @@ module.exports = {
 		}
 
 		// And send!
-
-		message.channel.send(output);
+		channel.send(output);
 
 		// ================ Functions ================
 

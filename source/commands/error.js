@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "error",
 	errorVerb: "throw an error",
 	missingArgsVerb: "error",

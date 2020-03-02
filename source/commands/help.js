@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-module.exports = {
+export default {
 	name: "help",
 	errorVerb: "help you",
 	missingArgsVerb: "help",
@@ -17,19 +17,13 @@ module.exports = {
 
 		if (!args.length) {
 			data.push(
-				"**```ini\n[Help] Beep beep, here's what I can do:\n" +
-					"If you'd like to know more about one of these, " +
-					"send the command name after " +
-					process.env.PREFIX +
-					"help!```**"
+				`**\`\`\`ini\n[Help] Beep beep, here's what I can do:\nIf you'd like to know more about one of these, send the command name after ${process.env.PREFIX}help!\`\`\`**`
 			);
 			data.push(
 				commands
-					.map(command => {
-						return `• ${process.env.PREFIX}**${
-							command.name
-						}**: ${command.shortDesc || ""}`;
-					})
+					.map(command => `• ${process.env.PREFIX}**${
+                    command.name
+                }**: ${command.shortDesc || ""}`)
 					.join("\n")
 			);
 
@@ -51,7 +45,7 @@ module.exports = {
 		const name = args[0].toLowerCase();
 		const command =
 			commands.get(name) ||
-			commands.find(c => c.aliases && c.aliases.includes(name));
+			commands.find(({aliases}) => aliases && aliases.includes(name));
 
 		if (!command) {
 			return message.reply("I don't know that one!");
@@ -75,7 +69,7 @@ module.exports = {
 				for (let i = 0; i < command.usage.length; i++) {
 					usage += `\n${process.env.PREFIX}**${command.name}** ${command.usage[i]}`;
 				}
-				data.push(usage + "\n");
+				data.push(`${usage}\n`);
 			}
 		}
 

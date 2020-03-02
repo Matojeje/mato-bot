@@ -25,7 +25,7 @@ module.exports = {
 
 * **Name** – Must be the same as the command's filename. This is only used in the `help`&nbsp;command.
 
-* **Error verb*** – This optional string will be used as a part of an error message, should the command return an error to&nbsp;`testingBot.js`. For this example:
+* **Error verb*** – This optional string will be used as a part of an error message, should the command return an error to&nbsp;`bot.js`. For this example:
 
   > There was some sort of weird error when I was trying to **boop someone**.
 
@@ -88,7 +88,7 @@ All of the command's main code takes place inside the `execute()`&nbsp;function.
 
 ### Input arguments
 
-The function is called from `testingBot.js` with three arguments: `message`, `args` and `client`. Due to how JavaScript works, you can set your execute()&nbsp;function to load only 1&nbsp;or 2 of these, but mind the order.
+The function is called from `bot.js` with three arguments: `message`, `args` and `client`. Due to how JavaScript works, you can set your execute()&nbsp;function to load only 1&nbsp;or 2 of these, but mind the order.
 
 Valid options*:
 
@@ -96,7 +96,7 @@ Valid options*:
 * `function execute(message, args)`
 * `function execute(message, args, client)`
 
-\* Here, the variable names that will be used inside the function are the same as the variables the function is called with in `testingBot.js`. This is preferred but not necessary.
+\* Here, the variable names that will be used inside the function are the same as the variables the function is called with in `bot.js`. This is preferred but not necessary.
 
 In the example, not all three of the input arguments are used, and therefore using `function execute(message)` would be enough.
 

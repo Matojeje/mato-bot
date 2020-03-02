@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "idea",
 	errorVerb: "react to your idea",
 	missingArgsVerb: "",

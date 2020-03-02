@@ -1,7 +1,7 @@
-const Pokedex = require("pokedex-promise-v2");
+import Pokedex from "pokedex-promise-v2";
 const P = new Pokedex();
 
-module.exports = {
+export default {
 	name: "moveinfo",
 	errorVerb: "search up what that move does (WIP)",
 	missingArgsVerb: "move",
@@ -22,15 +22,15 @@ module.exports = {
 		let hasMove = false;
 
 		input = args.toString().replace(",", " ");
-		console.log("i: " + input);
+		console.log(`i: ${input}`);
 
 		formattedMove = input.toLowerCase().replace(/ /g, "-");
-		console.log("f: " + formattedMove);
+		console.log(`f: ${formattedMove}`);
 		P.getMoveByName(formattedMove)
-			.then(function(response) {
+			.then(response => {
 				moveInfo = response;
 				if (moveInfo == undefined) {
-					message.reply("Move " + input + "not found");
+					message.reply(`Move ${input}not found`);
 					hasTextSetting = true;
 					hasMove = true;
 				}
@@ -59,9 +59,9 @@ module.exports = {
 					message.reply("please specify the text kind");
 				}
 			})
-			.catch(function(error) {
-				console.log("Pokédex API error:\n\n" + error);
-				message.channel.send("**PokéAPI error**:\n" + error);
+			.catch(error => {
+				console.log(`Pokédex API error:\n\n${error}`);
+				message.channel.send(`**PokéAPI error**:\n${error}`);
 			});
 
 		function cap(string) {

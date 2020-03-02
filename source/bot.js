@@ -1,17 +1,18 @@
-const fs = require("fs");
-const path = require("path");
-require("dotenv").config();
-const csvjson = require("csvjson");
-const Discord = require("discord.js");
-const client = new Discord.Client();
+import Discord from "discord.js";
+import csvjson from "csvjson";
+import fs from "fs";
+import path from "path";
 
+require("dotenv").config();
+const client = new Discord.Client();
 client.commands = new Discord.Collection();
+
 const commandFiles = fs
-	.readdirSync("./commands")
+	.readdirSync(__dirname + "/commands")
 	.filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+	const command = require(__dirname + `/commands/${file}`);
 	client.commands.set(command.name, command);
 }
 
@@ -19,9 +20,9 @@ const musicList = loadSongs();
 const cooldowns = new Discord.Collection();
 
 client.on("guildCreate", guild => {
-	console.log("Got added to " + guild);
+	console.log(`Got added to ${guild}`);
 	if (guild.available) {
-		const drawing = new Discord.Attachment(
+		const drawing = new Discord.MessageAttachment(
 			"./resources/drawingBotWelcome.png",
 			"drawing.png"
 		);
@@ -44,11 +45,11 @@ client.on("guildCreate", guild => {
 });
 
 client.on("ready", () => {
-	console.log("Logged in as " + client.user.tag + "!");
+	console.log(`Logged in as ${client.user.tag}!`);
 	client.setInterval(() => mixtape(), 5 * 60 * 1000);
 	mixtape("J̲u̲s̲t̲ ̲s̲t̲a̲r̲t̲e̲d̲ ̲u̲p̲!");
 
-	client.users
+	client.users.cache
 		.get(process.env.MATO)
 		.send(`Bot is up! (${new Date().toLocaleTimeString()})`);
 });
@@ -77,10 +78,11 @@ client.on("message", message => {
 			message.author.username
 		} at ${message.channel.name || "DMs"}`
 	);
+
 	const command =
 		client.commands.get(commandName) || // Is that a real command?
 		client.commands.find(
-			cmd => cmd.aliases && cmd.aliases.includes(commandName)
+			({ aliases }) => aliases && aliases.includes(commandName)
 		);
 	if (!command) return;
 
@@ -93,14 +95,15 @@ client.on("message", message => {
 
 	if (command.args && !args.length) {
 		// Argument count check from "args"
-		let reply = `${message.author}, you forgot to tell me the ${command.missingArgsVerb || "command"} settings`;
+		let reply = `${
+			message.author
+		}, you forgot to tell me the ${command.missingArgsVerb ||
+			"command"} settings`;
 
 		if (command.usage) {
 			// Did I write how to use it then?
 			if (typeof command.usage === "string") {
-				reply +=
-					". You should write it like " +
-					`${process.env.PREFIX}**${command.name}** ${command.usage}.`;
+				reply += `. You should write it like ${`${process.env.PREFIX}**${command.name}** ${command.usage}.`}`;
 			} else {
 				// There are multiple usages
 				for (let i = 0; i < command.usage.length - 1; i++) {
@@ -155,15 +158,11 @@ client.on("message", message => {
 		console.error(error);
 		dmRecipient = "";
 		if (message.channel.type !== "text") {
-			dmRecipient = tag(message.author) + ", ";
+			dmRecipient = `${tag(message.author)}, `;
 		}
 		message.reply(
-			dmRecipient +
-				"there was some sort of weird error when I was trying to " +
-				(command.errorVerb || "execute the command.") +
-				".\n\n*a small rolled up paper strip prints out, saying:*\n```js\n" +
-				error +
-				"```"
+			`${dmRecipient}there was some sort of weird error when I was trying to ${command.errorVerb ||
+				"execute the command."}.\n\n*a small rolled up paper strip prints out, saying:*\n\`\`\`js\n${error}\`\`\``
 		);
 	}
 
@@ -173,23 +172,23 @@ client.on("message", message => {
 });
 
 client.login(process.env.CLIENT_TOKEN);
-console.log("Prefix: " + process.env.PREFIX);
+console.log(`Prefix: ${process.env.PREFIX}`);
 
 process.on("unhandledRejection", error =>
 	console.error(`Uncaught Promise Rejection:\n${error}`)
 );
 
 function loadSongs() {
-	const musicFilePath = path.join(__dirname, "mixtape.csv");
+	const musicFilePath = path.join(__dirname, "../mixtape.csv");
 	const musicData = fs.readFileSync(musicFilePath, { encoding: "utf-8" });
 	const tempList = csvjson.toObject(musicData);
-	console.log("Loaded a list of " + tempList.length + " songs!");
+	console.log(`Loaded a list of ${tempList.length} songs!`);
 	return tempList;
 }
 
 function mixtape(message) {
 	const musicTrack = Math.floor(Math.random() * musicList.length);
-	div = " :: ";
+	const div = " :: ";
 	const music =
 		(message || "") +
 		div +
@@ -197,7 +196,7 @@ function mixtape(message) {
 		div +
 		musicList[musicTrack].Song;
 	client.user.setActivity(music, { type: "LISTENING" });
-	console.log("Music changed to " + music + "!");
+	console.log(`Music changed to ${music}!`);
 }
 
 function onDM(message) {
@@ -207,43 +206,38 @@ function onDM(message) {
 		message.author.id != client.user.id // Not mato-bot
 	) {
 		console.log(
-			"Recieved a non-command DM from " +
-				message.author.tag +
-				":\n" +
-				message
+			`Recieved a non-command DM from ${message.author.tag}:\n${message}`
 		);
-		// client.users.get(process.env.MATO).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
+		// client.users.cache.get(process.env.MATO).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
 	}
 }
 
-function secretCommand(message) {
-	const args = message.content
-		.slice(process.env.PREFIX.length)
-		.split(/\s?§\s?/g); // Splitting out arguments and prefix
+function secretCommand({ content, author }) {
+	const args = content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
 	commandName = args.shift().toLowerCase();
-	console.log(`Secret mato command: ${args[0]} (${message.content})`);
+	console.log(`Secret mato command: ${args[0]} (${content})`);
 
 	// Parse discord stuff
 	args[2] = args[2]
 		.replace(/emoji\((\d+),(\w+)\)/g, "<:$2:$1>") // emoji(id,name)
 		.replace(/animatedEmoji\((\d+),(\w+)\)/g, "<a:$2:$1>") // animatedEmoji(id,name)
 		.replace(/channel\((\d+)\)/g, "<#$1>") // channel(id)
-		.replace(/user\((\d+)\)/g, "<@$1>") // user(id)
+		.replace(/user\((\d+)\)/g, "<@$1>"); // user(id)
 
 	switch (args[0]) {
 		case "send": // ;mato § send § 12345 § henlo (§ settings)
-			matoChannel = client.channels.get(args[1]);
+			matoChannel = client.channels.cache.get(args[1]);
 			if (matoChannel == undefined) {
 				console.log("Can't send there");
 			} else matoChannel.send(args[2], args[3] || "");
 			break;
 		case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
-			matoUser = client.users.get(args[1]);
+			matoUser = client.users.cache.get(args[1]);
 			matoUser.send(args[2], args[3] || "");
-			console.log("I secretly sent a DM to " + matoUser.tag + "!");
+			console.log(`I secretly sent a DM to ${matoUser.tag}!`);
 			break;
 		case "test":
-			message.author.send("rii");
+			author.send("rii");
 			break;
 		case "music":
 			client.user.setActivity(args[1], { type: "LISTENING" });
@@ -252,6 +246,6 @@ function secretCommand(message) {
 	}
 }
 
-function tag(user) {
-	return "<@" + user.id + ">";
+function tag({ id }) {
+	return `<@${id}>`;
 }

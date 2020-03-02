@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "cookie",
 	errorVerb: "bake the cookies",
 	missingArgsVerb: "baking",

@@ -1,6 +1,6 @@
-const im = require("imperial-metric");
+import im from "imperial-metric";
 
-module.exports = {
+export default {
 	name: "convert",
 	errorVerb: "convert your stuff",
 	missingArgsVerb: "conversion",

@@ -3,28 +3,37 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "12.x",
-    "npm": "*"
+    "node": "13.x",
+    "npm": "6.x"
   },
-  "main": "testingBot.js",
+  "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node testingBot.js"
+    "build": "babel source -d dist --source-maps",
+    "start": "node dist/bot.js",
+    "dev": "npm run build && npm run start"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Matojeje/mato-bot.git"
+  },
+  "license": "MIT",
   "dependencies": {
     "canvas": "^2.6.1",
-    "cjson": "^0.5.0",
     "csvjson": "^5.1.0",
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.0.1",
     "dotenv": "^8.2.0",
     "images-scraper": "^4.0.0",
     "imperial-metric": "^1.2.1",
-    "npm": "^6.13.7",
     "pokedex-promise-v2": "^3.2.0"
   },
-  "license": "MIT",
   "devDependencies": {
-    "prettier": "1.19.1",
-    "eslint": "^6.8.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.6",
+    "babel-eslint": "^10.1.0",
+    "destiny": "^0.3.1",
+    "eslint": "^6.8.0",
+    "prettier": "1.19.1"
   }
 }

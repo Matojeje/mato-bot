@@ -4,8 +4,13 @@
         "node": true,
         "es6": true
     },
+    "parser": "babel-eslint",
     "parserOptions": {
-        "ecmaVersion": 8
+        "ecmaVersion": 8,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "modules": true
+        }
     },
     "rules": {
         "brace-style": ["off", "1tbs", { "allowSingleLine": true }],

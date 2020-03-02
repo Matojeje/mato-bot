@@ -1,9 +1,10 @@
-const movesData = require("../moves.json");
-const Discord = require("discord.js");
-const Pokedex = require("pokedex-promise-v2");
+import Discord from "discord.js";
+import Pokedex from "pokedex-promise-v2";
+import movesData from "../../moves.json";
+
 const P = new Pokedex();
 
-module.exports = {
+export default {
 	name: "metronome",
 	errorVerb: "use metronome",
 	missingArgsVerb: "waggle",
@@ -51,7 +52,7 @@ module.exports = {
 				case "h": // Emoji help
 					emojiMessage = "**Move type emojis**:\n\n";
 					for (const type in emojiData) {
-						emojiMessage += emojiData[type] + " | " + type + "\n";
+						emojiMessage += `${emojiData[type]} | ${type}\n`;
 					}
 					message.reply(emojiMessage);
 					break;
@@ -112,7 +113,7 @@ module.exports = {
 			if (critCalc === 24) {
 				moveSuccessful = 2;
 			}
-			console.log(critCalc + "/24 >> " + moveSuccessful);
+			console.log(`${critCalc}/24 >> ${moveSuccessful}`);
 		}
 
 		if (move.Accuracy != 100 && move.Accuracy != "") {
@@ -126,7 +127,7 @@ module.exports = {
 					`${accuracyCalc} is more than ${move.Accuracy} so it missed`
 				);
 			}
-			console.log(accuracyCalc + " >> " + moveSuccessful);
+			console.log(`${accuracyCalc} >> ${moveSuccessful}`);
 		}
 
 		console.log(moveSuccessful);
@@ -141,7 +142,8 @@ module.exports = {
 		}
 	},
 };
-function tickiStyle(move, message) {
+
+function tickiStyle(move, { channel }) {
 	toSend = `**${move.Name}**\n`;
 	switch (move.Category) {
 		case "Physical":
@@ -157,74 +159,73 @@ function tickiStyle(move, message) {
 	t = move.Type;
 	toSend += `\n${emojiData[move.Type]} (${move.Type}) Power: ${move.Power ||
 		"?"}   Accuracy: ${move.Accuracy || "?"}`;
-	message.channel.send(toSend);
+	channel.send(toSend);
 	showPower = false;
 }
 
-function makeMoveMessages(user, move) {
+function makeMoveMessages(user, { Name }) {
 	moveAnnounce = [
-		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${move.Name}!\``,
-		`\`${user} used Metronome!\n${user} used ${move.Name}!\``,
-		`\`${user}'s Metronome let ${demonstrative} use ${move.Name}!\``,
+		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${Name}!\``,
+		`\`${user} used Metronome!\n${user} used ${Name}!\``,
+		`\`${user}'s Metronome let ${demonstrative} use ${Name}!\``,
 		`\`${user} holds ${possesive} finger in the air and wags it. ${cap(
 			personal
-		)} use${verb} ${move.Name}!\``,
-		`\`${user} waves ${possesive} finger and uses ${move.Name}!\``,
-		`\`${user} waves ${possesive} finger, using ${move.Name}!\``,
+		)} use${verb} ${Name}!\``,
+		`\`${user} waves ${possesive} finger and uses ${Name}!\``,
+		`\`${user} waves ${possesive} finger, using ${Name}!\``,
 		`\`${user} waves one of ${possesive} arms, and the tip starts to glow. ${cap(
 			personal
-		)} then use${verb} ${move.Name}!\``,
+		)} then use${verb} ${Name}!\``,
 	];
 }
 
-function setupMoveInfo(move, message) {
-	const badge = new Discord.Attachment(
+function setupMoveInfo(move, { channel }) {
+	const badge = new Discord.MessageAttachment(
 		"./resources/badgeMoveInfo.png",
 		"badge.png"
 	);
-	const icon = new Discord.Attachment(
+	const icon = new Discord.MessageAttachment(
 		"./resources/iconMatoBot.png",
 		"icon.png"
 	);
-	P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(function(
-		dexResponse
-	) {
-		const flavorTexts = dexResponse.flavor_text_entries;
-		for (x in flavorTexts) {
-			if (
-				flavorTexts[x].language.name == "en" &&
-				flavorTexts[x].version_group.name == "ultra-sun-ultra-moon"
-			) {
-				infoText = flavorTexts[x].flavor_text;
-				break;
+	P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(
+		({ flavor_text_entries }) => {
+			const flavorTexts = flavor_text_entries;
+			for (x in flavorTexts) {
+				if (
+					flavorTexts[x].language.name == "en" &&
+					flavorTexts[x].version_group.name == "ultra-sun-ultra-moon"
+				) {
+					infoText = flavorTexts[x].flavor_text;
+					break;
+				}
 			}
+			const moveInfo = new Discord.RichEmbed()
+				.setColor("#2990bb")
+				.setTitle(move.Name)
+				.setURL(
+					`https://bulbapedia.bulbagarden.net/wiki/${encodeURI(
+						`${move.Name} (move)`
+					)}`
+				)
+				.setAuthor("Move info", "attachment://badge.png", "")
+				.setDescription(
+					`\`\`\`${infoText}\`\`\`\nMove number ${move["#"]} from generation ${move.Gen}.`
+				)
+				.addField("Type", move.Type || "None", true)
+				.addField("Damage category", move.Category || "None", true)
+				.addField("Contest condition", move.Contest || "???", true)
+				.addField("Power points", move.PP || "None", true)
+				.addField("Power", move.Power || "None", true)
+				.addField("Accuracy", `${move.Accuracy || "??? "}%`, true)
+				.setTimestamp()
+				.setFooter("⏪ Mato bot", "attachment://icon.png");
+			channel.send({
+				embed: moveInfo,
+				files: [badge, icon],
+			});
 		}
-		const moveInfo = new Discord.RichEmbed()
-			.setColor("#2990bb")
-			.setTitle(move.Name)
-			.setURL(
-				"https://bulbapedia.bulbagarden.net/wiki/" +
-					encodeURI(`${move.Name} (move)`)
-			)
-			.setAuthor("Move info", "attachment://badge.png", "")
-			.setDescription(
-				`\`\`\`${infoText}\`\`\`\nMove number ${
-					move["#"]
-				} from generation ${move.Gen}.`
-			)
-			.addField("Type", move.Type || "None", true)
-			.addField("Damage category", move.Category || "None", true)
-			.addField("Contest condition", move.Contest || "???", true)
-			.addField("Power points", move.PP || "None", true)
-			.addField("Power", move.Power || "None", true)
-			.addField("Accuracy", (move.Accuracy || "??? ") + "%", true)
-			.setTimestamp()
-			.setFooter("⏪ Mato bot", "attachment://icon.png");
-		message.channel.send({
-			embed: moveInfo,
-			files: [badge, icon],
-		});
-	});
+	);
 }
 
 function setEmojis() {

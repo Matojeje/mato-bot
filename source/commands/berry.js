@@ -1,8 +1,8 @@
-const Discord = require("discord.js");
-const Pokedex = require("pokedex-promise-v2");
+import Discord from "discord.js";
+import Pokedex from "pokedex-promise-v2";
 const P = new Pokedex();
 
-module.exports = {
+export default {
 	name: "berry",
 	errorVerb: "taste your berry",
 	missingArgsVerb: "berry",
@@ -14,33 +14,33 @@ module.exports = {
 	shortDesc: "Look up berry info",
 	usage: "(**list**/[*berry name*])",
 
-	execute(message, args) {
+	execute({channel}, args) {
 		P.getBerriesList()
-			.then(function(berryList) {
+			.then(({results, count}) => {
 				if (args[0] && args[0].toLowerCase() === "list") {
-					message.channel.send("**Current list of berries**:");
+					channel.send("**Current list of berries**:");
 					berries = [];
-					berryList.results.forEach(berry => {
-						berries.push(berry.name);
+					results.forEach(({name}) => {
+						berries.push(name);
 					});
-					message.channel.send(berries.join(", "));
+					channel.send(berries.join(", "));
 				} else {
 					berryName = args[0]
 						? args[0].toLowerCase().match(/^[a-z]+/gm)[0]
-						: berryList.results[getRandomInt(1, berryList.count)]
+						: results[getRandomInt(1, count)]
 								.name;
 
-					console.log("berry name:" + berryName);
+					console.log(`berry name:${berryName}`);
 
-					P.getItemByName(berryName + "-berry")
-						.then(function(berryItem) {
+					P.getItemByName(`${berryName}-berry`)
+						.then(berryItem => {
 							P.getBerryByName(berryName)
-								.then(function(berry) {
+								.then(berry => {
 									const capitalizedBerryName = capitalizeFirstLetter(
 										berryName
 									);
 									console.log(
-										"berry: " + capitalizedBerryName
+										`berry: ${capitalizedBerryName}`
 									);
 
 									const flavorTexts =
@@ -85,20 +85,20 @@ module.exports = {
 
 									berrySizeMetric =
 										berry.size >= 100
-											? berry.size / 10 + " cm"
+											? `${berry.size / 10} cm`
 											: (berrySizeMetric =
-													berry.size + " mm");
+													`${berry.size} mm`);
 
-									const image = new Discord.Attachment(
+									const image = new Discord.MessageAttachment(
 										berryItem.sprites.default,
 										"image.png"
 									);
-									const sprite = new Discord.Attachment(
+									const sprite = new Discord.MessageAttachment(
 										berryItem.sprites.default,
-										capitalizedBerryName + " berry.png"
+										`${capitalizedBerryName} berry.png`
 									);
 
-									const mmToInch = Math.pow(25.4, -1);
+									const mmToInch = 25.4 ** -1;
 
 									const moveInfo = buildBerryEmbed(
 										capitalizedBerryName,
@@ -107,16 +107,16 @@ module.exports = {
 										mmToInch
 									);
 
-									const badge = new Discord.Attachment(
+									const badge = new Discord.MessageAttachment(
 										"./resources/badgeMoveInfo.png",
 										"badge.png"
 									);
-									const icon = new Discord.Attachment(
+									const icon = new Discord.MessageAttachment(
 										"./resources/iconMatoBot.png",
 										"icon.png"
 									);
 
-									message.channel.send({
+									channel.send({
 										embed: moveInfo,
 										files: [sprite, badge, image, icon],
 									});
@@ -130,63 +130,56 @@ module.exports = {
 	},
 };
 
-function buildBerryEmbed(capitalizedBerryName, berryItem, berry, mmToInch) {
-	return (
-		new Discord.RichEmbed()
-			.setColor("#2990bb")
-			.setTitle("**" + capitalizedBerryName + " Berry**")
-			.setAuthor("Berry info", "attachment://badge.png", "")
-			.setImage("attachment://image.png")
-			.setURL(
-				"https://bulbapedia.bulbagarden.net/wiki/" +
-					capitalizedBerryName +
-					"_Berry"
-			)
-			.setDescription(
-				berryItem.effect_entries[0].effect
-					.replace(/\n: /gm, ": ")
-					.replace(/^.*:/gm, "**$&**")
-			)
-			.addField(
-				"Flavor",
-				capitalizeFirstLetter(berryFlavor) || "???",
-				true
-			)
-			.addField(
-				"Firmness",
-				capitalizeFirstLetter(berry.firmness.name.replace(/-/g, " ")) ||
-					"???",
-				true
-			)
-			.addField("Smoothness", berry.smoothness + "% water" || "???", true)
-			.addField(
-				"Growth time",
-				berry.growth_time + " hours per stage" || "???",
-				true
-			)
-			// .addField("Growth stage", berry.growth_time + " hours" || "???", true)
-			.addField(
-				"Harvest",
-				"Up to " + berry.max_harvest + " on one tree" || "???",
-				true
-			)
-			.addField(
-				"Size",
-				berrySizeMetric +
-					" / " +
-					parseFloat((berry.size * mmToInch).toFixed(2)) +
-					"″" || "???",
-				true
-			)
-			// .addField("Cost", berryItem.cost + " Poké" || "???", true)
-			/* .addField("Natural gift",
-            capitalizeFirstLetter(berry.natural_gift_type.name) +
-            " (power: " + berry.natural_gift_power + ")"
-            || "??? ", true
-        ) */
-			.setTimestamp()
-			.setFooter("Mato bot using PokéAPI", "attachment://icon.png")
-	);
+function buildBerryEmbed(capitalizedBerryName, {effect_entries}, berry, mmToInch) {
+	return new Discord.RichEmbed()
+        .setColor("#2990bb")
+        .setTitle(`**${capitalizedBerryName} Berry**`)
+        .setAuthor("Berry info", "attachment://badge.png", "")
+        .setImage("attachment://image.png")
+        .setURL(
+            `https://bulbapedia.bulbagarden.net/wiki/${capitalizedBerryName}_Berry`
+        )
+        .setDescription(
+            effect_entries[0].effect
+                .replace(/\n: /gm, ": ")
+                .replace(/^.*:/gm, "**$&**")
+        )
+        .addField(
+            "Flavor",
+            capitalizeFirstLetter(berryFlavor) || "???",
+            true
+        )
+        .addField(
+            "Firmness",
+            capitalizeFirstLetter(berry.firmness.name.replace(/-/g, " ")) ||
+                "???",
+            true
+        )
+        .addField("Smoothness", `${berry.smoothness}% water` || "???", true)
+        .addField(
+            "Growth time",
+            `${berry.growth_time} hours per stage` || "???",
+            true
+        )
+        // .addField("Growth stage", berry.growth_time + " hours" || "???", true)
+        .addField(
+            "Harvest",
+            `Up to ${berry.max_harvest} on one tree` || "???",
+            true
+        )
+        .addField(
+            "Size",
+            `${berrySizeMetric} / ${parseFloat((berry.size * mmToInch).toFixed(2))}″` || "???",
+            true
+        )
+        // .addField("Cost", berryItem.cost + " Poké" || "???", true)
+        /* .addField("Natural gift",
+        capitalizeFirstLetter(berry.natural_gift_type.name) +
+        " (power: " + berry.natural_gift_power + ")"
+        || "??? ", true
+    ) */
+        .setTimestamp()
+        .setFooter("Mato bot using PokéAPI", "attachment://icon.png");
 }
 
 // https://stackoverflow.com/a/1026087
@@ -201,6 +194,6 @@ function getRandomInt(min, max) {
 }
 
 function errorPokeAPI(error) {
-	console.log("Pokédex API error:\n\n" + error);
-	message.channel.send("**PokéAPI error**:\n" + error);
+	console.log(`Pokédex API error:\n\n${error}`);
+	message.channel.send(`**PokéAPI error**:\n${error}`);
 }

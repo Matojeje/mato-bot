@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "random",
 	errorVerb: "summon RNGesus",
 	missingArgsVerb: "randomizing",

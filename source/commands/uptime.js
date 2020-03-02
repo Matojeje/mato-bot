@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "uptime",
 	errorVerb: "look up my uptime",
 	missingArgsVerb: "timing",
@@ -11,9 +11,7 @@ module.exports = {
 	description: "This tells you how long is it since I woke up.",
 	usage: "",
 
-	execute(message, args, client) {
-		message.channel.send(
-			"My uptime's " + Math.round(client.uptime / 1000) + "s!"
-		);
+	execute({ channel }, args, { uptime }) {
+		channel.send(`My uptime's ${Math.round(uptime / 1000)}s!`);
 	},
 };

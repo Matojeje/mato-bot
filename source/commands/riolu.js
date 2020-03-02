@@ -1,7 +1,7 @@
-const { Attachment } = require("discord.js");
-const Scraper = require("images-scraper");
+import { MessageAttachment } from "discord.js";
+import Scraper from "images-scraper";
 
-module.exports = {
+export default {
 	name: "riolu",
 	errorVerb: "look up Riolu pictures",
 	missingArgsVerb: "Riolu",
@@ -17,22 +17,23 @@ module.exports = {
 
 	// This function is used to get a random image from Google and then send it to Discord.
 	// Sadly, we need to use a headless browser because Google rate limits calls now.
-	async execute(message) {
+	async execute({ channel }) {
 		let google = new Scraper.Google({
-			keyword: 'riolu',
+			keyword: "riolu",
 			limit: 10,
 			puppeteer: {
 				headless: true,
-			}
+			},
 		});
 
 		const results = await google.start();
 
 		const reply = !results.length
-			? "No results"
-			: new Attachment(
+			? "```js\nError: I was not able to get any images, I am sowwy.```"
+			: new MessageAttachment(
 					results[Math.floor(Math.random() * results.length)].url
 			  );
-		message.channel.send(reply);
+
+		channel.send(reply);
 	},
 };

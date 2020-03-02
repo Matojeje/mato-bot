@@ -1,7 +1,7 @@
-const Discord = require("discord.js");
-const Canvas = require("canvas");
+import Canvas from "canvas";
+import Discord from "discord.js";
 
-module.exports = {
+export default {
 	name: "playground",
 	errorVerb: "test something",
 	missingArgsVerb: "experiment",
@@ -14,7 +14,7 @@ module.exports = {
 	shortDesc: "Lets Mato test stuff",
 	usage: "[*experiment name*]",
 
-	execute(message, args, client) {
+	execute({author, channel}, args, client) {
 		switch (args[0].toLowerCase()) {
 			case "dataurl":
 				reply("DataURL test!");
@@ -27,16 +27,18 @@ module.exports = {
 
 			case "canvas":
 				canvas = Canvas.createCanvas(64, 64);
-				ctx = canvas.getContext('2d');
+				ctx = canvas.getContext("2d");
 
 				mato =
-					"https://cdn.discordapp.com/avatars/189400498497912832/8059a93a3e44ca4954cb0af13b7afcfc.png?size=128";
+					"https://cdn.discordapp.com/avatars/189400498497912832/7b250fde03e037968dca5288b3edf3d0.png?size=128";
 
-				Canvas.loadImage(message.author.displayAvatarURL || mato).then(avatar => {
-					ctx.drawImage(avatar, 0, 0, 64, 64);
-					ctx.fillText("heya", 5, 40);
-					replyImage(canvas.toDataURL());
-				})
+				Canvas.loadImage(author.displayAvatarURL || mato).then(
+					avatar => {
+						ctx.drawImage(avatar, 0, 0, 64, 64);
+						ctx.fillText("heya", 5, 40);
+						replyImage(canvas.toDataURL());
+					}
+				);
 				break;
 
 			default:
@@ -45,16 +47,17 @@ module.exports = {
 		}
 
 		function reply(text) {
-			message.channel.send(text);
+			channel.send(text);
 		}
 
 		function replyImage(dataURL) {
-			message.channel.send({
-				files: [dataURLtoBuffer(dataURL)],
-			}).catch(e => {
-				throw new Error(e);
-			});
-			break;
+			channel
+				.send({
+					files: [dataURLtoBuffer(dataURL)],
+				})
+				.catch(e => {
+					throw new Error(e);
+				});
 		}
 
 		function dataURLtoBuffer(dataUrl) {
