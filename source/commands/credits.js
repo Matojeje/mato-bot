@@ -15,16 +15,16 @@ export default {
 
 	execute({channel}) {
 		const badge = new Discord.MessageAttachment(
-			"./resources/badgeAbout.png",
+			"../../resources/badgeAbout.png",
 			"badge.png"
 		);
 		const drawing = new Discord.MessageAttachment(
-			"./resources/drawingBotWelcome.png",
+			"../../resources/drawingBotWelcome.png",
 			"drawing.png"
 		);
 
 		const icon = new Discord.MessageAttachment(
-			"./resources/iconMato.png",
+			"../../resources/iconMato.png",
 			"icon.png"
 		);
 

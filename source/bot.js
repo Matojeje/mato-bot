@@ -23,7 +23,7 @@ client.on("guildCreate", guild => {
 	console.log(`Got added to ${guild}`);
 	if (guild.available) {
 		const drawing = new Discord.MessageAttachment(
-			"./resources/drawingBotWelcome.png",
+			"../resources/drawingBotWelcome.png",
 			"drawing.png"
 		);
 

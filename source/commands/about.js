@@ -20,14 +20,14 @@ export default {
 
 	execute({ channel }, args, client) {
 		const badge = new Discord.MessageAttachment(
-			"./resources/badgeAbout.png",
+			"../../resources/badgeAbout.png",
 			"badge.png"
 		);
 		const drawing = new Discord.MessageAttachment(
-			"./resources/drawingBotHD.png",
+			"../../resources/drawingBotHD.png",
 			"drawing.png"
 		);
-		// const icon = new Discord.MessageAttachment("./resources/iconMato.png", "icon.png");
+		// const icon = new Discord.MessageAttachment("../../resources/iconMato.png", "icon.png");
 
 		const blank = "\u200B";
 

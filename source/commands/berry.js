@@ -108,11 +108,11 @@ export default {
 									);
 
 									const badge = new Discord.MessageAttachment(
-										"./resources/badgeMoveInfo.png",
+										"../../resources/badgeMoveInfo.png",
 										"badge.png"
 									);
 									const icon = new Discord.MessageAttachment(
-										"./resources/iconMatoBot.png",
+										"../../resources/iconMatoBot.png",
 										"icon.png"
 									);
 

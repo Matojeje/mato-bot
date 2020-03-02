@@ -181,11 +181,11 @@ function makeMoveMessages(user, { Name }) {
 
 function setupMoveInfo(move, { channel }) {
 	const badge = new Discord.MessageAttachment(
-		"./resources/badgeMoveInfo.png",
+		"../../resources/badgeMoveInfo.png",
 		"badge.png"
 	);
 	const icon = new Discord.MessageAttachment(
-		"./resources/iconMatoBot.png",
+		"../../resources/iconMatoBot.png",
 		"icon.png"
 	);
 	P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(
