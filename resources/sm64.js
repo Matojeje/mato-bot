@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	imgUrl: "https://rawcdn.githack.com/SM64-TAS-ABC/STROOP/c260e427ad9e4533b4eb00845059478cd7307b57/STROOP/Resources/Object Images/",
 	courses: [
 		/* 0 */ "Bob-omb Battlefield",

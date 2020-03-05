@@ -56,8 +56,9 @@ client.on("ready", () => {
 
 client.on("message", message => {
 	// Command check
+	let itsCommand;
 	if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) {
-		const itsCommand = false;
+		itsCommand = false;
 		onDM(message);
 		return;
 	}
@@ -206,7 +207,7 @@ function onDM(message) {
 		message.author.id != client.user.id // Not mato-bot
 	) {
 		console.log(
-			`Recieved a non-command DM from ${message.author.tag}:\n${message}`
+			`Received a non-command DM from ${message.author.tag}:\n${message}`
 		);
 		// client.users.cache.get(process.env.MATO).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
 	}
