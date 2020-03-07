@@ -37,7 +37,7 @@ export default {
 						ctx.drawImage(avatar, 0, 0, 64, 64);
 						ctx.fillText("heya", 5, 40);
 						replyImage(canvas.toDataURL());
-					}
+					},
 				);
 				break;
 

@@ -23,8 +23,8 @@ export default {
 		const reply = !results.length
 			? "```js\nError: I was not able to get any images, I am sorrii.```"
 			: new MessageAttachment(
-					results[Math.floor(Math.random() * results.length)].url
-			  );
+				results[Math.floor(Math.random() * results.length)].url
+			);
 
 		channel.send(reply);
 	},

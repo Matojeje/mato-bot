@@ -29,30 +29,30 @@ export default {
 
 		const badge = new Discord.MessageAttachment(
 			"resources/badgePowerStar.png",
-			"badge.png"
+			"badge.png",
 		);
 
 		const blockquoteTrim = /(?:> (?:\n|$))(?!> [^\n])+/g; // I made this myself! Very proud of it.
 		const normalCourses = 15; // Amount of normal courses in the game, acting as a breakpoint between normal and special courses
 
 		const indexTypeError = new Error(
-			"Invalid index. Please specify a Number."
+			"Invalid index. Please specify a Number.",
 		);
 		const selectorOrIndexError = new Error(
-			'Invalid argument! Please specify dialog index (Number), "list", or a type selector ("C" or "S").'
+			'Invalid argument! Please specify dialog index (Number), "list", or a type selector ("C" or "S").',
 		);
 		function indexRangeError(min, max, exclusive) {
 			return new Error(
 				`Index out of range. Please specify a Number between ${min} and ${max}${
 					!exclusive ? " (inclusive)." : " (exclusive)."
-				}`
+				}`,
 			);
 		}
 
-		let files = [];
+		const files = [];
 		let isDialog = true;
 		let specificDialog = false;
-		let messageText = "";
+		const messageText = "";
 
 		const marioInfo = new Discord.MessageEmbed()
 			.setColor("#ffff00")
@@ -70,14 +70,14 @@ export default {
 							// List
 							marioInfo.setAuthor(
 								"Course List",
-								"attachment://badge.png"
+								"attachment://badge.png",
 							);
 							files.push(badge);
 
-							let courseList = { normal: "", special: "" };
+							const courseList = { normal: "", special: "" };
 
 							data.courses.forEach((course, courseIndex) => {
-								let target =
+								const target =
 									courseIndex < normalCourses
 										? "normal"
 										: "special";
@@ -89,12 +89,12 @@ export default {
 								.addField(
 									"Normal Courses",
 									courseList.normal,
-									true
+									true,
 								)
 								.addField(
 									"Special Courses",
 									courseList.special,
-									true
+									true,
 								);
 						} else {
 							// Single course
@@ -103,23 +103,23 @@ export default {
 
 							if (args[1]) {
 								const argIndex = parseInt(args[1]);
-								if (isNaN(argIndex)) throw indexTypeError;
+								if (isNaN(argIndex)) {throw indexTypeError;}
 								else if (data.courses[argIndex - 1])
-									index = argIndex - 1;
+								{index = argIndex - 1;}
 								// Specific course
 								else
-									throw indexRangeError(
-										1,
-										data.courses.length
-									);
-							} else index = randomItemIndex(data.courses); // Random course
+								{throw indexRangeError(
+									1,
+									data.courses.length,
+								);}
+							} else {index = randomItemIndex(data.courses);} // Random course
 
 							marioInfo
 								.setAuthor(data.courses[index])
 								.setDescription(
 									index < normalCourses - 1
 										? `Course ${ss}${index + 1}${ss}`
-										: "Special Course"
+										: "Special Course",
 								);
 						}
 
@@ -133,18 +133,18 @@ export default {
 							// List
 							marioInfo.setAuthor("Star List");
 
-							let courseStars = [];
+							const courseStars = [];
 							for (let i = 0; i < data.courses.length; i++)
-								courseStars.push([]);
+							{courseStars.push([]);}
 
 							data.stars.forEach(({ course, name }, starIndex) =>
 								courseStars[course].push(
-									`*${starIndex}.* ` + name
-								)
+									`*${starIndex}.* ` + name,
+								),
 							);
 
 							let secretStarList = "";
-							let starCount = { normal: 0, coin: 0, special: 0 };
+							const starCount = { normal: 0, coin: 0, special: 0 };
 
 							data.courses.forEach((course, courseIndex) => {
 								const courseStarCount =
@@ -159,15 +159,15 @@ export default {
 											course +
 											`** (${courseStarCount}⭐)`, // **Bob-omb Battlefield** (7⭐)
 										`• ${courseStars[courseIndex].join(
-											"\n• "
+											"\n• ",
 										)}`,
-										true
+										true,
 									); // • Star mission name
 								} else if (courseStarCount > 0) {
 									// Special Course
 									starCount.special += courseStarCount;
 									secretStarList += `${"★".repeat(
-										courseStarCount
+										courseStarCount,
 									)} | ${course}${n}`;
 									// ⭐⭐ | The Princess's Secret Slide
 								}
@@ -181,10 +181,10 @@ export default {
 							marioInfo
 								.addField(
 									"**The Castle's Secret Stars**",
-									secretStarList
+									secretStarList,
 								)
 								.setDescription(
-									`Total Stars: **${starCount.total}${ss}${n} • Regular Stars: ${starCount.normal}${n} • 100 Coin Stars: ${starCount.coin}${n} • Secret Stars: ${starCount.special}`
+									`Total Stars: **${starCount.total}${ss}${n} • Regular Stars: ${starCount.normal}${n} • 100 Coin Stars: ${starCount.coin}${n} • Secret Stars: ${starCount.special}`,
 								);
 
 							break;
@@ -195,25 +195,25 @@ export default {
 
 							if (args[1]) {
 								const argIndex = parseInt(args[1]);
-								if (isNaN(argIndex)) throw indexTypeError;
+								if (isNaN(argIndex)) {throw indexTypeError;}
 								else if (data.stars[argIndex - 1])
-									index = argIndex - 1;
+								{index = argIndex - 1;}
 								// Specific star
 								else
-									throw indexRangeError(1, data.stars.length);
-							} else index = randomItemIndex(data.stars); // Random star
+								{throw indexRangeError(1, data.stars.length);}
+							} else {index = randomItemIndex(data.stars);} // Random star
 
 							marioInfo
 								.setAuthor(
 									data.stars[index].name,
-									getImage("Power Star Yellow")
+									getImage("Power Star Yellow"),
 								)
 								.setDescription(
 									`Star number **${
 										data.stars[index].id
 									}** from **${
 										data.courses[data.stars[index].course]
-									}${ss}`
+									}${ss}`,
 								)
 								.setFooter("Super Mario 64");
 						}
@@ -222,43 +222,43 @@ export default {
 
 					case "l": // Dialog list
 						if (args[0].toLowerCase().startsWith("li"))
-							files.push(badge),
-								marioInfo
-									.setAuthor(
-										"Dialog list",
-										"attachment://badge.png"
-									)
-									.setFooter(
-										"Spoiler warning.",
-										getImage("Power Star Blue")
-									)
-									.setTitle(
-										`There are two files listing the ${data.dialogs.length} dialogs:`
-									)
-									.addField(
-										"If you're unsure which one to open, pick **Description list**.",
-										"It's much more readable."
-									)
-									.setDescription(
-										`${`• **[Description list](${data.dialogListLinks.descriptions})** with short `}descriptions of where the dialog appears, for example: \`\`\`json\n020 - Peach's letter\`\`\`\n${`• **[Data file](${data.dialogListLinks.source})** of this command - essentially source code - `}listing everything Mato-bot needs for this command, including dialog text, for example:\n\`\`\`js\n/* 20 */ { text: "Dear Mario:\\nPlease come to the\\ncastle. I've baked\\na cake for you.\\nYours truly--\\nPrincess Toadstool" … }\`\`\``
-									);
+						{files.push(badge),
+						marioInfo
+							.setAuthor(
+								"Dialog list",
+								"attachment://badge.png",
+							)
+							.setFooter(
+								"Spoiler warning.",
+								getImage("Power Star Blue"),
+							)
+							.setTitle(
+								`There are two files listing the ${data.dialogs.length} dialogs:`,
+							)
+							.addField(
+								"If you're unsure which one to open, pick **Description list**.",
+								"It's much more readable.",
+							)
+							.setDescription(
+								`${`• **[Description list](${data.dialogListLinks.descriptions})** with short `}descriptions of where the dialog appears, for example: \`\`\`json\n020 - Peach's letter\`\`\`\n${`• **[Data file](${data.dialogListLinks.source})** of this command - essentially source code - `}listing everything Mato-bot needs for this command, including dialog text, for example:\n\`\`\`js\n/* 20 */ { text: "Dear Mario:\\nPlease come to the\\ncastle. I've baked\\na cake for you.\\nYours truly--\\nPrincess Toadstool" … }\`\`\``,
+							);}
 						break;
 
 					default:
 						throw selectorOrIndexError;
 				}
-			} else specificDialog = true;
+			} else {specificDialog = true;}
 		}
 		if (isDialog) {
 			let index = -1;
 
 			if (specificDialog) {
-				let argIndex = parseInt(args[0]);
+				const argIndex = parseInt(args[0]);
 				if (isNaN(argIndex)) throw selectorOrIndexError;
 				else if (data.dialogs[argIndex]) index = argIndex;
 				// Specific dialog
 				else throw indexRangeError(0, data.dialogs.length - 1);
-			} else index = randomItemIndex(data.dialogs); // Random dialog
+			} else {index = randomItemIndex(data.dialogs);} // Random dialog
 
 			const dialog = data.dialogs[index];
 
@@ -266,27 +266,27 @@ export default {
 				? typeof dialog.course === "number"
 					? data.courses[dialog.course]
 					: dialog.course
-							.map(course => data.courses[course])
-							.join(", ")
+						.map(course => data.courses[course])
+						.join(", ")
 				: null;
 
 			marioInfo
 				.setThumbnail(getImage(dialog.icon || "default"))
 				.setAuthor(
-					dialog.actor || dialog.icon || "Dialog text" /* + "  💬" */
+					dialog.actor || dialog.icon || "Dialog text", /* + "  💬" */
 				)
 				.setDescription(
 					splitIntoLineGroups(
 						parseSM64(dialog.text, "> ") || "No text.",
-						dialog.split
+						dialog.split,
 					)
 						.join(n)
-						.replace(blockquoteTrim, x)
+						.replace(blockquoteTrim, x),
 				)
 				.setFooter(
 					(!specificDialog ? `${index}: ` : x) +
 						(dialogCourse || "Super Mario 64"),
-					getImage("Power Star Yellow")
+					getImage("Power Star Yellow"),
 				)
 				.setTimestamp();
 		}

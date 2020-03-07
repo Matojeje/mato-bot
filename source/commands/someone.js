@@ -24,7 +24,7 @@ export default {
 		if (guild.available) {
 			let randomMember;
 			let member;
-			
+
 			while (true) {
 				randomMember = channel.members.random();
 				if (!randomMember.user.bot) {
@@ -35,7 +35,7 @@ export default {
 			}
 
 			// NOTE(alt): As of Discord.js ~12.0, users with no username gets read as undefined instead of null.
-			if (randomMember.nickname !== undefined) { 
+			if (randomMember.nickname !== undefined) {
 				member = `***${randomMember.user.username}*** (**${randomMember.nickname}**)`;
 			} else {
 				member = `**${randomMember.user.username}**`;

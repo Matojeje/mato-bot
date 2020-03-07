@@ -21,11 +21,11 @@ export default {
 	execute({ channel }, args, client) {
 		const badge = new Discord.MessageAttachment(
 			"resources/badgeAbout.png",
-			"badge.png"
+			"badge.png",
 		);
 		const drawing = new Discord.MessageAttachment(
 			"resources/drawingBotHD.png",
-			"drawing.png"
+			"drawing.png",
 		);
 
 		const blank = "\u200B";
@@ -40,7 +40,7 @@ export default {
 Running on Discord.js!
 
 Use **${process.env.PREFIX}help** to check the available commands.
-https://github.com/Matojeje/mato-bot`
+https://github.com/Matojeje/mato-bot`,
 			)
 			.addField("Uptime", `${Math.round(client.uptime)} ms`, true)
 			.addField("Woke up at", client.readyAt.toLocaleString(), true)
@@ -48,7 +48,7 @@ https://github.com/Matojeje/mato-bot`
 			.addField(
 				"Cookies in belly",
 				Math.round(Math.random() * 5000),
-				true
+				true,
 			)
 			/* .setURL("https://github.com/Matojeje/mato-bot") */
 			.setThumbnail("attachment://drawing.png")
@@ -63,7 +63,7 @@ https://github.com/Matojeje/mato-bot`
 					`
 \\🍪 Mato | https://github.com/Matojeje
 \\🍪 Rifki K. | https://github.com/IamRifki`,
-					false
+					false,
 				)
 				.addField(
 					"Artwork:",
@@ -71,7 +71,7 @@ https://github.com/Matojeje/mato-bot`
 \\🍪 HavocDusk | https://DuskyUmbreon.deviantart.com
 \\🍪 Spray-POKA | https://Spray-POKA.deviantart.com
 \\🍪 Parapetch | https://twitter.com/Parapetch_/`,
-					false
+					false,
 				);
 		} else if (args[0]) {
 			riiInfo.addField("He", "<a:He:608354487836475394>", true);

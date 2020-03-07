@@ -36,10 +36,10 @@ export default {
 							P.getBerryByName(berryName)
 								.then(berry => {
 									const capitalizedBerryName = capitalizeFirstLetter(
-										berryName
+										berryName,
 									);
 									console.log(
-										`berry: ${capitalizedBerryName}`
+										`berry: ${capitalizedBerryName}`,
 									);
 
 									const flavorTexts =
@@ -89,11 +89,11 @@ export default {
 
 									const image = new Discord.MessageAttachment(
 										berryItem.sprites.default,
-										"image.png"
+										"image.png",
 									);
 									const sprite = new Discord.MessageAttachment(
 										berryItem.sprites.default,
-										`${capitalizedBerryName} berry.png`
+										`${capitalizedBerryName} berry.png`,
 									);
 
 									const mmToInch = 25.4 ** -1;
@@ -102,16 +102,16 @@ export default {
 										capitalizedBerryName,
 										berryItem,
 										berry,
-										mmToInch
+										mmToInch,
 									);
 
 									const badge = new Discord.MessageAttachment(
 										"resources/badgeMoveInfo.png",
-										"badge.png"
+										"badge.png",
 									);
 									const icon = new Discord.MessageAttachment(
 										"resources/iconMatoBot.png",
-										"icon.png"
+										"icon.png",
 									);
 
 									channel.send({
@@ -132,7 +132,7 @@ function buildBerryEmbed(
 	capitalizedBerryName,
 	{ effect_entries },
 	berry,
-	mmToInch
+	mmToInch,
 ) {
 	return (
 		new Discord.MessageEmbed()
@@ -141,42 +141,42 @@ function buildBerryEmbed(
 			.setAuthor("Berry info", "attachment://badge.png", "")
 			.setImage("attachment://image.png")
 			.setURL(
-				`https://bulbapedia.bulbagarden.net/wiki/${capitalizedBerryName}_Berry`
+				`https://bulbapedia.bulbagarden.net/wiki/${capitalizedBerryName}_Berry`,
 			)
 			.setDescription(
 				effect_entries[0].effect
 					.replace(/\n: /gm, ": ")
-					.replace(/^.*:/gm, "**$&**")
+					.replace(/^.*:/gm, "**$&**"),
 			)
 			.addField(
 				"Flavor",
 				capitalizeFirstLetter(berryFlavor) || "???",
-				true
+				true,
 			)
 			.addField(
 				"Firmness",
 				capitalizeFirstLetter(berry.firmness.name.replace(/-/g, " ")) ||
 					"???",
-				true
+				true,
 			)
 			.addField("Smoothness", `${berry.smoothness}% water` || "???", true)
 			.addField(
 				"Growth time",
 				`${berry.growth_time} hours per stage` || "???",
-				true
+				true,
 			)
 			// .addField("Growth stage", berry.growth_time + " hours" || "???", true)
 			.addField(
 				"Harvest",
 				`Up to ${berry.max_harvest} on one tree` || "???",
-				true
+				true,
 			)
 			.addField(
 				"Size",
 				`${berrySizeMetric} / ${parseFloat(
-					(berry.size * mmToInch).toFixed(2)
+					(berry.size * mmToInch).toFixed(2),
 				)}″` || "???",
-				true
+				true,
 			)
 			// .addField("Cost", berryItem.cost + " Poké" || "???", true)
 			/* .addField("Natural gift",

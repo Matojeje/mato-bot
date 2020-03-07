@@ -14,8 +14,8 @@ export default {
 	usage: "[**value**] [**from this unit**] (to) [**to this unit**]",
 
 	execute(message, args) {
-		let value = args[0];
-		let from = args[1];
+		const value = args[0];
+		const from = args[1];
 		let to;
 
 		if (args[2].toLowerCase() === "to") {
@@ -26,11 +26,11 @@ export default {
 
 		try {
 			message.reply(`${value} ${from} = **${im(value.replace(/,/, "."))
-			.from(from)
-			.to(to)} ${to}**`
-			)
+				.from(from)
+				.to(to)} ${to}**`,
+			);
 		} catch(err) {
-			message.reply(`I do not provide conversion for that type, I'm sorrii.`);
+			message.reply(`I don't provide conversion for that type, I'm sorrii.`);
 			console.log(err);
 		}
 	},

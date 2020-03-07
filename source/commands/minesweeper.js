@@ -29,7 +29,7 @@ export default {
 		let width;
 		let height;
 
-		const diff = "beginner";
+		let diff = "beginner";
 		if (args[0]) {
 			diff = args[0].toString().toLowerCase();
 			switch (args[0].toString().toLowerCase()) {
@@ -58,7 +58,7 @@ export default {
 					return Error(
 						`Wait, ${args[0]
 							.toString()
-							.toLowerCase()} isn't a difficulty!`
+							.toLowerCase()} isn't a difficulty!`,
 					);
 			}
 		} else {
@@ -74,7 +74,7 @@ export default {
 			return Error(
 				`There are too many mines! (${mines} mines, but ${width *
 					height -
-					1} max)`
+					1} max)`,
 			);
 		}
 
@@ -145,7 +145,7 @@ export default {
 			}
 			output = output.replace(
 				new RegExp(`${i.toString()}`, "g"),
-				h + emojis[i] + h
+				h + emojis[i] + h,
 			);
 			if (hide && placedHint == true) {
 				h = "||";
@@ -161,7 +161,7 @@ export default {
 		// Check the message length
 		if (output.length >= 2000) {
 			new Error(
-				`The message is too long! (It's using ${output.length} out of 2000 characters.)`
+				`The message is too long! (It's using ${output.length} out of 2000 characters.)`,
 			);
 		}
 
@@ -182,7 +182,7 @@ export default {
 			const c = y > 0;
 			const d = y < h - 1;
 
-			let e = [x, y];
+			const e = [x, y];
 
 			if (a && c) {
 				check(f[x - 1][y - 1], e, f);

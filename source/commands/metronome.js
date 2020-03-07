@@ -39,14 +39,12 @@ export default {
 		"\n",
 
 	execute(message, args) {
-		setEmojis();
-
 		const moveCount = movesData.length;
 		const move = movesData[Math.ceil(Math.random() * moveCount)];
 		const user = message.author.username.toUpperCase();
 
 		if (args[0] == "x" || args[0] == "t" || args[0] == "h") {
-			mode = args[0];
+			const mode = args[0];
 			args.shift();
 			switch (mode) {
 				case "x": // Attack name only
@@ -98,10 +96,10 @@ export default {
 				setDefaultHeckinPronouns();
 			}
 
-			const moveAnnounce = makeMoveMessages(user, move);
+			const moveAnnounce = makeMoveMessages(user, move.Name);
 
 			message.channel.send(
-				moveAnnounce[Math.floor(Math.random() * moveAnnounce.length)]
+				moveAnnounce[Math.floor(Math.random() * moveAnnounce.length)],
 			);
 		}
 
@@ -123,14 +121,14 @@ export default {
 		}
 
 		if (move.Accuracy != 100 && move.Accuracy != "") {
-			accuracyCalc = Math.floor(Math.random() * 100);
+			const accuracyCalc = Math.floor(Math.random() * 100);
 			console.log(
-				`Accuracy for ${move.Name} with ${move.Accuracy} accuracy: ${accuracyCalc}`
+				`Accuracy for ${move.Name} with ${move.Accuracy} accuracy: ${accuracyCalc}`,
 			);
 			if (accuracyCalc > move.Accuracy) {
 				moveSuccessful = 0;
 				console.log(
-					`${accuracyCalc} is more than ${move.Accuracy} so it missed`
+					`${accuracyCalc} is more than ${move.Accuracy} so it missed`,
 				);
 			}
 			console.log(`${accuracyCalc} >> ${moveSuccessful}`);
@@ -150,7 +148,9 @@ export default {
 };
 
 function tickiStyle(move, { channel }) {
-	toSend = `**${move.Name}**\n`;
+	const emojiData = setEmojis();
+
+	let toSend = `**${move.Name}**\n`;
 	switch (move.Category) {
 		case "Physical":
 			toSend += "⚔ (Physical)";
@@ -162,11 +162,9 @@ function tickiStyle(move, { channel }) {
 			toSend += "🌧 (Status)";
 			break;
 	}
-	t = move.Type;
 	toSend += `\n${emojiData[move.Type]} (${move.Type}) Power: ${move.Power ||
 		"?"}   Accuracy: ${move.Accuracy || "?"}`;
 	channel.send(toSend);
-	showPower = false;
 }
 
 function makeMoveMessages(user, move) {
@@ -175,12 +173,12 @@ function makeMoveMessages(user, move) {
 		`\`${user} used Metronome!\n${user} used ${move}!\``,
 		`\`${user}'s Metronome let ${demonstrative} use ${move}!\``,
 		`\`${user} holds ${possessive} finger in the air and wags it. ${cap(
-			personal
+			personal,
 		)} use${verb} ${move}!\``,
 		`\`${user} waves ${possessive} finger and uses ${move}!\``,
 		`\`${user} waves ${possessive} finger, using ${move}!\``,
 		`\`${user} waves one of ${possessive} arms, and the tip starts to glow. ${cap(
-			personal
+			personal,
 		)} then use${verb} ${move}!\``,
 	];
 }
@@ -188,11 +186,11 @@ function makeMoveMessages(user, move) {
 function setupMoveInfo(move, { channel }) {
 	const badge = new Discord.MessageAttachment(
 		"resources/badgeMoveInfo.png",
-		"badge.png"
+		"badge.png",
 	);
 	const icon = new Discord.MessageAttachment(
 		"resources/iconMatoBot.png",
-		"icon.png"
+		"icon.png",
 	);
 	P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(
 		({ flavor_text_entries }) => {
@@ -211,12 +209,12 @@ function setupMoveInfo(move, { channel }) {
 				.setTitle(move.Name)
 				.setURL(
 					`https://bulbapedia.bulbagarden.net/wiki/${encodeURI(
-						`${move.Name} (move)`
-					)}`
+						`${move.Name} (move)`,
+					)}`,
 				)
 				.setAuthor("Move info", "attachment://badge.png", "")
 				.setDescription(
-					`\`\`\`${infoText}\`\`\`\nMove number ${move["#"]} from generation ${move.Gen}.`
+					`\`\`\`${infoText}\`\`\`\nMove number ${move["#"]} from generation ${move.Gen}.`,
 				)
 				.addField("Type", move.Type || "None", true)
 				.addField("Damage category", move.Category || "None", true)
@@ -230,7 +228,7 @@ function setupMoveInfo(move, { channel }) {
 				embed: moveInfo,
 				files: [badge, icon],
 			});
-		}
+		},
 	);
 }
 
@@ -255,7 +253,7 @@ function setEmojis() {
 	emojiData["Dark"] = "🕶";
 	emojiData["Fairy"] = "✨";
 	emojiData["???"] = "❔";
-	return;
+	return emojiData;
 }
 
 function setDefaultHeckinPronouns() {

@@ -55,7 +55,7 @@ export default {
 							"name"
 						] || ""} move)\nPower: **${moveInfo["power"] ||
 							"?"}** Accuracy: **${moveInfo["accuracy"] ||
-							"?"}**\n${infoText}`
+							"?"}**\n${infoText}`,
 					);
 				} else if (!hasTextSetting) {
 					message.reply("please specify the text kind");
