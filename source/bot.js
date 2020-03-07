@@ -24,7 +24,7 @@ client.on("guildCreate", guild => {
 	if (guild.available) {
 		const drawing = new Discord.MessageAttachment(
 			"resources/drawingBotWelcome.png",
-			"drawing.png"
+			"drawing.png",
 		);
 
 		const joinEmbed = new Discord.MessageEmbed()
@@ -39,7 +39,7 @@ client.on("guildCreate", guild => {
 				{
 					embed: joinEmbed,
 					files: [drawing],
-				}
+				},
 			);
 	}
 });
@@ -77,20 +77,20 @@ client.on("message", message => {
 	console.log(
 		`Got command! ${commandName}, from ${
 			message.author.username
-		} at ${message.channel.name || "DMs"}`
+		} at ${message.channel.name || "DMs"}`,
 	);
 
 	const command =
 		client.commands.get(commandName) || // Is that a real command?
 		client.commands.find(
-			({ aliases }) => aliases && aliases.includes(commandName)
+			({ aliases }) => aliases && aliases.includes(commandName),
 		);
 	if (!command) return;
 
 	if (command.guildOnly && message.channel.type !== "text") {
 		// DMs check
 		return message.reply(
-			"I don't think I know how do that thing in DMs, sorrii!"
+			"I don't think I know how do that thing in DMs, sorrii!",
 		);
 	}
 
@@ -126,7 +126,7 @@ client.on("message", message => {
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	
+
 	let cooldownAmount;
 
 	if (process.env.DEBUG) {
@@ -147,7 +147,7 @@ client.on("message", message => {
 			return message.reply(
 				`hold up! Please wait ${timeLeft.toFixed(1)}s to use ${
 					process.env.PREFIX
-				}${command.name} again.`
+				}${command.name} again.`,
 			);
 		}
 		timestamps.set(message.author.id, now);
@@ -166,7 +166,7 @@ client.on("message", message => {
 		}
 		message.reply(
 			`${dmRecipient}there was some sort of weird error when I was trying to ${command.errorVerb ||
-				"execute the command."}.\n\n*a small rolled up paper strip prints out, saying:*\n\`\`\`js\n${error}\`\`\``
+				"execute the command."}.\n\n*a small rolled up paper strip prints out, saying:*\n\`\`\`js\n${error}\`\`\``,
 		);
 	}
 
@@ -179,7 +179,7 @@ client.login(process.env.CLIENT_TOKEN);
 console.log(`Prefix: ${process.env.PREFIX}`);
 
 process.on("unhandledRejection", error =>
-	console.error(`Uncaught Promise Rejection:\n${error}`)
+	console.error(`Uncaught Promise Rejection:\n${error}`),
 );
 
 function loadSongs() {
@@ -210,7 +210,7 @@ function onDM(message) {
 		message.author.id != client.user.id // Not mato-bot
 	) {
 		console.log(
-			`Received a non-command DM from ${message.author.tag}:\n${message}`
+			`Received a non-command DM from ${message.author.tag}:\n${message}`,
 		);
 		// client.users.cache.get(process.env.MATO).send("Recieved a non-command DM from " + message.author.tag + ":\n" + message);
 	}
@@ -233,7 +233,9 @@ function secretCommand({ content, author }) {
 			matoChannel = client.channels.cache.get(args[1]);
 			if (matoChannel == undefined) {
 				console.log("Can't send there");
-			} else matoChannel.send(args[2], args[3] || "");
+			} else {
+				matoChannel.send(args[2], args[3] || "");
+			}
 			break;
 		case "sendDM": // ;mato § sendDM § 12345 § henlo (§ settings)
 			matoUser = client.users.cache.get(args[1]);
