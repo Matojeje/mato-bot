@@ -9,7 +9,6 @@ dist
 *.env
 *.dev
 *.code-workspace
-.vscode
 .DS_Store
 desktop.ini
 

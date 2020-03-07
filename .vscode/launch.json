@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "dev",
+            "program": "${workspaceRoot}/dist/bot.js",
+            "runtimeExecutable": "node",
+            "outFiles": [
+                "${workspaceRoot}/dist/**.js"
+            ]
+        }
+    ]
+}
