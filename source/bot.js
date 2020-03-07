@@ -12,7 +12,7 @@ const commandFiles = fs
 	.filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
-	const command = require(__dirname + `/commands/${file}`);
+	const command = require(__dirname + `/commands/${file}`).default; // NOTE(alt): Babel requires the `.default` for some stupid reason.
 	client.commands.set(command.name, command);
 }
 
@@ -23,11 +23,11 @@ client.on("guildCreate", guild => {
 	console.log(`Got added to ${guild}`);
 	if (guild.available) {
 		const drawing = new Discord.MessageAttachment(
-			"../resources/drawingBotWelcome.png",
+			"resources/drawingBotWelcome.png",
 			"drawing.png"
 		);
 
-		const joinEmbed = new Discord.RichEmbed()
+		const joinEmbed = new Discord.MessageEmbed()
 			.setColor("#2990bb")
 			.setImage("attachment://drawing.png");
 
@@ -119,13 +119,16 @@ client.on("message", message => {
 		return message.channel.send(reply);
 	}
 
+	// Cooldown Stuff
 	if (!cooldowns.has(command.name)) {
-		// Cooldown stuff
 		cooldowns.set(command.name, new Discord.Collection());
 	}
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
+	
+	let cooldownAmount;
+
 	if (process.env.DEBUG) {
 		console.log("Cooldown skip!");
 		cooldownAmount = 0;
@@ -157,7 +160,7 @@ client.on("message", message => {
 		command.execute(message, args, client);
 	} catch (error) {
 		console.error(error);
-		dmRecipient = "";
+		let dmRecipient = "";
 		if (message.channel.type !== "text") {
 			dmRecipient = `${tag(message.author)}, `;
 		}

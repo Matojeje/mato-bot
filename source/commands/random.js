@@ -19,6 +19,8 @@ export default {
 		"\n",
 
 	execute(message, args) {
+		let randomNumber;
+
 		if (!args.length) {
 			randomNumber = Math.random();
 		} else {

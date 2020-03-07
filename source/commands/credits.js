@@ -8,27 +8,26 @@ export default {
 	missingArgsVerb: "staff",
 	cooldown: 20,
 	shortDesc: "Shows who worked on this bot",
-	description:
-		`${process.env.PREFIX}credits tells you who worked on me, beep!`,
+	description: `${process.env.PREFIX}credits tells you who worked on me, beep!`,
 	guildOnly: false,
 	args: false,
 
-	execute({channel}) {
+	execute({ channel }) {
 		const badge = new Discord.MessageAttachment(
-			"../../resources/badgeAbout.png",
+			"resources/badgeAbout.png",
 			"badge.png"
 		);
 		const drawing = new Discord.MessageAttachment(
-			"../../resources/drawingBotWelcome.png",
+			"resources/drawingBotWelcome.png",
 			"drawing.png"
 		);
 
 		const icon = new Discord.MessageAttachment(
-			"../../resources/iconMato.png",
+			"resources/iconMato.png",
 			"icon.png"
 		);
 
-		const credits = new Discord.RichEmbed()
+		const credits = new Discord.MessageEmbed()
 			.setColor("#2990bb")
 			.setAuthor("About mato-bot", "attachment://badge.png", "")
 			.setTitle(`**Credits**`)

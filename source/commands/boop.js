@@ -10,7 +10,7 @@ export default {
 	shortDesc: "Boops someone",
 	usage: "[__user__]",
 
-	execute({channel}, args, client) {
+	execute({ channel }, args) {
 		channel.send(`*boops ${args[0]}!*`);
 	},
 };

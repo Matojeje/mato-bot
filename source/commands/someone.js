@@ -22,6 +22,9 @@ export default {
 
 	execute({ guild, channel }) {
 		if (guild.available) {
+			let randomMember;
+			let member;
+			
 			while (true) {
 				randomMember = channel.members.random();
 				if (!randomMember.user.bot) {
@@ -30,17 +33,14 @@ export default {
 					continue;
 				}
 			}
-			if (randomMember.nickname !== null) {
+
+			// NOTE(alt): As of Discord.js ~12.0, users with no username gets read as undefined instead of null.
+			if (randomMember.nickname !== undefined) { 
 				member = `***${randomMember.user.username}*** (**${randomMember.nickname}**)`;
 			} else {
 				member = `**${randomMember.user.username}**`;
 			}
-			/* botMessage = "";
-			if (botPickCount = 1) {
-				botMessage = " I also randomly hit one bot.";
-			} else if (botPickCount > 1) {
-				botMessage = " I also randomly hit " + botPickCount + " bots.";
-			} */
+
 			channel.send(`${member} was randomly picked!`);
 		}
 	},

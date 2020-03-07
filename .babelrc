@@ -10,5 +10,18 @@
 		]
 	],
 	"sourceMaps": "inline",
-  	"retainLines": true
+	"retainLines": true,
+	"plugins": [
+		[
+			"module-resolver",
+			{
+				"root": ["./source"],
+				"alias": {
+					"resources": "./resources",
+					"root": "./",
+					"underscore": "lodash"
+				}
+			}
+		]
+	]
 }

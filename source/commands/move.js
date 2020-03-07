@@ -1,4 +1,5 @@
 import Pokedex from "pokedex-promise-v2";
+
 const P = new Pokedex();
 
 export default {
@@ -17,28 +18,29 @@ export default {
 		'[*move name or ID*]\nNote: When looking up a Z move with multiple damage categories, \
 		specify which one you want (for example "tectonic rage--physical")',
 
-	execute(message, args, client) {
+	execute(message, args) {
 		let hasTextSetting = false;
 		let hasMove = false;
+		let infoText;
 
-		input = args.toString().replace(",", " ");
+		const input = args.toString().replace(",", " ");
 		console.log(`i: ${input}`);
 
-		formattedMove = input.toLowerCase().replace(/ /g, "-");
+		const formattedMove = input.toLowerCase().replace(/ /g, "-");
 		console.log(`f: ${formattedMove}`);
 		P.getMoveByName(formattedMove)
 			.then(response => {
-				moveInfo = response;
+				const moveInfo = response;
 				if (moveInfo == undefined) {
 					message.reply(`Move ${input}not found`);
 					hasTextSetting = true;
 					hasMove = true;
 				}
 
-				a = input.toLowerCase();
+				const a = input.toLowerCase();
 				if (!hasMove) {
-					ft = moveInfo.flavor_text_entries;
-					for (x in ft) {
+					const ft = moveInfo.flavor_text_entries;
+					for (const x in ft) {
 						if (
 							ft[x].language.name == "en" &&
 							ft[x].version_group.name == "sun-moon"

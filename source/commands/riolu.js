@@ -15,19 +15,11 @@ export default {
 		"This command will look up a random Riolu picture from Bing. This might take a while.",
 	usage: "",
 
-	// This function is used to get a random image from Google and then send it to Discord.
-	// Sadly, we need to use a headless browser because Google rate limits calls now.
+	// This function is used to get a random image from Bing and then send it to Discord.
+	// This uses an old version of images-scraper which I will fix once pevers on GitHub comes up with a solution.
 	async execute({ channel }) {
-		let google = new Scraper.Google({
-			keyword: "riolu",
-			limit: 10,
-			puppeteer: {
-				headless: true,
-			},
-		});
-
-		const results = await google.start();
-
+		const bing = new Scraper.Bing();
+		const results = await bing.list({ keyword: "riolu", detail: true });
 		const reply = !results.length
 			? "```js\nError: I was not able to get any images, I am sorrii.```"
 			: new MessageAttachment(

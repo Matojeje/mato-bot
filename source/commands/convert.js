@@ -14,18 +14,24 @@ export default {
 	usage: "[**value**] [**from this unit**] (to) [**to this unit**]",
 
 	execute(message, args) {
-		value = args[0];
-		from = args[1];
+		let value = args[0];
+		let from = args[1];
+		let to;
+
 		if (args[2].toLowerCase() === "to") {
 			to = args[3];
 		} else {
 			to = args[2];
 		}
 
-		message.reply(
-			`${value} ${from} = **${im(value.replace(/,/, "."))
-				.from(from)
-				.to(to)} ${to}**`
-		);
+		try {
+			message.reply(`${value} ${from} = **${im(value.replace(/,/, "."))
+			.from(from)
+			.to(to)} ${to}**`
+			)
+		} catch(err) {
+			message.reply(`I do not provide conversion for that type, I'm sorrii.`);
+			console.log(err);
+		}
 	},
 };

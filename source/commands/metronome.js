@@ -1,8 +1,14 @@
 import Discord from "discord.js";
 import Pokedex from "pokedex-promise-v2";
-import movesData from "../../moves.json";
+import movesData from "root/moves.json";
 
 const P = new Pokedex();
+
+// NOTE(alt): Global Variables because of stupid reasons.
+let personal;
+let possessive;
+let demonstrative;
+let verb;
 
 export default {
 	name: "metronome",
@@ -32,7 +38,7 @@ export default {
 		"\nOptional | Arg 3: Show more detailed information about the move (rich embed)." +
 		"\n",
 
-	execute(message, args, client) {
+	execute(message, args) {
 		setEmojis();
 
 		const moveCount = movesData.length;
@@ -68,19 +74,19 @@ export default {
 				switch (args[0]) {
 					case "m":
 						personal = "he";
-						possesive = "his";
+						possessive = "his";
 						demonstrative = "him";
 						verb = "s";
 						break;
 					case "f":
 						personal = "she";
-						possesive = "her";
+						possessive = "her";
 						demonstrative = "her";
 						verb = "s";
 						break;
 					case "p":
 						personal = "they";
-						possesive = "their";
+						possessive = "their";
 						demonstrative = "them";
 						verb = "";
 						break;
@@ -92,7 +98,7 @@ export default {
 				setDefaultHeckinPronouns();
 			}
 
-			makeMoveMessages(user, move);
+			const moveAnnounce = makeMoveMessages(user, move);
 
 			message.channel.send(
 				moveAnnounce[Math.floor(Math.random() * moveAnnounce.length)]
@@ -106,10 +112,10 @@ export default {
 			setupMoveInfo(move, message);
 		}
 
-		moveSuccessful = 1;
+		let moveSuccessful = 1;
 
 		if (move.Power !== "") {
-			critCalc = Math.ceil(Math.random() * 24);
+			const critCalc = Math.ceil(Math.random() * 24);
 			if (critCalc === 24) {
 				moveSuccessful = 2;
 			}
@@ -163,29 +169,29 @@ function tickiStyle(move, { channel }) {
 	showPower = false;
 }
 
-function makeMoveMessages(user, { Name }) {
-	moveAnnounce = [
-		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${Name}!\``,
-		`\`${user} used Metronome!\n${user} used ${Name}!\``,
-		`\`${user}'s Metronome let ${demonstrative} use ${Name}!\``,
-		`\`${user} holds ${possesive} finger in the air and wags it. ${cap(
+function makeMoveMessages(user, move) {
+	return [
+		`\`${user} used Metronome!\nWaggling a finger let ${demonstrative} use ${move}!\``,
+		`\`${user} used Metronome!\n${user} used ${move}!\``,
+		`\`${user}'s Metronome let ${demonstrative} use ${move}!\``,
+		`\`${user} holds ${possessive} finger in the air and wags it. ${cap(
 			personal
-		)} use${verb} ${Name}!\``,
-		`\`${user} waves ${possesive} finger and uses ${Name}!\``,
-		`\`${user} waves ${possesive} finger, using ${Name}!\``,
-		`\`${user} waves one of ${possesive} arms, and the tip starts to glow. ${cap(
+		)} use${verb} ${move}!\``,
+		`\`${user} waves ${possessive} finger and uses ${move}!\``,
+		`\`${user} waves ${possessive} finger, using ${move}!\``,
+		`\`${user} waves one of ${possessive} arms, and the tip starts to glow. ${cap(
 			personal
-		)} then use${verb} ${Name}!\``,
+		)} then use${verb} ${move}!\``,
 	];
 }
 
 function setupMoveInfo(move, { channel }) {
 	const badge = new Discord.MessageAttachment(
-		"../../resources/badgeMoveInfo.png",
+		"resources/badgeMoveInfo.png",
 		"badge.png"
 	);
 	const icon = new Discord.MessageAttachment(
-		"../../resources/iconMatoBot.png",
+		"resources/iconMatoBot.png",
 		"icon.png"
 	);
 	P.getMoveByName(move.Name.toLowerCase().replace(/ /g, "-")).then(
@@ -200,7 +206,7 @@ function setupMoveInfo(move, { channel }) {
 					break;
 				}
 			}
-			const moveInfo = new Discord.RichEmbed()
+			const moveInfo = new Discord.MessageEmbed()
 				.setColor("#2990bb")
 				.setTitle(move.Name)
 				.setURL(
@@ -229,7 +235,7 @@ function setupMoveInfo(move, { channel }) {
 }
 
 function setEmojis() {
-	emojiData = new Array();
+	const emojiData = new Array();
 	emojiData["Normal"] = "⬜";
 	emojiData["Fighting"] = "👊";
 	emojiData["Flying"] = "🐦";
@@ -254,7 +260,7 @@ function setEmojis() {
 
 function setDefaultHeckinPronouns() {
 	personal = "it"; // ${personal}
-	possesive = "its"; // ${possesive}
+	possessive = "its"; // ${possessive}
 	demonstrative = "it"; // ${demonstrative}
 	verb = "s"; // ${verb}
 }

@@ -55,6 +55,4 @@ Also thanks to [IamRifki](https://github.com/IamRifki) and [FM-96](https://www.r
 
 ## License
 
-![MIT Image](resources/logoMIT.png)
-
-mato-bot is free software: you can distribute it under the Massachusetts Institute of Technology (MIT) License.
+[MIT](./LICENSE.md) © Matojeje et al.

@@ -1,5 +1,5 @@
 import Discord from "discord.js";
-import data from "../../resources/sm64";
+import data from "resources/sm64";
 
 export default {
 	name: "sm64",
@@ -28,7 +28,7 @@ export default {
 		const ss = "**";
 
 		const badge = new Discord.MessageAttachment(
-			"../../resources/badgePowerStar.png",
+			"resources/badgePowerStar.png",
 			"badge.png"
 		);
 
@@ -54,7 +54,7 @@ export default {
 		let specificDialog = false;
 		let messageText = "";
 
-		marioInfo = new Discord.RichEmbed()
+		const marioInfo = new Discord.MessageEmbed()
 			.setColor("#ffff00")
 			.setFooter("Super Mario 64", getImage("Power Star Yellow"));
 

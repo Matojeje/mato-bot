@@ -25,7 +25,11 @@ export default {
 		"\n",
 
 	execute({ channel }, args) {
-		diff = "beginner";
+		let mines;
+		let width;
+		let height;
+
+		const diff = "beginner";
 		if (args[0]) {
 			diff = args[0].toString().toLowerCase();
 			switch (args[0].toString().toLowerCase()) {
@@ -63,8 +67,8 @@ export default {
 			height = 9;
 		}
 
-		hide = true;
-		hint = true;
+		const hide = true;
+		const hint = true;
 
 		if (mines >= width * height) {
 			return Error(
@@ -75,15 +79,15 @@ export default {
 		}
 
 		// Prepare the minefield
-
-		field = new Array(height).fill(0).map(() => new Array(width).fill(0));
+		const field = new Array(height)
+			.fill(0)
+			.map(() => new Array(width).fill(0));
 
 		// Place all the mines (and the exact number of them)
-
-		i = 0;
+		let i = 0;
 		while (i < mines) {
-			rnW = Math.trunc(Math.random() * width);
-			rnH = Math.trunc(Math.random() * height);
+			const rnW = Math.trunc(Math.random() * width);
+			const rnH = Math.trunc(Math.random() * height);
 			if (field[rnW][rnH] == 0) {
 				field[rnW][rnH] = 100;
 				console.log(`Mine ${i} added at ${rnW},${rnH}`);
@@ -92,7 +96,6 @@ export default {
 		}
 
 		// Check every tile for explosive surroundings
-
 		for (let i = 0; i < field.length; i++) {
 			for (let j = 0; j < field[i].length; j++) {
 				around(j, i, width, height, field);
@@ -100,8 +103,7 @@ export default {
 		}
 
 		// Prepare the output message
-
-		output = "";
+		let output = "";
 		for (let i = 0; i < field.length; i++) {
 			for (let j = 0; j < field[i].length; j++) {
 				output += `${field[i][j]}\t`;
@@ -109,8 +111,10 @@ export default {
 			output += "\n";
 		}
 
-		// Handle spoiler tags
+		let h;
+		let placedHint;
 
+		// Handle spoiler tags
 		if (hide) {
 			h = "||";
 			placedHint = false;
@@ -119,11 +123,9 @@ export default {
 		}
 
 		// Replace the mines first
-
 		output = output.replace(/10\S/g, `${h}:boom:${h}`);
 
 		// Turn the numbers into their emojis
-
 		const emojis = {
 			"0": ":zero:",
 			"1": ":one:",
@@ -180,7 +182,7 @@ export default {
 			const c = y > 0;
 			const d = y < h - 1;
 
-			e = [x, y];
+			let e = [x, y];
 
 			if (a && c) {
 				check(f[x - 1][y - 1], e, f);

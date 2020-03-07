@@ -14,7 +14,7 @@ export default {
 	shortDesc: "Lets Mato test stuff",
 	usage: "[*experiment name*]",
 
-	execute({author, channel}, args, client) {
+	execute({ author, channel }, args) {
 		switch (args[0].toLowerCase()) {
 			case "dataurl":
 				reply("DataURL test!");

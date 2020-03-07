@@ -20,18 +20,17 @@ export default {
 
 	execute({ channel }, args, client) {
 		const badge = new Discord.MessageAttachment(
-			"../../resources/badgeAbout.png",
+			"resources/badgeAbout.png",
 			"badge.png"
 		);
 		const drawing = new Discord.MessageAttachment(
-			"../../resources/drawingBotHD.png",
+			"resources/drawingBotHD.png",
 			"drawing.png"
 		);
-		// const icon = new Discord.MessageAttachment("../../resources/iconMato.png", "icon.png");
 
 		const blank = "\u200B";
 
-		riiInfo = new Discord.RichEmbed()
+		const riiInfo = new Discord.MessageEmbed()
 			.setColor("#2990bb")
 			.setAuthor("About mato-bot", "attachment://badge.png", "")
 			.setTitle(`**v${meta.version}** (in development)`)
@@ -45,7 +44,7 @@ https://github.com/Matojeje/mato-bot`
 			)
 			.addField("Uptime", `${Math.round(client.uptime)} ms`, true)
 			.addField("Woke up at", client.readyAt.toLocaleString(), true)
-			.addField("Ping", `${client.ping.toFixed(1)} ms`, true)
+			.addField("Ping", `${client.ws.ping.toFixed(1)} ms`, true)
 			.addField(
 				"Cookies in belly",
 				Math.round(Math.random() * 5000),
@@ -57,11 +56,8 @@ https://github.com/Matojeje/mato-bot`
 
 		if (args[0] === "credits") {
 			riiInfo
-				.addBlankField()
-				.addField(
-					"<:blueDot:357620038838124544> **Credits**",
-					"~~             ~~"
-				)
+				.addField("\u200b", "\u200b", false) // NOTE(alt): This does the same thing as .addBlankField in Discord.js v11; They removed it for some stupid reason.
+				.addField("🔵 **Credits**", "~~             ~~")
 				.addField(
 					"Code:",
 					`
@@ -81,13 +77,16 @@ https://github.com/Matojeje/mato-bot`
 			riiInfo.addField("He", "<a:He:608354487836475394>", true);
 		}
 
-		client.fetchUser(process.env.MATO).then(({ id, avatar, username }) => {
-			avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.webp`;
-			riiInfo.setFooter(`By ${username}`, avatarURL);
-			channel.send({
-				embed: riiInfo,
-				files: [badge, drawing],
+		client.users
+			.fetch(process.env.MATO)
+			.then(({ id, avatar, username }) => {
+				const avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.webp`;
+
+				riiInfo.setFooter(`By ${username}`, avatarURL);
+				channel.send({
+					embed: riiInfo,
+					files: [badge, drawing],
+				});
 			});
-		});
 	},
 };
