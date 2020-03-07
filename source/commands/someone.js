@@ -22,13 +22,12 @@ export default {
 
 	execute({ guild, channel }) {
 		if (guild.available) {
-			let botPickCount = 0;
 			while (true) {
 				randomMember = channel.members.random();
 				if (!randomMember.user.bot) {
 					break;
 				} else {
-					botPickCount++;
+					continue;
 				}
 			}
 			if (randomMember.nickname !== null) {

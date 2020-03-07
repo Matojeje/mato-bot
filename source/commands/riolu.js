@@ -29,7 +29,7 @@ export default {
 		const results = await google.start();
 
 		const reply = !results.length
-			? "```js\nError: I was not able to get any images, I am sowwy.```"
+			? "```js\nError: I was not able to get any images, I am sorrii.```"
 			: new MessageAttachment(
 					results[Math.floor(Math.random() * results.length)].url
 			  );
