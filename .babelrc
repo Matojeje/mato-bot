@@ -19,7 +19,8 @@
 				"alias": {
 					"resources": "./resources",
 					"root": "./",
-					"underscore": "lodash"
+					"underscore": "lodash",
+					"utils": "./source/utils"
 				}
 			}
 		]

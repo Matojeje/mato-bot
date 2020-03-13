@@ -1,6 +1,6 @@
 "use strict";
 
-import im from "imperial-metric";
+import im from "utils/imperial-metric.js";
 
 export default {
     name: "convert",
@@ -32,7 +32,7 @@ export default {
                 .to(to)} ${to}**`,
             );
         } catch(err) {
-            message.reply(`I don't provide conversion for that type, I'm sorrii.`);
+            message.reply("I don't provide conversion for that type, I'm sorrii.");
             console.log(err);
         }
     },

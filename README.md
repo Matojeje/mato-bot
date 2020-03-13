@@ -45,13 +45,9 @@ Also thanks to [IamRifki](https://github.com/IamRifki) and [FM-96](https://www.r
 
 [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) MIT ©&nbsp;2016 Thomas Asadurian
 
-[images-scraper](https://github.com/pevers/images-scraper) ISC ©&nbsp;2019 Peter Evers
-
 [csvjson](https://github.com/pradeep-mishra/csvjson) MIT ©&nbsp;2014 Pradeep Mishra
 
-[imperial-metric](https://github.com/tiansijie/imperial-metric) ISC ©&nbsp;2016 Sijie Tian
-
-[View all dependencies](https://github.com/Matojeje/mato-bot/network/dependencies)
+[View other dependencies](https://github.com/Matojeje/mato-bot/network/dependencies)
 
 ## License
 

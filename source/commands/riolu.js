@@ -1,7 +1,7 @@
 "use strict";
 
 import { MessageAttachment } from "discord.js";
-import Scraper from "scraper";
+import Scraper from "utils/scraper.js";
 
 export default {
     name: "riolu",
@@ -17,7 +17,9 @@ export default {
 		"This command will look up a random Riolu picture from Bing. This might take a while.",
     usage: "",
 
-    // This function is used to get a random image from Bing and then send it to Discord.
+    /**
+     * This function is used to get a random image from Bing and then send it to Discord.
+     */
     async execute({ channel }, args) {
         let query;
 

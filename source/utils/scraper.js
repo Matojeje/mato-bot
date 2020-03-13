@@ -1,9 +1,12 @@
 /**
  * 0BSD © Dania Rifki <iamrifki@gmail.com>
  *
- * The code is heavily based on Peter Ever's old images-scraper,
+ * The code is heavily based on Peter Evers' old images-scraper,
  * however I massively refactored it to use Classes and Modern JS features
  * Huge thanks to him for making the original.
+ *
+ * Please use this version instead if you want to use this script for your own project:
+ * https://gist.github.com/IamRifki/24a4ee5170e919d80df616a8a652fc22
  */
 
 "use strict";

@@ -1,7 +1,7 @@
 "use strict";
 
 import Discord from "discord.js";
-import data from "resources/sm64";
+import data from "resources/sm64.js";
 
 export default {
     name: "sm64",
