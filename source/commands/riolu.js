@@ -1,6 +1,6 @@
 "use strict";
 
-import { MessageAttachment } from "discord.js";
+import { MessageEmbed } from "discord.js";
 import Scraper from "utils/scraper.js";
 
 export default {
@@ -14,29 +14,39 @@ export default {
     guildOnly: false,
     shortDesc: "Fetches and sends a Riolu picture",
     description:
-		"This command will look up a random Riolu picture from Bing. This might take a while.",
+        "This command will look up a random Riolu picture from Bing. This might take a while.",
     usage: "",
 
     /**
-     * This function is used to get a random image from Bing and then send it to Discord.
+     * This function is used to get a random image from Bing
+     * and then send it to Discord via an embed.
      */
-    async execute({ channel }, args) {
+    async execute(message, args) {
         let query;
+        let color;
 
-        if (args[0] === "luu") {
+        if (args[0] === "luu" || args[0] === "lucario") {
             query = "Lucario";
+            color = "#268AB5";
         } else {
             query = "Riolu";
+            color = "#91CAE9";
         }
 
         const scraper = new Scraper();
         const results = await scraper.list({ keyword: query, detail: true });
         const reply = !results.length
             ? "```js\nError: I was not able to get any images, I am sorrii.```"
-            : new MessageAttachment(
-                results[Math.floor(Math.random() * results.length)].url,
-            );
+            : new MessageEmbed()
+                .setColor(color)
+                .setImage(
+                    results[Math.floor(Math.random() * results.length)].url,
+                )
+                .setFooter(
+                    `Requested by ${message.author.username}`,
+                    message.author.avatarURL(),
+                );
 
-        channel.send(reply);
+        message.channel.send(reply);
     },
 };
