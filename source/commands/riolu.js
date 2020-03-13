@@ -15,7 +15,7 @@ export default {
     shortDesc: "Fetches and sends a Riolu picture",
     description:
         "This command will look up a random Riolu picture from Bing. This might take a while.",
-    usage: "",
+    usage: "(**luu**/**lucario**) to search Lucario pictures instead.",
 
     /**
      * This function is used to get a random image from Bing
