@@ -25,7 +25,7 @@ export default {
         let query;
         let color;
 
-        if (args[0] === "luu" || args[0] === "lucario") {
+        if (args[0].toLowerCase() === "luu" || args[0].toLowerCase() === "lucario") {
             query = "Lucario";
             color = "#268AB5";
         } else {
