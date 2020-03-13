@@ -1,7 +1,7 @@
 "use strict";
 
 import { MessageAttachment } from "discord.js";
-import Scraper from "images-scraper";
+import Scraper from "scraper";
 
 export default {
     name: "riolu",
@@ -18,10 +18,17 @@ export default {
     usage: "",
 
     // This function is used to get a random image from Bing and then send it to Discord.
-    // This uses an old version of images-scraper which I will fix once pevers on GitHub comes up with a solution.
-    async execute({ channel }) {
-        const bing = new Scraper.Bing();
-        const results = await bing.list({ keyword: "riolu", detail: true });
+    async execute({ channel }, args) {
+        let query;
+
+        if (args[0] === "luu") {
+            query = "Lucario";
+        } else {
+            query = "Riolu";
+        }
+
+        const scraper = new Scraper();
+        const results = await scraper.list({ keyword: query, detail: true });
         const reply = !results.length
             ? "```js\nError: I was not able to get any images, I am sorrii.```"
             : new MessageAttachment(
