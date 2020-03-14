@@ -3,7 +3,7 @@
 Example for a command that will "boop" someone:
 
 ```javascript
-module.exports = {
+export default {
     name: "boop",
     errorVerb: "boop someone",
     missingArgsVerb: "booping",
@@ -88,17 +88,17 @@ All of the command's main code takes place inside the `execute()`&nbsp;function.
 
 ### Input arguments
 
-The function is called from `bot.js` with three arguments: `message`, `args` and `client`. Due to how JavaScript works, you can set your execute()&nbsp;function to load only 1&nbsp;or 2 of these, but mind the order.
+The function is called from `bot.js` with three arguments: `message`, `args` and `client`. If there's an `async` keyword before the function, that's an asynchronous function, it's used when you need to do asynchronous tasks inside of the function. Due to how JavaScript works, you can set your execute()&nbsp;function to load only 1&nbsp;or 2 of these, but mind the order.
 
 Valid options*:
 
-* `function execute(message)`
-* `function execute(message, args)`
-* `function execute(message, args, client)`
+* `[async] execute(message)`
+* `[async] execute(message, args)`
+* `[async] execute(message, args, client)`
 
 \* Here, the variable names that will be used inside the function are the same as the variables the function is called with in `bot.js`. This is preferred but not necessary.
 
-In the example, not all three of the input arguments are used, and therefore using `function execute(message)` would be enough.
+In the example, not all three of the input arguments or the `async` keyword are used, and therefore using `execute(message)` would be enough.
 
 ### Output
 
