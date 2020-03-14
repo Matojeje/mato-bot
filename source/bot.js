@@ -33,7 +33,7 @@ client.on("guildCreate", guild => {
             .setColor("#2990bb")
             .setImage("attachment://drawing.png");
 
-        client.channels
+        client.channels.cache
             .get(guild.systemChannelID)
             .send(
                 `Hello! I'm Mato-bot. My prefix is \`${process.env.PREFIX}\`. ` +
