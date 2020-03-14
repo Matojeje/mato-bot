@@ -56,7 +56,7 @@ https://github.com/Matojeje/mato-bot`,
             .setThumbnail("attachment://drawing.png")
             .setTimestamp(new Date(meta.timestamp));
 
-        if (args[0].toLowerCase() === "credits") {
+        if (args[0] === "credits") {
             riiInfo
                 .addField("\u200b", "\u200b", false) // NOTE(alt): This does the same thing as .addBlankField in Discord.js v11; They removed it for some stupid reason.
                 .addField("🔵 **Credits**", "~~             ~~")
