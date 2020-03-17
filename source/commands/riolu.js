@@ -7,9 +7,8 @@ export default {
     name: "riolu",
     errorVerb: "look up Riolu pictures",
     missingArgsVerb: "Riolu",
-
     aliases: ["rpics", "rii", "riolupics"],
-    args: false,
+    args: true,
     cooldown: 10,
     guildOnly: false,
     shortDesc: "Fetches and sends a Riolu picture",
