@@ -10,8 +10,8 @@ export default {
     guildOnly: false,
     shortDesc: "This command will mess with text",
     description:
-            "This command will mess with text with a user defined argument.",
-    usage: "[**uwu**/**mock**/**random**] [__text__]",
+        "This command will mess with text with a user defined argument.",
+    usage: "[**uwu**/**mock**] [__text__]",
 
     execute({ channel }, args) {
         let reply;
@@ -21,7 +21,6 @@ export default {
                 reply = UwUify(args.join(" ").slice(args[0].length));
                 break;
             case "mock":
-            case "random":
                 reply = randomCase(args.join(" ").slice(args[0].length));
                 break;
             default:
@@ -35,7 +34,7 @@ export default {
 const faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
 
 /**
- *  UwUifies the text in the given string.
+ * UwUifies the text in the given string.
  *
  * @param   {string} str string to be UwUfied.
  * @return  {string} The input string with UwUfied letters.
@@ -47,10 +46,13 @@ function UwUify(string) {
     string = string.replace(/N([aeiou])/g, "Ny$1");
     string = string.replace(/N([AEIOU])/g, "Ny$1");
     string = string.replace(/ove/g, "uv");
-    string = string.replace(/!+/g, ` ${faces[Math.floor(Math.random() * faces.length)]} `);
+    string = string.replace(
+        /!+/g,
+        ` ${faces[Math.floor(Math.random() * faces.length)]} `,
+    );
 
     return string;
-};
+}
 
 /**
  * Randomize the capitalization of each letter in the given string.
