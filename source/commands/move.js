@@ -8,7 +8,6 @@ export default {
     name: "moveinfo",
     errorVerb: "search up what that move does (WIP)",
     missingArgsVerb: "move",
-
     aliases: ["mi", "move"],
     args: true,
     cooldown: 10,

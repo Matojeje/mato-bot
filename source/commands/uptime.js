@@ -4,7 +4,6 @@ export default {
     name: "uptime",
     errorVerb: "look up my uptime",
     missingArgsVerb: "timing",
-
     aliases: ["up"],
     args: false,
     cooldown: 0,

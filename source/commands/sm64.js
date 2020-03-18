@@ -7,7 +7,6 @@ export default {
     name: "sm64",
     errorVerb: "BLJ to the nearest QPU",
     missingArgsVerb: "Super Mario Brothers' Super",
-
     aliases: ["sign", "textbox", "bup", "mario"],
     args: false,
     cooldown: 20,
