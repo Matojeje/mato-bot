@@ -1,14 +1,14 @@
 "use strict";
 
 import { MessageEmbed } from "discord.js";
-import Scraper from "utils/scraper.js";
+import Scraper from "utils/scraper-yandex.js";
 
 export default {
     name: "riolu",
     errorVerb: "look up Riolu pictures",
     missingArgsVerb: "Riolu",
     aliases: ["rpics", "rii", "riolupics"],
-    args: true,
+    args: false,
     cooldown: 10,
     guildOnly: false,
     shortDesc: "Fetches and sends a Riolu picture",
