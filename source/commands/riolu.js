@@ -1,7 +1,7 @@
 "use strict";
 
 import { MessageEmbed } from "discord.js";
-import Scraper from "utils/scraper-yandex.js";
+import Scraper from "utils/scraper.js";
 
 export default {
     name: "riolu",
@@ -33,7 +33,7 @@ export default {
         }
 
         const scraper = new Scraper();
-        const results = await scraper.list({ keyword: query, detail: true });
+        const results = await scraper.list({ keyword: query });
         const reply = !results.length
             ? "```js\nError: I was not able to get any images, I am sorrii.```"
             : new MessageEmbed()
