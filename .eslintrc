@@ -12,7 +12,7 @@
         "ecmaFeatures": {
             "modules": true
         },
-        "ecmaVersion": 8,
+        "ecmaVersion": 2019,
         "sourceType": "module"
     },
     "rules": {
