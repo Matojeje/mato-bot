@@ -25,6 +25,11 @@ export default {
                 break;
             default:
                 reply = "Please add the word transformation type argument";
+                break;
+        }
+
+        if (args[1] === undefined) {
+            reply = "Please provide the sentence that you want to transform";
         }
 
         channel.send(reply);
