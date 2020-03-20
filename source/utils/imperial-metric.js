@@ -82,8 +82,7 @@ class ImperialMetric {
         this.goal = this.map[goal];
         if (this.unit.belong !== this.goal.belong) {
             return this.val * this.unit.toMain * this.unit.toOthers / this.goal.toMain;
-        }
-        else {
+        } else {
             return this.val * this.unit.toMain / this.goal.toMain;
         }
     }

@@ -48,8 +48,8 @@ import { parse } from "node-html-parser";
  * Note that I did hardcode a bit,
  * mostly because I can't figure out an elegant solution that works.
  *
- * @param  {string} keyword Keyword that's used to query Ecosia.
- * @return {string} A randomly generated result from Ecosia passed as a string.
+ * @param   {string} keyword Keyword that's used to query Ecosia.
+ * @returns {string} A randomly generated result from Ecosia passed as a string.
  */
 export default async function scrape(keyword) {
     const url = `https://ecosia.org/images?q=${keyword}`;
