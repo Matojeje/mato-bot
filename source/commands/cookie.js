@@ -11,7 +11,7 @@ export default {
     description: "Recieve a cookie for free!",
     usage: "",
 
-    execute(message, args) {
+    execute(message) {
         message.react("🍪");
     },
 };
