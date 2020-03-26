@@ -10,7 +10,7 @@
   "scripts": {
     "build": "babel source -d dist --source-maps",
     "start": "node dist/bot.js",
-    "dev": "rm -rf dist && npm run build && npm run start"
+    "dev": "npm run build && npm run start"
   },
   "repository": {
     "type": "git",

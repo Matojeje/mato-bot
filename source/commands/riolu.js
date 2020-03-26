@@ -36,6 +36,7 @@ export default {
             keyword: query,
             puppeteer: {
                 headless: true,
+                args: ["--no-sandbox"],
             },
         });
 
