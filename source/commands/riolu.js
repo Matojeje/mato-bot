@@ -11,7 +11,7 @@ export default {
     args: false,
     cooldown: 10,
     guildOnly: false,
-    shortDesc: "Looks up a random Riolu picture",
+    shortDesc: "Looks up a random Riolu picture.",
     description:
         "This command will look up a random Riolu picture from Ecosia. This might take a while.",
     usage: "(**luu**/**lucario**) to search Lucario pictures instead.",

@@ -8,7 +8,7 @@ export default {
     args: true,
     cooldown: 10,
     guildOnly: false,
-    shortDesc: "This command will mess with text",
+    shortDesc: "This command will mess with text.",
     description:
         "This command will mess with text with a user defined argument.",
     usage: "[**uwu**/**mock**] [__text__]",
@@ -24,12 +24,12 @@ export default {
                 reply = randomCase(args.join(" ").slice(args[0].length));
                 break;
             default:
-                reply = `<@${message.author.id}> Please add the word transformation type argument`;
+                reply = `<@${message.author.id}> Please add the word transformation type argument.`;
                 break;
         }
 
         if (args[1] === undefined) {
-            reply = `<@${message.author.id}> Please provide the sentence that you want to transform`;
+            reply = `<@${message.author.id}> Please provide the sentence that you want to transform.`;
         }
 
         message.channel.send(reply);
