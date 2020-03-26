@@ -1,7 +1,7 @@
 "use strict";
 
+import { Ecosia } from "alt-image-scraper";
 import { MessageEmbed } from "discord.js";
-import scraper from "utils/scraper.js";
 
 export default {
     name: "riolu",
@@ -32,13 +32,19 @@ export default {
             color = "#91CAE9";
         }
 
-        const results = await scraper(query);
+        const ecosia = new Ecosia({
+            keyword: query,
+            puppeteer: {
+                headless: true,
+            },
+        });
 
+        const results = await ecosia.scrape();
         const reply = !results.length
             ? "```js\nError: I was not able to get any images, I am sorrii.```"
             : new MessageEmbed()
                 .setColor(color)
-                .setImage(results)
+                .setImage(results[Math.floor(Math.random() * results.length)])
                 .setFooter(
                     `Requested by ${message.author.username}`,
                     message.author.avatarURL(),

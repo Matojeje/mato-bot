@@ -13,7 +13,7 @@ export default {
         "This command will mess with text with a user defined argument.",
     usage: "[**uwu**/**mock**] [__text__]",
 
-    execute({ channel }, args) {
+    execute(message, args) {
         let reply;
 
         switch (args[0]) {
@@ -24,15 +24,15 @@ export default {
                 reply = randomCase(args.join(" ").slice(args[0].length));
                 break;
             default:
-                reply = "Please add the word transformation type argument";
+                reply = `<@${message.author.id}> Please add the word transformation type argument`;
                 break;
         }
 
         if (args[1] === undefined) {
-            reply = "Please provide the sentence that you want to transform";
+            reply = `<@${message.author.id}> Please provide the sentence that you want to transform`;
         }
 
-        channel.send(reply);
+        message.channel.send(reply);
     },
 };
 
