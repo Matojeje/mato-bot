@@ -235,27 +235,27 @@ function setupMoveInfo(move, { channel }) {
 }
 
 function setEmojis() {
-    const emojiData = new Array();
-    emojiData["Normal"] = "⬜";
-    emojiData["Fighting"] = "👊";
-    emojiData["Flying"] = "🐦";
-    emojiData["Poison"] = "☣";
-    emojiData["Ground"] = "⛰";
-    emojiData["Rock"] = "🌑";
-    emojiData["Bug"] = "🐛";
-    emojiData["Ghost"] = "👻";
-    emojiData["Steel"] = "🔩";
-    emojiData["Fire"] = "🔥";
-    emojiData["Water"] = "💦";
-    emojiData["Grass"] = "🌿";
-    emojiData["Electric"] = "⚡";
-    emojiData["Psychic"] = "🌟";
-    emojiData["Ice"] = "❄";
-    emojiData["Dragon"] = "🐲";
-    emojiData["Dark"] = "🕶";
-    emojiData["Fairy"] = "✨";
-    emojiData["???"] = "❔";
-    return emojiData;
+    const emojis = new Array();
+    emojis["Normal"] = "⬜";
+    emojis["Fighting"] = "👊";
+    emojis["Flying"] = "🐦";
+    emojis["Poison"] = "☣";
+    emojis["Ground"] = "⛰";
+    emojis["Rock"] = "🌑";
+    emojis["Bug"] = "🐛";
+    emojis["Ghost"] = "👻";
+    emojis["Steel"] = "🔩";
+    emojis["Fire"] = "🔥";
+    emojis["Water"] = "💦";
+    emojis["Grass"] = "🌿";
+    emojis["Electric"] = "⚡";
+    emojis["Psychic"] = "🌟";
+    emojis["Ice"] = "❄";
+    emojis["Dragon"] = "🐲";
+    emojis["Dark"] = "🕶";
+    emojis["Fairy"] = "✨";
+    emojis["???"] = "❔";
+    return emojis;
 }
 
 function setDefaultHeckinPronouns() {

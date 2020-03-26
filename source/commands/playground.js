@@ -7,7 +7,6 @@ export default {
     name: "playground",
     errorVerb: "test something",
     missingArgsVerb: "experiment",
-
     aliases: ["pg", "experiment"],
     args: true,
     cooldown: 0,

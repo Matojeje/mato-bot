@@ -4,7 +4,6 @@ export default {
     name: "ping",
     errorVerb: "ping you",
     missingArgsVerb: "pinging",
-
     aliases: ["test"],
     args: false,
     cooldown: 1,
