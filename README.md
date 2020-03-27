@@ -47,6 +47,8 @@ Also thanks to [IamRifki](https://github.com/IamRifki) and [FM-96](https://www.r
 
 [csvjson](https://github.com/pradeep-mishra/csvjson) MIT ©&nbsp;2014 Pradeep Mishra
 
+[alt-image-scraper](https://github.com/IamRifki/alt-image-scraper) MIT © 2020 Dania Rifki
+
 [View other dependencies](https://github.com/Matojeje/mato-bot/network/dependencies)
 
 ## License
