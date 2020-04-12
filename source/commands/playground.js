@@ -1,7 +1,6 @@
 "use strict";
 
 import Canvas from "canvas";
-import Discord from "discord.js";
 
 export default {
     name: "playground",
@@ -16,27 +15,25 @@ export default {
     usage: "[*experiment name*]",
 
     execute({ author, channel }, args) {
+        const canvas = Canvas.createCanvas(64, 64);
+        const ctx = canvas.getContext("2d");
         switch (args[0].toLowerCase()) {
             case "dataurl":
                 reply("DataURL test!");
-
-                loss =
-					"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAHCAMAAAAPmYwrAAAABlBMVEUAAAD///+l2Z/dAAAAIElEQVQIW2NgYGBkAGEQBAM0LkwIxoQDrLKoOmFckGIABjsAHwiH5BAAAAAASUVORK5CYII=";
-
-                replyImage(loss);
+                replyImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAHCAMAAAAPmYwrAAAABlBMVEUAAAD///+l2Z/dAAAAIElEQVQIW2NgYGBkAGEQBAM0LkwIxoQDrLKoOmFckGIABjsAHwiH5BAAAAAASUVORK5CYII=");
                 break;
 
             case "canvas":
-                canvas = Canvas.createCanvas(64, 64);
-                ctx = canvas.getContext("2d");
-
-                mato =
-					"https://cdn.discordapp.com/avatars/189400498497912832/7b250fde03e037968dca5288b3edf3d0.png?size=128";
-
-                Canvas.loadImage(author.displayAvatarURL || mato).then(
+                Canvas.loadImage(author.displayAvatarURL({ format: "png" })).then(
                     avatar => {
                         ctx.drawImage(avatar, 0, 0, 64, 64);
-                        ctx.fillText("heya", 5, 40);
+                        ctx.fillText("heya", 4, 40);
+                        ctx.fillText("heya", 5, 41);
+                        ctx.fillText("heya", 3, 41);
+                        ctx.fillText("heya", 5, 39);
+                        ctx.fillText("heya", 3, 39);
+                        ctx.fillStyle = "white";
+                        ctx.fillText("heya", 4, 40);
                         replyImage(canvas.toDataURL());
                     },
                 );
@@ -56,9 +53,9 @@ export default {
                 .send({
                     files: [dataURLtoBuffer(dataURL)],
                 })
-                .catch(e => {
+                /* .catch(e => {
                     throw new Error(e);
-                });
+                }) */;
         }
 
         function dataURLtoBuffer(dataUrl) {
