@@ -4,7 +4,7 @@ export default {
     name: "regex",
     errorVerb: "mess with text",
     missingArgsVerb: "messing text",
-    aliases: ["re", "replace", "quirk"],
+    aliases: ["re", "replace", "quirk", "string", "str"],
     args: true,
     cooldown: 10,
     guildOnly: false,
