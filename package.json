@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "12.x",
+    "node": "13.x",
     "npm": "6.x"
   },
   "main": "bot.js",
