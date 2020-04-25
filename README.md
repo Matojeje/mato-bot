@@ -41,11 +41,11 @@ Also thanks to [IamRifki](https://github.com/IamRifki) and [FM-96](https://www.r
 
 ## Dependencies
 
-[Discord.JS](https://discord.js.org) Apache 2.0 ©&nbsp;2015 - 2020 Amish Shah
+[Discord.JS](https://discord.js.org) Apache 2.0 © 2015 - 2020 Amish Shah
 
-[pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) MIT ©&nbsp;2016 Thomas Asadurian
+[pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2) MIT © 2016 Thomas Asadurian
 
-[csvjson](https://github.com/pradeep-mishra/csvjson) MIT ©&nbsp;2014 Pradeep Mishra
+[csvjson](https://github.com/pradeep-mishra/csvjson) MIT © 2014 Pradeep Mishra
 
 [alt-image-scraper](https://github.com/IamRifki/alt-image-scraper) MIT © 2020 Dania Rifki
 
@@ -53,4 +53,4 @@ Also thanks to [IamRifki](https://github.com/IamRifki) and [FM-96](https://www.r
 
 ## License
 
-[MIT](./LICENSE.md) © Matojeje et al.
+[MIT](./LICENSE) © Matojeje et al.
