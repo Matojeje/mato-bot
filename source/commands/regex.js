@@ -26,6 +26,9 @@ export default {
             case "mock":
                 reply = randomCase(args.join(" ").slice(args[0].length));
                 break;
+            case "shuffle":
+                reply = shuffler(args.join(" ").slice(args[0].length));
+                break;
             default:
                 reply = `<@${message.author.id}> Please add the word transformation type argument.`;
                 break;
@@ -44,8 +47,8 @@ const faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
 /**
  * UwUifies the text in the given string.
  *
- * @param   {string} str string to be UwUfied.
- * @return  {string} The input string with UwUfied letters.
+ * @param   {string} string string to be UwUfied.
+ * @returns {string} The input string with UwUfied letters.
  */
 function UwUify(string) {
     string = string.replace(/(?:l|r)/g, "w");
@@ -65,34 +68,49 @@ function UwUify(string) {
 /**
  * Randomize the capitalization of each letter in the given string.
  *
- * @param   {string} str  string to be randomized.
- * @return  {string} The input string with randomized casing.
+ * @param   {string} string string to be randomized.
+ * @returns {string} The input string with randomized casing.
  */
-function randomCase(str) {
-    str = str.split("");
-    for (let i = 0; i < str.length; i++) {
+function randomCase(string) {
+    string = string.split("");
+    for (let i = 0; i < string.length; i++) {
         const cas = Math.random() < 0.5 ? 0 : 1;
         if (cas < 0.5) {
-            str[i] = str[i].toUpperCase();
+            string[i] = string[i].toUpperCase();
         } else {
-            str[i] = str[i].toLowerCase();
+            string[i] = string[i].toLowerCase();
         }
     }
-    return str.join("");
+    return string.join("");
+}
+
+/**
+ * Shuffles the letters in the given string.
+ *
+ * @param   {string} string string to be shuffled.
+ * @returns {string} The input string with shuffled letters.
+ */
+function shuffler(string) {
+    let shuffled = "";
+    word = string.split();
+    while (word.length > 0) {
+        shuffled += word.splice(word.length * Math.random() << 0, 1);
+    }
+    return shuffled;
 }
 
 /**
  * Modifies the given string to resemble baby babble.
  * Converted using https://matojeje.github.io/playground/hotstrings/
  *
- * @param   {string} str string to be babified.
- * @return  {string} The input string with babified letters.
+ * @param   {string} string string to be babified.
+ * @returns {string} The input string with babified letters.
  */
 function babify(string) {
-    // TODO add more text to replace
-    // TODO format all the regex patterns and replacements into an object
-    // TODO move the new object to another file (maybe)
-    // TODO add function that loops over all the patterns for cleaner code
+    // TODO(mato): add more text to replace
+    // TODO(mato): format all the regex patterns and replacements into an object
+    // TODO(mato): move the new object to another file (maybe)
+    // TODO(mato): add function that loops over all the patterns for cleaner code
     return string
         .replace(/\baccident\b/g, "oopsie")
         .replace(/\ball/g, "awl")
@@ -204,4 +222,4 @@ function babify(string) {
         .replace(/\bwhy/g, "wai")
         .replace(/\byou/g, "yoo")
         .replace(/\byes\b/g, "yus");
-};
+}
