@@ -18,16 +18,16 @@ export default {
 
         switch (args[0]) {
             case "uwu":
-                reply = UwUify(args.join(" ").slice(args[0].length));
+                reply = args.join(" ").slice(args[0].length).uwuify();
                 break;
             case "baby":
-                reply = babify(args.join(" ").slice(args[0].length));
+                reply = args.join(" ").slice(args[0].length).babify();
                 break;
             case "mock":
-                reply = randomCase(args.join(" ").slice(args[0].length));
+                reply = args.join(" ").slice(args[0].length).random();
                 break;
             case "shuffle":
-                reply = shuffler(args.join(" ").slice(args[0].length));
+                reply = args.join(" ").slice(args[0].length).shuffle();
                 break;
             default:
                 reply = `<@${message.author.id}> Please add the word transformation type argument.`;
@@ -46,33 +46,29 @@ const faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
 
 /**
  * UwUifies the text in the given string.
- *
- * @param   {string} string string to be UwUfied.
  * @returns {string} The input string with UwUfied letters.
  */
-function UwUify(string) {
-    string = string.replace(/(?:l|r)/g, "w");
-    string = string.replace(/(?:L|R)/g, "W");
-    string = string.replace(/n([aeiou])/g, "ny$1");
-    string = string.replace(/N([aeiou])/g, "Ny$1");
-    string = string.replace(/N([AEIOU])/g, "Ny$1");
-    string = string.replace(/ove/g, "uv");
-    string = string.replace(
+String.prototype.uwuify = function() {
+    string = this.replace(/(?:l|r)/g, "w");
+    string = this.replace(/(?:L|R)/g, "W");
+    string = this.replace(/n([aeiou])/g, "ny$1");
+    string = this.replace(/N([aeiou])/g, "Ny$1");
+    string = this.replace(/N([AEIOU])/g, "Ny$1");
+    string = this.replace(/ove/g, "uv");
+    string = this.replace(
         /!+/g,
         ` ${faces[Math.floor(Math.random() * faces.length)]} `,
     );
 
     return string;
-}
+};
 
 /**
  * Randomize the capitalization of each letter in the given string.
- *
- * @param   {string} string string to be randomized.
  * @returns {string} The input string with randomized casing.
  */
-function randomCase(string) {
-    string = string.split("");
+String.prototype.random = function() {
+    const string = this.split("");
     for (let i = 0; i < string.length; i++) {
         const cas = Math.random() < 0.5 ? 0 : 1;
         if (cas < 0.5) {
@@ -82,36 +78,36 @@ function randomCase(string) {
         }
     }
     return string.join("");
-}
+};
 
 /**
  * Shuffles the letters in the given string.
- *
- * @param   {string} string string to be shuffled.
  * @returns {string} The input string with shuffled letters.
  */
-function shuffler(string) {
-    let shuffled = "";
-    word = string.split();
-    while (word.length > 0) {
-        shuffled += word.splice(word.length * Math.random() << 0, 1);
+String.prototype.shuffle = function() {
+    const string = this.split("");
+    const length = string.length;
+
+    for (let i = length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = string[i];
+        string[i] = string[j];
+        string[j] = tmp;
     }
-    return shuffled;
-}
+    return string.join("");
+};
 
 /**
  * Modifies the given string to resemble baby babble.
  * Converted using https://matojeje.github.io/playground/hotstrings/
- *
- * @param   {string} string string to be babified.
  * @returns {string} The input string with babified letters.
  */
-function babify(string) {
+String.prototype.babify = function() {
     // TODO(mato): add more text to replace
     // TODO(mato): format all the regex patterns and replacements into an object
     // TODO(mato): move the new object to another file (maybe)
     // TODO(mato): add function that loops over all the patterns for cleaner code
-    return string
+    return this
         .replace(/\baccident\b/g, "oopsie")
         .replace(/\ball/g, "awl")
         .replace(/\band\b/g, "an")
@@ -222,4 +218,4 @@ function babify(string) {
         .replace(/\bwhy/g, "wai")
         .replace(/\byou/g, "yoo")
         .replace(/\byes\b/g, "yus");
-}
+};
