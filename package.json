@@ -18,10 +18,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "alt-image-scraper": "^1.0.4",
+    "alt-image-scraper": "^1.0.5",
     "canvas": "^2.6.1",
     "csvjson": "^5.1.0",
-    "discord.js": "^12.1.1",
+    "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "pokedex-promise-v2": "^3.2.0"
   },
@@ -29,11 +29,11 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
-    "prettier": "^2.0.2"
+    "eslint-config-prettier": "^6.11.0",
+    "prettier": "^2.0.5"
   }
 }
