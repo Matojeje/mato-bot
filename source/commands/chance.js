@@ -30,8 +30,8 @@ export default {
         ctx.drawImage(imageRoulette, 0, randomAction * 64, 64, 64, 119, 76, 64, 64);
 
         // Draw random members' avatars
-        // NOTE(Mato): Collection#random should return *unique* members
-        // TODO(Mato) improve random picking to only involve non-bot users with recent messages
+        // NOTE(mato): Collection#random should return *unique* members
+        // TODO(mato): improve random picking to only involve non-bot users with recent messages
         const members = channel.members.random(2);
 
         ctx.drawImage(await Canvas.loadImage(members[0].user.displayAvatarURL({ format: "png" })), 25, 76, 64, 64);
@@ -40,7 +40,7 @@ export default {
         // All done!
         channel.send(
             "Oh! The results are in!",
-            // TODO Add action descriptions from actionTitle[]
+            // TODO(mato): Add action descriptions from actionTitle[]
             { files: [canvas.toBuffer()] },
         );
 
