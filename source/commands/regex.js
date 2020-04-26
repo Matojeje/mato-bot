@@ -11,7 +11,7 @@ export default {
     shortDesc: "This command will mess with text.",
     description:
         "This command will mess with text with a user defined argument.",
-    usage: "[**uwu**/**mock**/**baby**] [__text__]",
+    usage: "[**uwu**/**mock**/**baby**/**shuffle**] [__text__]",
 
     execute(message, args) {
         let reply;
