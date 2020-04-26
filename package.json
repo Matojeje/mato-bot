@@ -1,9 +1,9 @@
 {
   "name": "bawt",
   "version": "1.0.0",
-  "description": "",
+  "description": "A fun Discord bot written in Discord.js with extra Pokémon-oriented commands!",
   "engines": {
-    "node": "13.x",
+    "node": "14.x",
     "npm": "6.x"
   },
   "main": "bot.js",
