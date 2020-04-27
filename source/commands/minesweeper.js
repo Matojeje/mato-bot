@@ -19,12 +19,12 @@ export default {
     guildOnly: false,
     shortDesc: "Generates a game of minesweeper",
     description:
-		"This command generates a minesweeper-like field using spoiler tags!",
+        "This command generates a minesweeper-like field using spoiler tags!",
     usage:
-		"(**beginner**/**intermediate**/**advanced**) ([*mines*] [*width*] [*height*])\n" +
-		"\nOptional | Arg 1: Set the difficulty, using the beginner difficulty (10 mines, 9×9) by default, or specify your own." +
-		"\nConditional | Args 2, 3, 4: Set up the minefield's mine count (m ∈ ℕ₀), field width and height. (w;h ∈ ℕ*) ※ Set a custom difficulty to use this." +
-		"\n",
+        "(**beginner**/**intermediate**/**advanced**) ([*mines*] [*width*] [*height*])\n" +
+        "\nOptional | Arg 1: Set the difficulty, using the beginner difficulty (10 mines, 9×9) by default, or specify your own." +
+        "\nConditional | Args 2, 3, 4: Set up the minefield's mine count (m ∈ ℕ₀), field width and height. (w;h ∈ ℕ*) ※ Set a custom difficulty to use this." +
+        "\n",
 
     execute({ channel }, args) {
         let mines;
@@ -74,9 +74,9 @@ export default {
 
         if (mines >= width * height) {
             return Error(
-                `There are too many mines! (${mines} mines, but ${width *
-					height -
-					1} max)`,
+                `There are too many mines! (${mines} mines, but ${
+                    width * height - 1
+                } max)`,
             );
         }
 

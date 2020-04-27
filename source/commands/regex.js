@@ -48,26 +48,21 @@ const faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
  * UwUifies the text in the given string.
  * @returns {string} The input string with UwUfied letters.
  */
-String.prototype.uwuify = function() {
-    string = this.replace(/(?:l|r)/g, "w");
-    string = this.replace(/(?:L|R)/g, "W");
-    string = this.replace(/n([aeiou])/g, "ny$1");
-    string = this.replace(/N([aeiou])/g, "Ny$1");
-    string = this.replace(/N([AEIOU])/g, "Ny$1");
-    string = this.replace(/ove/g, "uv");
-    string = this.replace(
-        /!+/g,
-        ` ${faces[Math.floor(Math.random() * faces.length)]} `,
-    );
-
-    return string;
+String.prototype.uwuify = function () {
+    return this.replace(/(?:l|r)/g, "w")
+        .replace(/(?:L|R)/g, "W")
+        .replace(/n([aeiou])/g, "ny$1")
+        .replace(/N([aeiou])/g, "Ny$1")
+        .replace(/N([AEIOU])/g, "Ny$1")
+        .replace(/ove/g, "uv")
+        .replace(/!+/g, ` ${faces[Math.floor(Math.random() * faces.length)]} `);
 };
 
 /**
  * Randomize the capitalization of each letter in the given string.
  * @returns {string} The input string with randomized casing.
  */
-String.prototype.random = function() {
+String.prototype.random = function () {
     const string = this.split("");
     for (let i = 0; i < string.length; i++) {
         const cas = Math.random() < 0.5 ? 0 : 1;
@@ -84,7 +79,7 @@ String.prototype.random = function() {
  * Shuffles the letters in the given string.
  * @returns {string} The input string with shuffled letters.
  */
-String.prototype.shuffle = function() {
+String.prototype.shuffle = function () {
     const string = this.split("");
     const length = string.length;
 
@@ -102,13 +97,12 @@ String.prototype.shuffle = function() {
  * Converted using https://matojeje.github.io/playground/hotstrings/
  * @returns {string} The input string with babified letters.
  */
-String.prototype.babify = function() {
+String.prototype.babify = function () {
     // TODO(mato): add more text to replace
     // TODO(mato): format all the regex patterns and replacements into an object
     // TODO(mato): move the new object to another file (maybe)
     // TODO(mato): add function that loops over all the patterns for cleaner code
-    return this
-        .replace(/\baccident\b/g, "oopsie")
+    return this.replace(/\baccident\b/g, "oopsie")
         .replace(/\ball/g, "awl")
         .replace(/\band\b/g, "an")
         .replace(/\bass/g, "butt")
