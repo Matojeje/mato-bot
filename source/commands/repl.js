@@ -1,12 +1,12 @@
 "use strict";
 
-import { evalLisp, loadFile } from "utils/repl.js";
+import { evalLisp, loadFile } from "utils/lisp.js";
 
 export default {
-    name: "lisp",
+    name: "repl",
     errorVerb: "run a lisp command",
     missingArgsVerb: "lisping",
-    aliases: ["repl"],
+    aliases: ["lisp"],
     args: true,
     cooldown: 10,
     guildOnly: false,
