@@ -14,7 +14,7 @@ export default {
     shortDesc: "Runs a command of a lisp-like language in a repl",
 
     execute({ channel }, args) {
-        loadFile("resources/standard-library.lisp");
+        loadFile("resources/standard-library.fakelisp");
         const output = evalLisp(args.join(" "));
 
         channel.send("```" + output + "```");
