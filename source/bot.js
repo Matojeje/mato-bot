@@ -148,7 +148,7 @@ client.on("message", message => {
         if (now < expirationTime) {
             const timeLeft = (expirationTime - now) / 1000;
             return message.reply(
-                `hold up! Please wait ${timeLeft.toFixed(1)}s to use ${
+                `Hold up! Please wait ${timeLeft.toFixed(1)}s to use ${
                     process.env.PREFIX
                 }${command.name} again.`,
             );
