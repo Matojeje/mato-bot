@@ -8,7 +8,7 @@ export default {
     missingArgsVerb: "lisping",
     aliases: ["lisp"],
     args: true,
-    cooldown: 10,
+    cooldown: 0,
     guildOnly: false,
     description: "Runs a lisp command",
     shortDesc: "Runs a command of a lisp-like language in a repl",

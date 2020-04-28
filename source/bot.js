@@ -131,7 +131,8 @@ client.on("message", message => {
 
     let cooldownAmount;
 
-    if (process.env.DEBUG) {
+    // NOTE(alt): Due to "use strict" and Babel you can't just read a string called "true" as a boolean, you have to compare it directly
+    if (process.env.DEBUG === "true") {
         console.log("Cooldown skip!");
         cooldownAmount = 0;
     } else {
