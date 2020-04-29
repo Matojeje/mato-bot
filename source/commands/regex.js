@@ -11,7 +11,7 @@ export default {
     shortDesc: "This command will mess with text.",
     description:
         "This command will mess with text with a user defined argument.",
-    usage: "[**uwu**/**mock**/**baby**/**shuffle**] [__text__]",
+    usage: "[**uwu**/**mock**/**baby**/**shuffle**/**lolcat**] [__text__]",
 
     execute(message, args) {
         let reply;
@@ -28,6 +28,9 @@ export default {
                 break;
             case "shuffle":
                 reply = args.join(" ").slice(args[0].length).shuffle();
+                break;
+            case "lolcat":
+                reply = args.join(" ").slice(args[0].length).lolcat();
                 break;
             default:
                 reply = `<@${message.author.id}> Please add the word transformation type argument.`;
@@ -212,4 +215,120 @@ String.prototype.babify = function () {
         .replace(/\bwhy/g, "wai")
         .replace(/\byou/g, "yoo")
         .replace(/\byes\b/g, "yus");
+};
+
+/**
+ * Modifies the given string to convert them to lolspeak.
+ * @returns {string} The input string with LOLed characters.
+ */
+String.prototype.lolcat = function () {
+    let str = this.toLowerCase();
+    let regExp = "";
+
+    // prettier-ignore
+    const dictionary = {
+        "i can have"    : "i can has",
+        "oh really"    	: "orly",
+        "seriously"    	: "srsly",
+        "uestion"		: "wesjun",
+
+        /* 6 */
+        "unless"		: "unles",
+        "really"		: ["rly", "rily", "rilly", "rilley"],
+        "you're"		: ["yore", "yr"],
+        "buddah"		: "ceiling cat",
+        "kitten"		: "kitteh",
+
+        /* 5 */
+        "cture"			: "kshur",
+        "esque"			: "esk",
+        "tious"			: "shus",
+        "thank"			: ["fank", "tank", "thx", "thnx"],
+        "world"			: ["wurrld", "whirld", "wurld", "wrld"],
+        "hello"			: "oh hai",
+        "howdy"			: "oh hai",
+        "allah"			: "ceiling cat",
+        "diety"			: "ceiling cat",
+        "kitty"			: "kitteh",
+
+
+        /* 4 */
+        "this"			: "thiz",
+        "eady"			: "eddy",
+        "what"			: ["wut", "whut"],
+        "more"			: "moar",
+        "sion"			: "shun",
+        "just"			: "jus",
+        "want"			: "waants",
+        "eese"			: "eez",
+        "ucke"			: ["ukki", "ukke"],
+        "like"			: ["likes", "liek"],
+        "love"			: ["loves", "lub", "lubs", "luv"],
+        "outh"			: "owf",
+        "scio"			: "shu",
+        "ture"			: "chur",
+        "sure"			: "shur",
+        "were"			: "was",
+        "ease"			: "eez",
+        "have"			: ["has", "hav", "haz a"],
+        "your"			: ["yur", "ur", "yore", "yoar"],
+        "good"			: ["gud", "goed", "guud", "gude", "gewd"],
+        "ight"			: "ite",
+        "tion"			: "shun",
+
+
+        /* 3 */
+        "ome"			: "um",
+        "are"			: ["r", "is", "ar"],
+        "you"			: ["yu", "yous", "yoo", "u"],
+        "the"			: "teh",
+        "ose"			: "oze",
+        "ead"			: "edd",
+        "eak"			: "ekk",
+        "age"			: "uj",
+        "dog"			: "slowpaw",
+        "who"			: "hoo",
+        "ese"			: "eez",
+        "too"			: ["to", "2"],
+        "tty"			: "tteh",
+        "thy"			: "fee",
+        "que"			: "kwe",
+        "oth"			: "udd",
+        "ing"			: ["in", "ins", "ng", "ing"],
+        "ove"			: ["oov", "ove", "uuv", "uv", "oove"],
+        "for"			: ["fore", "4", "fr", "fur", "for", "foar"],
+        "i'm"			: "im",
+        "hey"			: "oh hai",
+        "god"			: "ceiling cat",
+        "cat"			: "kitteh",
+
+        /* 2 */
+        "ph"			: "f",
+        "as"			: "az",
+        "my"			: ["muh", "mah"],
+        "er"			: "r",
+        "of"			: ["of", "ov", "of"],
+        "is"			: ["ar teh", "ar"],
+        "nd"			: "n",
+        "ok"			: ["k", "kay"],
+        "ym"			: "im",
+        "ly"			: "li",
+    };
+
+    for (const k in dictionary) {
+        regExp += `(${k})|`;
+    }
+    regExp = regExp.slice(0, -1);
+
+    const match = new RegExp(regExp, "gm");
+    const matches = str.match(match);
+
+    for (let i = 0, l = matches.length; i < l; i++) {
+        let replace = dictionary[matches[i]];
+        if (typeof replace !== "string") {
+            replace = replace[Math.floor(Math.random() * replace.length)];
+        }
+        str = str.replace(matches[i], replace);
+    }
+    return str;
 };
