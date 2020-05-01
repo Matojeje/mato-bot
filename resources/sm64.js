@@ -321,6 +321,6 @@ module.exports = {
         /* 169 */ { course: 2, icon: "Sign", split: 4, text: "Keep out!\nThat means you!\nArrgghh!\n\nAnyone entering this cave\nwithout permission will\nmeet certain disaster." },
     ], dialogListLinks: {
         source: "https://github.com/Matojeje/mato-bot/blob/master/resources/sm64.js#L151",
-        descriptions: "https://gitlab.com/Pilzinsel64/sm64-rom-manager/blob/master/SM64%20ROM%20Manager/bin/Debug/Data/Text%20Manager/dialogs.txt",
+        descriptions: "https://gitlab.com/Pilzinsel64/sm64-rom-manager/-/blob/f1d96c156167f8c8b2dae018fa18c4d609e05b59/SM64%20ROM%20Manager/bin/Debug/Data/Text%20Manager/dialogs.txt",
     },
 };
