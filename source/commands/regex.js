@@ -11,7 +11,8 @@ export default {
     shortDesc: "This command will mess with text.",
     description:
         "This command will mess with text with a user defined argument.",
-    usage: "[**uwu**/**mock**/**baby**/**shuffle**/**lolcat**] [__text__]",
+    usage:
+        "[**uwu**/**mock**/**baby**/**shuffle**/**lolcat**/**soviet**] [__text__]",
 
     execute(message, args) {
         let reply;
@@ -31,6 +32,9 @@ export default {
                 break;
             case "lolcat":
                 reply = args.join(" ").slice(args[0].length).lolcat();
+                break;
+            case "soviet":
+                reply = args.join(" ").slice(args[0].length).soviet();
                 break;
             default:
                 reply = `<@${message.author.id}> Please add the word transformation type argument.`;
@@ -88,11 +92,36 @@ String.prototype.shuffle = function () {
 
     for (let i = length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        const tmp = string[i];
-        string[i] = string[j];
-        string[j] = tmp;
+        [array[i], array[j]] = [array[j], array[i]];
     }
     return string.join("");
+};
+
+const prefix = [
+    "In Soviet Russia",
+    "In the Eastern Bloc",
+    "In communist Poland",
+    "In East Germany",
+    "In communist Czechoslovakia",
+    "In communist Hungary",
+    "In Yugoslavia",
+];
+
+/**
+ * Reverses the string and appends the prefix seen above.
+ * @returns {string} The input string commified.
+ */
+String.prototype.soviet = function () {
+    const string = this.toLowerCase().split(" ").reverse();
+    return `${prefix[Math.floor(Math.random() * prefix.length)]}, ${string.toString().replace(/,/g, " ").capitalize()}`;
+};
+
+/**
+ * Capitalizes the fist letter of the string.
+ * @returns {string} String with the first letter capitalized.
+ */
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
 /**
