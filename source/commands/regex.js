@@ -12,7 +12,7 @@ export default {
     description:
         "This command will mess with text with a user defined argument.",
     usage:
-        "[**uwu**/**mock**/**baby**/**shuffle**/**lolcat**/**soviet**] [__text__]",
+        "[**uwu**/**mock**/**baby**/**shuffle**/**lolcat**/**soviet**/**euro**] [__text__]",
 
     execute(message, args) {
         let reply;
@@ -35,6 +35,9 @@ export default {
                 break;
             case "soviet":
                 reply = args.join(" ").slice(args[0].length).soviet();
+                break;
+            case "euro":
+                reply = args.join(" ").slice(args[0].length).euro();
                 break;
             default:
                 reply = `<@${message.author.id}> Please add the word transformation type argument.`;
@@ -113,7 +116,9 @@ const prefix = [
  */
 String.prototype.soviet = function () {
     const string = this.toLowerCase().split(" ").reverse();
-    return `${prefix[Math.floor(Math.random() * prefix.length)]}, ${string.toString().replace(/,/g, " ").capitalize()}`;
+    return `${
+        prefix[Math.floor(Math.random() * prefix.length)]
+    }, ${string.toString().replace(/,/g, " ").capitalize()}`;
 };
 
 /**
@@ -122,6 +127,85 @@ String.prototype.soviet = function () {
  */
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+/**
+ * Turns Standard English to a German Euro English Dialect.
+ * @returns {string} String with the deutsche-ed words.
+ */
+String.prototype.euro = function () {
+    return this.euroify().rmdouble().shorten().creplace();
+};
+
+// Below are string sub-functions for the euro "master" function
+// Their names should be self-descriptive.
+// Taken from here:
+// https://raw.githubusercontent.com/Meowcolm024/euro/master/euro.js
+String.prototype.euroify = function () {
+    const mid = this.replace(/ph/g, "f")
+        .replace(/th/g, "z")
+        .replace(/ou/g, "o")
+        .replace(/ea/g, "e")
+        .replace(/w/g, "v")
+        .replace(/Ph/g, "F")
+        .replace(/Th/g, "Z")
+        .replace(/Ou/g, "O")
+        .replace(/Ea/g, "E")
+        .replace(/W/g, "V");
+    if (mid.endsWith("ed")) {
+        const o = mid.slice(0, mid.length - 2);
+        return o + "d";
+    }
+    return mid;
+};
+
+String.prototype.shorten = function () {
+    if (this.length <= 3) {
+        return this;
+    }
+    if (this.endsWith("e")) {
+        return this.slice(0, this.length - 1);
+    }
+    return this;
+};
+
+String.prototype.rmdouble = function () {
+    const x = this;
+
+    if (x.length < 2) {
+        return x;
+    }
+    const mid = takeWhile(y => {
+        return y === x[0];
+    }, x);
+    const rest = x.slice(mid.length, x.length);
+    return mid[0] + rest.rmdouble();
+};
+
+const takeWhile = (fn, a) =>
+    a.length && fn(a[0]) ? [a[0], ...takeWhile(fn, a.slice(1))] : [];
+
+String.prototype.creplace = function () {
+    if (this.length < 2) {
+        return this;
+    }
+    let x = this;
+    for (let i = 0; i < this.length - 1; i++) {
+        if (x[i] == "c") {
+            if ("eiy".includes(x[i + 1])) {
+                x = x.substr(0, i - 1) + "s" + x.substr(i + 1, this.length - 1);
+            } else {
+                x = x.substr(0, i - 1) + "k" + x.substr(i + 1, this.length - 1);
+            }
+        } else if (x[i] == "C") {
+            if ("eiy".includes(x[i + 1])) {
+                x = x.substr(0, i - 1) + "S" + x.substr(i + 1, this.length - 1);
+            } else {
+                x = x.substr(0, i - 1) + "K" + x.substr(i + 1, this.length - 1);
+            }
+        }
+    }
+    return x;
 };
 
 /**
