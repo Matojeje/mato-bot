@@ -34,7 +34,6 @@
             "error",
             "property"
         ],
-        "handle-callback-err": "off",
         "indent": [
             "error",
             4,

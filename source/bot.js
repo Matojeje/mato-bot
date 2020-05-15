@@ -14,7 +14,7 @@ const commandFiles = fs
     .filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
-    const command = require(__dirname + `/commands/${file}`).default; // NOTE(alt): Babel requires the `.default` for some stupid reason.
+    const command = require(__dirname + `/commands/${file}`);
     client.commands.set(command.name, command);
 }
 
