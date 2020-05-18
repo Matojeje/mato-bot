@@ -39,6 +39,9 @@ export default {
             case "euro":
                 reply = args.join(" ").slice(args[0].length).euro();
                 break;
+            case "aesthetic":
+                reply = args.join(" ").slice(args[0].length).aesthetic();
+                break;
             default:
                 reply = `<@${message.author.id}> Please add the word transformation type argument.`;
                 break;
@@ -98,6 +101,17 @@ String.prototype.shuffle = function () {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return string.join("");
+};
+
+/**
+ * Aesthetifies the given string.
+ * @returns {string} The input string aesthetifies.
+ */
+String.prototype.aesthetic = function () {
+    this
+        .toUpperCase()
+        .split("")
+        .join(" ");
 };
 
 const prefix = [
