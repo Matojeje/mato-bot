@@ -34,7 +34,7 @@ export default {
 
         const ecosia = new Ecosia({
             keyword: query,
-            limit: 200,
+            limit: 150,
             puppeteer: {
                 headless: true,
                 args: ["--no-sandbox"],
