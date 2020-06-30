@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "A fun Discord bot written in Discord.js with extra Pokémon-oriented commands!",
   "engines": {
-    "node": "12.18.1",
-    "npm": "6.x"
+    "node": "12.18.1"
   },
   "main": "bot.js",
   "scripts": {
