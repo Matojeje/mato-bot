@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "A fun Discord bot written in Discord.js with extra Pokémon-oriented commands!",
   "engines": {
-    "node": "12.18.x"
+    "node": "12.x"
   },
   "main": "bot.js",
   "scripts": {
     "build": "babel source -d dist --source-maps",
     "start": "node dist/bot.js",
-    "dev": "npm run build && npm run start"
+    "dev": "nodemon --exec babel-node source/bot.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "alt-image-scraper": "^1.1.1",
+    "alt-image-scraper": "^1.1.2",
     "canvas": "git+https://github.com/Automattic/node-canvas.git#0d9ca8861cb1c30793f7d8526b0ccb0e035d0906",
     "csvjson": "^5.1.0",
     "discord.js": "^12.2.0",
@@ -34,6 +34,7 @@
     "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
+    "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
   }
 }
