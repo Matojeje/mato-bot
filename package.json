@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A fun Discord bot written in Discord.js with extra Pokémon-oriented commands!",
   "engines": {
-    "node": "12.13.1"
+    "node": "12.18.x"
   },
   "main": "bot.js",
   "scripts": {
@@ -18,12 +18,12 @@
   "license": "MIT",
   "dependencies": {
     "alt-image-scraper": "^1.1.1",
-    "canvas": "^2.6.1",
+    "canvas": "git+https://github.com/Automattic/node-canvas.git#0d9ca8861cb1c30793f7d8526b0ccb0e035d0906",
     "csvjson": "^5.1.0",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "pokedex-promise-v2": "^3.2.0",
-    "puppeteer": "^4.0.1"
+    "puppeteer": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",
@@ -32,7 +32,7 @@
     "@babel/preset-env": "^7.10.4",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
-    "eslint": "^7.3.1",
+    "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "prettier": "^2.0.5"
   }
