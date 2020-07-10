@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A fun Discord bot written in Discord.js with extra Pokémon-oriented commands!",
   "engines": {
-    "node": "12.13.1"
+    "node": "12.18.2"
   },
   "main": "bot.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "alt-image-scraper": "^1.1.2",
-    "canvas": "git+https://github.com/Automattic/node-canvas.git#0d9ca8861cb1c30793f7d8526b0ccb0e035d0906",
+    "canvas": "^2.6.1",
     "csvjson": "^5.1.0",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
