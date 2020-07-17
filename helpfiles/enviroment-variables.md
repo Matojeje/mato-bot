@@ -18,7 +18,7 @@ Also available in [.env.example](./.env.example).
 
 |Variable name |Type    |Description                                                               |
 |--------------|--------|--------------------------------------------------------------------------|
-|`CLIENT_TOKEN`|String* |Your bot token. You can get one [here](https://discordapp.com/developers).|
+|`CLIENT_TOKEN`|String* |Your bot token. You can get one [here](https://discord.com/developers).|
 |`PREFIX`      |String* |Prefix you'd like to use for commands. (**`;`**&nbsp;by default)          |
 |`DEBUG`       |Boolean |Only used to bypass cooldowns during development.                         |
 |`MATO`        |Number  |Your user ID for commands in DMs.                                         |
