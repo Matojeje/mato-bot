@@ -17,22 +17,22 @@
   },
   "license": "MIT",
   "dependencies": {
-    "alt-image-scraper": "^1.1.2",
+    "alt-image-scraper": "^1.1.4",
     "canvas": "^2.6.1",
     "csvjson": "^5.1.0",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "pokedex-promise-v2": "^3.2.0",
-    "puppeteer": "^5.0.0"
+    "puppeteer": "^5.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.4",
-    "@babel/core": "^7.10.4",
-    "@babel/node": "^7.10.4",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
-    "eslint": "^7.4.0",
+    "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
