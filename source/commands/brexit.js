@@ -23,7 +23,6 @@ export default {
         await page.goto(`https://iamrifki.github.io/brexit/?text=${args.join(" ")}`, {
             waitUntil: "networkidle2",
         });
-        await page.waitFor(1000);
 
         const imageBuffer = await page.screenshot({ type: "png" });
         await browser.close();

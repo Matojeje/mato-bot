@@ -23,7 +23,7 @@
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "pokedex-promise-v2": "^3.2.0",
-    "puppeteer": "^5.2.0"
+    "puppeteer": "^5.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
