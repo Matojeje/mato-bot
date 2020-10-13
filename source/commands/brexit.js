@@ -17,12 +17,12 @@ export default {
     usage: "[__text__]",
 
     async execute(message, args) {
-        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'], });
+        const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
         const page = await browser.newPage();
 
         if (fz(args.join(), "cgntvbhvrthrpy")) {
             args = ["Nice Try"];
-        } 
+        }
 
         await page.setViewport({ width: 1280, height: 720 });
         await page.goto(`https://iamrifki.github.io/brexit/?text=${args.join(" ")}`, {
