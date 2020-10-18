@@ -5,8 +5,8 @@ import { MessageEmbed, MessageAttachment } from "discord.js";
 require("dotenv").config();
 
 const meta = {
-    version: "1.9.3",
-    timestamp: 1602574324543, // Time of last edit (roughly) from Date.now()
+    version: "1.9.4",
+    timestamp: 1603014224439, // Time of last edit (roughly) from Date.now()
 };
 
 export default {
@@ -37,7 +37,8 @@ export default {
             .setColor("#2990bb")
             .setAuthor("About mato-bot", "attachment://badge.png", "")
             .setTitle(`**v${meta.version}** (in development)`)
-            .setDescription(`
+            .setDescription(
+                `
 Running on Discord.js v12!
 
 Use **${process.env.PREFIX}help** to check the available commands.
@@ -45,21 +46,25 @@ https://github.com/Matojeje/mato-bot
 
 Mato-bot currently has ${cookies} cookies in his belly.`,
             )
-            .addField("Uptime",
+            .addField(
+                "Uptime",
                 client.uptime < 15 * 60 * 1000 // 15 minutes
                     ? `${Math.round(client.uptime / 1000)} seconds`
                     : `${Math.round(client.uptime / 60000)} minutes`,
-                true)
+                true,
+            )
             .addField("Woke up at", client.readyAt.toLocaleString(), true)
             .addField("Ping", `${Math.round(client.ws.ping)} ms`, true)
             .addField("~~⠀           ⠀~~", "🔵 **Credits**")
             .addField(
-                "<:blank:688476368471982165> Code:", `
+                "<:blank:688476368471982165> Code:",
+                `
 🍪 Mato | https://github.com/Matojeje
 🍪 Dania Rifki | https://github.com/IamRifki`,
             )
             .addField(
-                "<:blank:688476368471982165> Artwork:", `
+                "<:blank:688476368471982165> Artwork:",
+                `
 🍪 HavocDusk | https://DuskyUmbreon.deviantart.com
 🍪 Spray-POKA | https://Spray-POKA.deviantart.com
 🍪 Parapetch | https://twitter.com/Parapetch_/`,

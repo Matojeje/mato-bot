@@ -16,7 +16,7 @@ export default {
     usage: "[__user__]",
 
     execute(message, args, client) {
-        message.channel.send(`*boops ${args[0]}!*`)
+        message.channel.send(`*boops ${args[0]}!*`);
     },
 };
 ```
