@@ -4,7 +4,7 @@ export default {
     name: "portal",
     errorVerb: "build a portal",
     missingArgsVerb: "portal",
-    aliases: ["yagt", "zagreb"],
+    aliases: ["brazil", "yagt", "zagreb"],
     cooldown: 10,
     guildOnly: false,
     args: true,
