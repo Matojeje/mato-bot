@@ -14,7 +14,7 @@ export default {
     usage: "([__emote__])",
 
     execute(message, args) {
-        const block = args[0] ? args[0] : "<:obsidian:767344800100909066>";
+        const block = typeof args[0] !== "undefined" ? args[0] : "<:obsidian:767344800100909066>";
         const portal = "<a:portal:767343567701016596>";
         let reply;
 
