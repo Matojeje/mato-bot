@@ -17,7 +17,7 @@ export default {
         let reply;
 
         if (args.length > 1) {
-            reply = "I can only accept one argument, I am sorrii";
+            reply = "```js\nError: I can only accept one argument, I am sorrii.```";
         } else {
             reply = `${args[0]}${args[0]}${args[0]}${args[0]}\n`;
             reply += `${args[0]}:purple_square::purple_square:${args[0]}\n`;
