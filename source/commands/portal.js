@@ -9,8 +9,8 @@ export default {
     guildOnly: false,
     args: false,
     description:
-        "This command will build a portal from an emoji to send people through.",
-    shortDesc: "Builds a Nether portal from an emoji",
+        "This command will build a nether portal from an emoji to send people through.",
+    shortDesc: "Builds a nether portal from an emoji",
     usage: "([__emote__])",
 
     execute(message, args) {
