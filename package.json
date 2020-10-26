@@ -22,7 +22,6 @@
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0",
     "ecoasia-image-scraper": "^1.2.0",
-    "fz": "^0.2.0",
     "pokedex-promise-v2": "^3.2.0",
     "puppeteer": "^5.4.0"
   },
