@@ -1,6 +1,6 @@
 "use strict";
 
-import { Ecosia } from "alt-image-scraper";
+import EcoasiaImageScraper from "ecoasia-image-scraper";
 import { MessageEmbed } from "discord.js";
 
 export default {
@@ -21,27 +21,20 @@ export default {
      * and then send it to Discord via an embed.
      */
     async execute(message, args) {
-        let query;
-        let color;
+        const query =
+            args[0] === "luu" || args[0] === "lucario" ? "Lucario" : "Riolu";
+        const color =
+            args[0] === "luu" || args[0] === "lucario" ? "#268AB5" : "#91CAE9";
 
-        if (args[0] === "luu" || args[0] === "lucario") {
-            query = "Lucario";
-            color = "#268AB5";
-        } else {
-            query = "Riolu";
-            color = "#91CAE9";
-        }
-
-        const ecosia = new Ecosia({
+        const imageScraper = new EcoasiaImageScraper({
             keyword: query,
-            limit: 150,
             puppeteer: {
                 headless: true,
                 args: ["--no-sandbox"],
             },
         });
 
-        const results = await ecosia.scrape();
+        const results = await imageScraper.scrape();
         const reply = !results.length
             ? "```js\nError: I was not able to get any images, I am sorrii.```"
             : new MessageEmbed()
