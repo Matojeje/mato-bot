@@ -5,8 +5,8 @@ import { MessageEmbed, MessageAttachment } from "discord.js";
 require("dotenv").config();
 
 const meta = {
-    version: "1.9.4",
-    timestamp: 1603014224439, // Time of last edit (roughly) from Date.now()
+    version: "1.9.5",
+    timestamp: 1608299016861, // Time of last edit (roughly) from Date.now()
 };
 
 export default {
