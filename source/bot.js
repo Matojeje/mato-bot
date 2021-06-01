@@ -74,7 +74,7 @@ client.on("message", message => {
     }
 
     const args = message.content.slice(process.env.PREFIX.length).split(/ +/); // Splitting out arguments and prefix
-    const commandName = args.shift().toLowerCase();
+    let commandName = args.shift().toLowerCase();
 
     console.log(
         `Got command! ${commandName}, from ${
@@ -221,7 +221,7 @@ function onDM(message) {
 
 function secretCommand({ content, author }) {
     const args = content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
-    commandName = args.shift().toLowerCase();
+    commandName = args.shift();
     console.log(`Secret mato command: ${args[0]} (${content})`);
 
     // Parse discord stuff
