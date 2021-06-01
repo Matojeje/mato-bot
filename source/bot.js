@@ -221,7 +221,7 @@ function onDM(message) {
 
 function secretCommand({ content, author }) {
     const args = content.slice(process.env.PREFIX.length).split(/\s?§\s?/g); // Splitting out arguments and prefix
-    commandName = args.shift();
+    // commandName = args.shift();
     console.log(`Secret mato command: ${args[0]} (${content})`);
 
     // Parse discord stuff
